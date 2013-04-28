@@ -2,7 +2,7 @@
 
 import os
 import shutil
-from book.models import Entry, Category, SubCategory
+from book.models import Book, Category, SubCategory
 from django.conf import settings
 
 
@@ -57,7 +57,7 @@ def movedir(post_data, modele_id):
     if post_data['set_type'] == 'entry':
         category = Category.objects.get(pk=post_data['category'])
         subcategory = SubCategory.objects.get(pk=post_data['subcategory'])
-        entry = Entry.objects.get(pk=modele_id)
+        entry = Book.objects.get(pk=modele_id)
         old_name = os.path.join(settings.MANAGE_BOOK_PATH, entry.category.url_name, entry.subcategory.url_name, entry.url_title )
         new_name = os.path.join(settings.MANAGE_BOOK_PATH, category.url_name, subcategory.url_name, post_data['url_title'])
         os.rename(old_name, new_name)

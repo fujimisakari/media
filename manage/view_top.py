@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 from django.conf import settings
 from django.template import RequestContext
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
-from django import forms
 from manage.forms import WhatNewForm
 from top.models import WhatNew
 from manage.view_common import *

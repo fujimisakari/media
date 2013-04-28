@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from ctypes import *
+from ctypes import CDLL, byref, c_int, POINTER, c_char_p
 from django.conf import settings
 
 

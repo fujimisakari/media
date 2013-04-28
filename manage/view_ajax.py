@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponse, Http404
-from book.models import Entry, Entry_Detail, Category, SubCategory, Writer, Publisher
+from django.http import HttpResponse
+from book.models import Book, BookDetail, SubCategory, Writer
 
 
 def getSubcategoryList(request):
@@ -23,7 +23,7 @@ def getWriterList(request):
 def getTitleList(request):
     # 指定したサブカテゴリからタイトル一覧を取得
     titleList = '<option selected="selected" value="">---------</option>|'
-    for row in Entry.objects.filter(subcategory=request.GET['subcategory_id']):
+    for row in Book.objects.filter(subcategory=request.GET['subcategory_id']):
         titleList += "<option value=\"%d\">%s</option>|" % (row.id, row.title)
     return  HttpResponse(titleList, mimetype="text/javascript")
 
@@ -31,6 +31,6 @@ def getTitleList(request):
 def getVolumeList(request):
     # 指定したタイトルからvolume一覧を取得
     volumeList = '<option selected="selected" value="">---------</option>|'
-    for row in Entry_Detail.objects.filter(entry=request.GET['entry_id']):
+    for row in BookDetail.objects.filter(entry=request.GET['entry_id']):
         volumeList += "<option value=\"%d\">%s</option>|" % (row.volume, row.volume)
     return  HttpResponse(volumeList, mimetype="text/javascript")

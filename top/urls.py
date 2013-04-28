@@ -1,10 +1,9 @@
-from django.conf.urls.defaults import *
-from django.conf import settings
-from top.views import whatnew_list
+# -*- coding: utf-8 -*-
+
+from django.conf.urls.defaults import patterns, url
 
 
-urlpatterns = patterns('',
-    (r'^$', whatnew_list, {}, 'whatnew'),
+urlpatterns = patterns(
+    'top.views',
+    url(r'^$', 'whatnew_list', name='top_whatnew'),
 )
-
-

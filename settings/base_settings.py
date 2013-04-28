@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# Django settings for media project.
+from settings.private_config import *
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+AUTO_LOGIN = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -11,19 +12,41 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# テンプレートで使用
 import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'media'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'fujimo'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'fujimo@'         # Not used with sqlite3.
-DATABASE_HOST = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = '5432'             # Set to empty string for default. Not used with sqlite3.
+# インポートのパスを設定
+import sys
+sys.path.append(ROOT_PATH + '/module/')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',               # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': DB_NAME,               # Or path to database file if using sqlite3.
+        'USER': DB_USER,                 # Not used with sqlite3.
+        'PASSWORD': DB_PASS,             # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+import socket
+HOSTNAME = socket.gethostname()
+if HOSTNAME == PUBLIC_HOSTNAME:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+            'TIMEOUT': 3600 * 24,  # 24h
+        },
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
+# On Unix systems, a value of None will cause Django to use the same
+# timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'Asia/Tokyo'
@@ -38,44 +61,47 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+# If you set this to False, Django will not format dates, numbers and
+# calendars according to the current locale
+USE_L10N = True
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, 'templates'), 'static')
+MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-# MEDIA_URL = '/static/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/static/admin_media/'
+MEDIA_URL = ''
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'q2vga9)jy-7d4n0!e^m%3xs@75bvg5+uw@0#gq$$+!vp+rpx7@'
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
+    'module.misc.middleware.TemplateFilterMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'media.urls'
+ROOT_URLCONF = 'urls'
+
+# Python dotted path to the WSGI application used by Django's runserver.
+#WSGI_APPLICATION = 'hoge.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(ROOT_PATH, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -86,6 +112,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.formtools',
+    'south',
+
     'book',
     'top',
     'manage',
@@ -132,14 +160,13 @@ LOGGING = {
     }
 }
 
-
 #####################################################################
 # search
-HYPER_ESTRAIER_INDEX = os.path.join(BASE_DIR, 'templates/static/media/book/casket/')
+HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
 
 # upload
 FILE_UPLOAD_MAX_MEMORY_SIZE = u'314572800'
-FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'templates/static/media/tmp')
+FILE_UPLOAD_TEMP_DIR = os.path.join(ROOT_PATH, 'templates/static/media/tmp')
 
 # login
 LOGIN_REDIRECT_URL = '/media/'
@@ -192,9 +219,9 @@ MANAGE_MOVIE = 'manage/movie/'
 MANAGE_MUSIC = 'manage/music/'
 MANAGE_UPLOAD = 'manage/uploader/'
 MANAGE_ANALYSIS = 'manage/analysis/'
-MANAGE_BOOK_PATH = os.path.join(BASE_DIR, 'templates/static/media/book')
-MANAGE_MOVIE_PATH = os.path.join(BASE_DIR, 'templates/static/media/movie')
-MANAGE_MUSIC_PATH = os.path.join(BASE_DIR, 'templates/static/media/music')
+MANAGE_BOOK_PATH = os.path.join(ROOT_PATH, 'templates/static/media/book')
+MANAGE_MOVIE_PATH = os.path.join(ROOT_PATH, 'templates/static/media/movie')
+MANAGE_MUSIC_PATH = os.path.join(ROOT_PATH, 'templates/static/media/music')
 
 # image
 RECENT_BOOK = '/images/cnavi_tit_book.png'

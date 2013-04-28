@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from book.models import Category, SubCategory, Entry, Entry_Detail, Writer, Publisher
+from book.models import Category, SubCategory, Book, BookDetail, Writer, Publisher
 
 
 class CategoryOptions(admin.ModelAdmin):
-    list_display = ('name', 'url_name',)
+    list_display = ('name', 'url',)
 
 
 class SubCategoryOptions(admin.ModelAdmin):
-    list_display = ('category', 'name', 'url_name',)
+    list_display = ('category', 'name', 'url',)
     ordering = ('-name',)
 
 
-class EntryOptions(admin.ModelAdmin):
+class BookOptions(admin.ModelAdmin):
     list_display = ('category', 'subcategory', 'title', 'url_title',)
     list_filter = ('category', 'subcategory',)
     # search_fields = ('title', 'url_title',)
@@ -35,7 +35,7 @@ class PublisherOptions(admin.ModelAdmin):
     ordering = ('name',)
 
 
-class Entry_DetailOptions(admin.ModelAdmin):
+class BookDetailOptions(admin.ModelAdmin):
     list_display = ('entry', 'volume', 'pdf_size', 'epud_size', 'total_page',
                     'writer', 'publisher', 'description', 'exit_pdf', 'exit_epud',)
     list_filter = ('entry', 'writer', 'publisher',)
@@ -50,7 +50,7 @@ class Entry_DetailOptions(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryOptions)
 admin.site.register(SubCategory, SubCategoryOptions)
-admin.site.register(Entry, EntryOptions)
+admin.site.register(Book, BookOptions)
 admin.site.register(Writer, WriterOptions)
 admin.site.register(Publisher, PublisherOptions)
-admin.site.register(Entry_Detail, Entry_DetailOptions)
+admin.site.register(BookDetail, BookDetailOptions)

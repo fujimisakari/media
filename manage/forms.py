@@ -2,7 +2,7 @@
 
 from django import forms
 from top.models import WhatNew
-from book.models import Category, SubCategory, Entry, Entry_Detail, Writer, Publisher
+from book.models import Category, SubCategory, Book, BookDetail, Writer, Publisher
 
 
 class WhatNewForm(forms.ModelForm):
@@ -22,12 +22,12 @@ class SubCategoryForm(forms.ModelForm):
 
 class EntryForm(forms.ModelForm):
     class Meta:
-        model = Entry
+        model = Book
 
 
 class Entry_DetailForm(forms.ModelForm):
     class Meta:
-        model = Entry_Detail
+        model = BookDetail
 
 
 class WriterForm(forms.ModelForm):

@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.conf import settings
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
-from book.models import Entry, Entry_Detail, Category, SubCategory, Writer, Publisher
+from book.models import Book, BookDetail, Category, SubCategory
 from manage.view_common import *
 
 BASE_TYPE = 'analysis'
@@ -25,20 +24,20 @@ def analysis(request, set_type):
         subcategoryArr = {}
 
         # 総冊数
-        bookArr['total_book'] = Entry_Detail.objects.all().count()
+        bookArr['total_book'] = BookDetail.objects.all().count()
         # 総タイトル数
-        titleArr['total_title'] = Entry.objects.all().count()
+        titleArr['total_title'] = Book.objects.all().count()
 
         for i in Category.objects.all().order_by('sort_num'):
             # カテゴリ別総冊数
-            bookArr[i.url_name] = Entry_Detail.objects.filter(entry__category=i.id).count()
+            bookArr[i.url_name] = BookDetail.objects.filter(entry__category=i.id).count()
             # カテゴリ別タイトル数
-            titleArr[i.url_name] = Entry.objects.filter(category=i.id).count()
+            titleArr[i.url_name] = Book.objects.filter(category=i.id).count()
             # サブカテゴリ別タイトル数
             tmpArr = []
             for sub in SubCategory.objects.filter(category=i.id).order_by('sort_num'):
                 tmpDic = {}
-                tmpDic[sub.url_name] = Entry.objects.filter(category=i.id).filter(subcategory=sub.id).count()
+                tmpDic[sub.url_name] = Book.objects.filter(category=i.id).filter(subcategory=sub.id).count()
                 tmpArr.append(tmpDic)
             subcategoryArr[i.url_name] = tmpArr
 

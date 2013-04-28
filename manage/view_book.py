@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 from django.conf import settings
-from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.core.paginator import Paginator
 from django.db.models.query import Q
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
-from django import forms
 from manage.forms import EntryForm, Entry_DetailForm, CategoryForm, SubCategoryForm, WriterForm, PublisherForm
-from book.models import Entry, Entry_Detail, Category, SubCategory, Writer, Publisher
+from book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
 from manage.dirhandler import mkdir, rmdir, movedir
 from manage.view_common import *
 
@@ -75,8 +72,8 @@ def book_add(request, set_type='entry'):
 
 @login_required
 def book_edit_list(request, set_type):
-    getModel = {'entry': Entry,
-                'detail': Entry_Detail,
+    getModel = {'entry': Book,
+                'detail': BookDetail,
                 'category': Category,
                 'subcategory': SubCategory,
                 'writer': Writer,
@@ -111,8 +108,8 @@ def book_edit_list(request, set_type):
 
 @login_required
 def book_search(request, set_type):
-    getModel = {'entry': Entry,
-                'detail': Entry_Detail,
+    getModel = {'entry': Book,
+                'detail': BookDetail,
                 'category': Category,
                 'subcategory': SubCategory,
                 'writer': Writer,
@@ -184,8 +181,8 @@ def book_search(request, set_type):
 
 @login_required
 def book_edit(request, set_type, id):
-    getModel = {'entry': Entry,
-                'detail': Entry_Detail,
+    getModel = {'entry': Book,
+                'detail': BookDetail,
                 'category': Category,
                 'subcategory': SubCategory,
                 'writer': Writer,
@@ -242,8 +239,8 @@ def book_edit(request, set_type, id):
 
 @login_required
 def book_delete(request, set_type, id):
-    getmodel = {'entry': Entry,
-                'detail': Entry_Detail,
+    getmodel = {'entry': Book,
+                'detail': BookDetail,
                 'category': Category,
                 'subcategory': SubCategory,
                 'writer': Writer,
@@ -264,8 +261,8 @@ def book_delete(request, set_type, id):
 
 @login_required
 def book_delete_checked(request, set_type):
-    getmodel = {'entry': Entry,
-                'detail': Entry_Detail,
+    getmodel = {'entry': Book,
+                'detail': BookDetail,
                 'category': Category,
                 'subcategory': SubCategory,
                 'writer': Writer,

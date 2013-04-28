@@ -7,11 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from django.db.models.query import Q
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.core.paginator import Paginator
 
-from book.models import Entry, Entry_Detail, Category, SubCategory
-from book.hyperestraier import search_index
+from book.models import Book, BookDetail, Category, SubCategory
+# from book.hyperestraier import search_index
 
 
 @login_required
@@ -103,7 +102,7 @@ ORDER BY
 
 @login_required
 def category(request, category):
-    query_set = Entry.objects.filter(category__url_name=category).order_by('subcategory')
+    query_set = Book.objects.filter(category__url_name=category).order_by('subcategory')
     category_query = Category.objects.get(url_name=category)
     category_name  = category_query.name
     try:
@@ -122,7 +121,7 @@ def category(request, category):
 
 @login_required
 def subcategory(request, category, subcategory):
-    query_set = Entry.objects.filter(subcategory__url_name=subcategory).order_by('title')
+    query_set = Book.objects.filter(subcategory__url_name=subcategory).order_by('title')
     subcategory_query = SubCategory.objects.get(url_name=subcategory)
     subcategory_name  = subcategory_query.name
     try:
@@ -142,7 +141,7 @@ def subcategory(request, category, subcategory):
 
 @login_required
 def detail(request, category, subcategory, title):
-    query_set = Entry_Detail.objects.filter(entry__url_title__exact=title).order_by('volume').select_related()
+    query_set = BookDetail.objects.filter(entry__url_title__exact=title).order_by('volume').select_related()
     try:
         page_id = request.GET['page']
     except:
@@ -158,13 +157,13 @@ def detail(request, category, subcategory, title):
 
 @login_required
 def preview(request, category, subcategory, title, volume):
-    query_set = Entry_Detail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
+    query_set = BookDetail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
     return render_to_response('book/preview.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
 
 
 @login_required
 def extend_detail(request, category, subcategory, title, volume):
-    query_set = Entry_Detail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
+    query_set = BookDetail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
     return render_to_response('book/extend_detail.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
 
 
@@ -174,7 +173,7 @@ def search(request):
         keyword = request.POST['search'].encode('utf-8')
     else:
         keyword = request.GET.get('keyword', '').encode('utf-8')
-    query_set = Entry.objects.all()
+    query_set = Book.objects.all()
     for word in keyword.split():
         query_set = query_set.filter(Q(title__icontains=word) | Q(url_title__icontains=word)).order_by('title')
     try:

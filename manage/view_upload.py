@@ -6,13 +6,13 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django import forms
-from book.models import Category, SubCategory, Entry, Entry_Detail
+from book.models import Category, SubCategory, Book, BookDetail
 from manage.view_common import *
 
 
 class UploadEntryForm(forms.ModelForm):
     class Meta:
-        model = Entry
+        model = Book
         fields = ('category', 'subcategory')
 
 
@@ -20,7 +20,7 @@ class UploadFileForm(forms.ModelForm):
     upload_file = forms.FileField()
 
     class Meta:
-        model = Entry_Detail
+        model = BookDetail
         fields = ('entry', 'volume')
 
 
@@ -28,7 +28,7 @@ def create_path(post_data):
     volume = forms.IntegerField()
     category = Category.objects.get(pk=post_data['category'])
     subcategory = SubCategory.objects.get(pk=post_data['subcategory'])
-    entry = Entry.objects.get(pk=post_data['entry'])
+    entry = Book.objects.get(pk=post_data['entry'])
     get_data_type = {'thumbnail': '_thumbnail.jpg',
                      'pdf': '_pc.pdf',
                      'epud': '_ipad.epud',

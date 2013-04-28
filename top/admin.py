@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib import admin
 from top.models import WhatNew
+
 
 class WhatNewOptions(admin.ModelAdmin):
     list_display = ('regist_date', 'content',)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
-from book.models import Entry, Entry_Detail, Category, SubCategory
+from book.models import Book, BookDetail, Category, SubCategory
 
 
 def common_context(request):
@@ -31,12 +31,12 @@ def book_context(request):
         'BOOK_VOLUME_THUMBNAIL': settings.BOOK_VOLUME_THUMBNAIL,
         'BOOK_THUMB_HEIGHT': settings.BOOK_THUMB_HEIGHT,
         'BOOK_THUMB_WIDTH': settings.BOOK_THUMB_WIDTH,
-        'it_list': Entry.objects.filter(category__url_name='it').order_by('title').select_related()[:settings.ALL_LIST_LIMIT],
-        'managa_list': Entry.objects.filter(category__url_name='manga').order_by('title').select_related()[:settings.ALL_LIST_LIMIT],
-        'recent_book_list': Entry_Detail.objects.order_by('-create_date')[:settings.LIST_COUNT],
+        'it_list': Book.objects.filter(category__url_name='it').order_by('title').select_related()[:settings.ALL_LIST_LIMIT],
+        'managa_list': Book.objects.filter(category__url_name='manga').order_by('title').select_related()[:settings.ALL_LIST_LIMIT],
+        'recent_book_list': BookDetail.objects.order_by('-create_date')[:settings.LIST_COUNT],
         'category_list': Category.objects.all().order_by('sort_num'),
         'subcategory_list': SubCategory.objects.all().order_by('sort_num'),
-        'entry_list': Entry.objects.all().order_by('title')
+        'entry_list': Book.objects.all().order_by('title')
     }
 
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
 from manage.view_book import book_add, book_edit, book_edit_list, book_delete, book_delete_checked, book_search
