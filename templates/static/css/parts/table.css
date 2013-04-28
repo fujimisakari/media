@@ -1,0 +1,176 @@
+@charset "utf-8";
+
+/* =======================================
+
+    table css
+
+ -----------------------------------------
+    INDEX
+ -----------------------------------------
+ 
+    1.ALLList Table
+    2.DetailList Table
+    
+========================================== */
+
+
+/*  1.AllList Table
+========================================== */
+
+#wrapper #contents #contentsMain div.section h3 {
+    color: #ffdead;
+    font-size: 140%;
+    font-weight: bold;
+    border-style: solid;
+    border-color: #daa520;
+    border-width: 0px 0px 1px 5px;
+    padding: 0 0 3px 10px;
+    margin: 5px 0px 0px;
+}
+
+#wrapper #contents #contentsMain div.section ul.column{
+    width: 100%;
+    padding: 0;
+    margin: 5px 0 10px 5px;
+    list-style: none;
+}
+
+#wrapper #contents #contentsMain div.section ul.column li {
+    float: left;
+    width: 150px; /*Set default width*/
+    padding: 0;
+    margin: 5px 0 5px;
+    display: inline;
+}
+
+#wrapper #contents #contentsMain div.section .block {
+    height: 140px;
+    margin-right: 10px; /*Creates the 10px gap between each column*/
+    margin-top: 5px;
+    padding: 0 5px 10px;
+    /* background: #e3e1d5; */
+}
+
+#wrapper #contents #contentsMain div.section .block img {
+    background: #666666;
+    margin: 0 auto;
+    display: block;
+    -ms-interpolation-mode: bicubic; /*prevents image pixelation for IE 6/7 */
+}
+
+#wrapper #contents #contentsMain div.section ul.column li div.block div.bookName {
+    text-align: center;
+    margin-top: 10px;
+    white-space: nowrap;
+    overflow:hidden;
+}
+
+#wrapper #contents #contentsMain div.section p.extendPage {
+    text-align: right;
+    margin: 0 15px 0 0;
+}
+
+#wrapper #contents #contentsMain div.section:after { /* for Modern Browser */
+    content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+}
+
+#wrapper #contents #contentsMain div.section ul.column:after { /* for Modern Browser */
+    content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+}
+
+/*  2.DetailList Table
+========================================== */
+#wrapper #contents #contentsMain div.section table.detailList {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#wrapper #contents #contentsMain div.section table.detailList tr {
+    border-bottom: #daa520 1px solid;
+}
+
+#wrapper #contents #contentsMain div.section table.detailList tr td.dlSection {
+    padding: 10px 5px;
+}
+
+    /*  2-1.dlSection1
+    ------------------------------------------ */
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection1 {
+        width: 130px;
+        text-align: left;
+        padding: 0px 0 5px 8px;
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection1 img {
+        margin: 0 0 10px;
+    }
+
+    /*  2-2.dlSection2
+    ------------------------------------------ */
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2 {
+        width: 375px;
+        /* white-space: nowrap; */
+        /* overflow: hidden; */
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2 dl {
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2 dl dt {
+        clear: both;
+        float: left;
+        font-weight: bold;
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2 dl dd {
+        margin-left: 120px;
+        padding: 1.7px 0;
+    }
+
+        /*  2-3.dlSection2_detail
+    ------------------------------------------ */
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2_extend {
+        width: 585px;
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2_extend dl {
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2_extend dl dt {
+        clear: both;
+        float: left;
+        font-weight: bold;
+    }
+
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2_extend dl dt.editLink {
+        clear: both;
+        float: left;
+        font-weight: normal;
+    }
+ 
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2_extend dl dd {
+        margin-left: 120px;
+        padding: 1.7px 0;
+        word-wrap: break-word;
+    }
+
+    
+    /*  2-4.dlSection3
+    ------------------------------------------ */
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection3 {
+        width: 210px;
+        text-align: left;
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection3 dl {
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection3 dl dt {
+        font-weight: bold;
+    }
+     
+    #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection3 dl dd {
+        padding-left: 10px;
+        overflow: auto;
+        word-wrap: break-word;
+    }

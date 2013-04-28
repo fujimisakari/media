@@ -1,0 +1,127 @@
+{% extends 'book/base.html' %}
+
+{% block contentsNavi %}
+    <h2><img src="{{ MEDIA_URL }}{{ NAVI_CATEAGORY }}" alt="CATEGORY" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul>
+        {% for category in category_list %}
+            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+        {% endfor %}
+        </ul>
+    <!-- .localContentsNavi --></div>
+
+    <h2><img src="{{ MEDIA_URL }}{{ NAVI_SUBCATEGORY }}" alt="SUBCATEGORY" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul>
+        {% for category in category_list %}
+            {% ifequal category.url_name param_category %}
+            {% for subcategory in subcategory_list %}
+                {% ifequal category.id subcategory.category_id %}
+                    <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a></li>
+                {% endifequal %}
+            {% endfor %}
+            {% endifequal %}
+        {% endfor %}
+        </ul>
+    <!-- .localContentsNavi --></div>
+{% endblock %}
+
+{% block contentsMain %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_DETAIL }}" alt="DETAIL_LIST" width="795" height="45" /></h2>
+    <div class="section">
+        {% ifnotequal hits 1 %}
+            <p class="detail_page_result center">{{ hits }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
+        {% endifnotequal %}
+        <table class="detailList">
+            {% for object in object_list %}
+                <tr>
+                    <td class="dlSection">
+                        <div class="dlSection1">
+                            <a href="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume}}{{ BOOK_VOLUME_THUMBNAIL }}" class="thumbnail_view">
+                                <img src="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume}}{{ BOOK_VOLUME_THUMBNAIL }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                            </a>
+                            <ul>
+                                {% if object.exit_pdf %}
+                                    <li><a href="{{ object.get_absolute_url }}{{ object.volume }}" onclick="m_win(this.href,'preview',835, 1000); return false;">preview</a></li>
+                                    <li><a href="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume }}{{ BOOK_PDF }}" target="_blank">pc(pdf)</a></li>
+                                {% endif %}
+                                {% if object.exit_epud %}
+                                    <li><a href="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume }}{{ BOOK_IPAD }}">ipad(epub)</a></li>
+                                {% endif %}
+                                <!-- <li><a href="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume }}{{ BOOK_IPHONE }}">iphone(epub)</a></li> -->
+                                {% if object.exit_attachment  %}
+                                    <li><a href="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume }}{{ BOOK_DATA }}" target="_blank">付属CD</a></li>
+                                {% endif %}
+                            </ul>
+                        <!-- /.dlSection1 --></div>
+                    <!-- /.dlSection --></td>
+                    <td class="dlSection">
+                        <div class="dlSection2_extend">
+                            <dl>
+                                <dt>タイトル :</dt><dd>{{ object.entry.title }}</dd>
+                                {% ifequal object.entry.category.url_name 'manga' %}
+                                    <dt>巻 :</dt><dd>{{ object.volume }}</dd>
+                                {% endifequal %}
+                                <dt>カテゴリ :</dt><dd>{{ object.entry.category }}</dd>
+                                <dt>サブカテゴリ :</dt><dd>{{ object.entry.subcategory }}</dd>
+                                {% if object.exit_pdf %}
+                                    <dt>PDFサイズ :</dt><dd>{{ object.pdf_size }} M</dd>
+                                {% endif %}
+                                {% if object.exit_epud %}
+                                    <dt>EPUDサイズ :</dt><dd>{{ object.epud_size }} M</dd>
+                                {% endif %}
+                                <dt>ページ数 :</dt><dd>{{ object.total_page }}</dd>
+                                {% ifequal object.entry.category.url_name 'it' %}
+                                    <dt>著者 :</dt><dd>{{ object.writer }}</dd>
+                                    <dt>出版社 :</dt><dd>{{ object.publisher }}</dd>
+                                    <dt>作成日 :</dt><dd>{{ object.create_date|date:"Y-m-d" }}</dd>
+                                    <dt>備考 :</dt><dd>{{ object.description|linebreaks|safe }}</dd>
+                                    <dt class="editLink"><a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}edit/detail/{{ object.id }}/">編集する</a></dt>
+                                {% else %}
+                                    <dt class="editLink"><span class="switchHat">さらに詳しく</span></dt><dd>&nbsp;</dd>
+                                    <div class="switchDetail">
+                                        <dt>著者 :</dt><dd>{{ object.writer }}</dd>
+                                        <dt>出版社 :</dt><dd>{{ object.publisher }}</dd>
+                                        <dt>作成日 :</dt><dd>{{ object.create_date|date:"Y-m-d" }}</dd>
+                                        <dt>備考 :</dt><dd>{{ object.description|linebreaks|safe }}</dd>
+                                        <dt class="editLink"><a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}edit/detail/{{ object.id }}/">編集する</a></dt>
+                                    <!-- .switchDetail --></div>
+                                {% endifequal %}
+                            </dl>
+                        <!-- /.dlSection --></div>
+                    <!-- /.dlSection --></td>
+                </tr>
+            {% endfor %}
+        <!-- /.dtailList --></table>
+
+        <div align="center">
+            <table class="paging_list">
+                <tr>
+                    <td>
+                    {% if has_previous %}
+                        <a href="?page={{ previous }}">&lt; Prev</a>
+                    {% else %}
+                        <p>&lt; Prev</p>
+                    {% endif %}
+                    </td>
+                    <td>
+                      [{% for page_num in page_range %}
+                          {% ifequal page page_num %}
+                              {{ page_num }}
+                          {% else %}
+                              <a href="?page={{ page_num }}">{{ page_num }}</a>
+                          {% endifequal %}
+                      {% endfor %}]
+                    </td>
+                    <td>
+                        {% if has_next %}
+                            <a href="?page={{ next }}">Next &gt;</a>
+                        {% else %}
+                            <p>Next &gt;</p>
+                        {% endif %}
+                    </td>
+                          </tr>
+            <!-- .paging_list --></table>
+        </div>
+    <!-- /.section --></div>
+{% endblock %}

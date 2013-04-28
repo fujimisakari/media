@@ -1,0 +1,209 @@
+{% extends 'manage/base.html' %}
+
+{% block manageContentsMain %}
+    <div class="manageSection">
+        <div class="manageMode"><a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/{{ set_type }}/">add</a> / edit</div>
+        <div class="manageSearchForm">
+            <ul>
+                <form method="post" action="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}search/{{ set_type }}/" >
+                    {% if keyword %}
+                        <li><input class="search_result" type="text" maxlength="100" name="search" value="{{ keyword }}" /></li>
+                    {% else %}
+                        <li><input class="id_search" type="text" maxlength="100" name="search" value="キーワード検索" /></li>
+                    {% endif %}
+                    <li><input class="button" type="submit" value="SEARCH" /></li>
+                </form>
+            </ul>
+        <!-- /.manageSearchForm --></div>
+        {% if keyword %}
+            <p class="page_result">検索結果：{{ hits }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
+        {% else %}
+            <p class="page_result">{{ hits }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
+        {% endif %}
+
+            <form method="post">
+                {% for object in object_list %}
+
+                    {% ifequal set_type 'entry' %}
+                        {% if forloop.first %}
+                            <table class="manageList">
+                                <tr>
+                                    <th class="size60"></th>
+                                    <th>カテゴリ</th>
+                                    <th>サブカテゴリ</th>
+                                    <th>タイトル</th>
+                                    <th>URLタイトル</th>
+                                </tr>
+                        {% endif %}
+                            <tr>
+                                <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                <td>{{ object.category }}</td>
+                                <td>{{ object.subcategory }}</td>
+                                <td><a href="./{{ object.id }}/">{{ object.title }}</a></td>
+                                <td>{{ object.url_title }}</td>
+                            </tr>
+                    {% endifequal %}
+
+                    {% ifequal set_type 'detail' %}
+                        {% if forloop.first %}
+                            <table class="manageList">
+                                <tr>
+                                    <th class="size60"></th>
+                                    <th>タイトル</th>
+                                    <th class="size40">巻</th>
+                                    <th class="size30">PDFサイズ</th>
+                                    <th class="size50">EPUDサイズ</th>
+                                    <th class="size40">ページ数</th>
+                                    <th>著者</th>
+                                    <th>出版社</th>
+                                </tr>
+                        {% endif %}
+                            <tr>
+                                <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                <td><a href="./{{ object.id }}/">{{ object.entry }}</a></td>
+                                <td>{{ object.volume }}</td>
+                                <td>{{ object.pdf_size }}M</td>
+                                <td>{{ object.epud_size }}M</td>
+                                <td>{{ object.total_page }}</td>
+                                <td>{{ object.writer }}</td>
+                                <td>{{ object.publisher }}</td>
+                            </tr>
+                    {% endifequal %}
+
+                    {% ifequal set_type 'category' %}
+                        {% if forloop.first %}
+                            <table class="manageList">
+                                <tr>
+                                    <th class="size60"></th>
+                                    <th class="size75">Sort番号</th>
+                                    <th>カテゴリ名</th>
+                                    <th>URLカテゴリ</th>
+                                </tr>
+                        {% endif %}
+                            <tr>
+                                <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                <td>{{ object.sort_num }}</td>
+                                <td><a href="./{{ object.id }}/">{{ object.name }}</a></td>
+                                <td>{{ object.url_name }}</td>
+                            </tr>
+                    {% endifequal %}
+
+                    {% ifequal set_type 'subcategory' %}
+                        {% if forloop.first %}
+                            <table class="manageList">
+                                <tr>
+                                  <th class="size60"></th>
+                                  <th class="size75">Sort番号</th>
+                                  <th class="size100">カテゴリ名</th>
+                                  <th>サブカテゴリ名</th>
+                                  <th>URLサブカテゴリ</th>
+                                </tr>
+                        {% endif %}
+                            <tr>
+                                <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                <td>{{ object.sort_num }}</td>
+                                <td>{{ object.category }}</td>
+                                <td><a href="./{{ object.id }}/">{{ object.name }}</a></td>
+                                <td>{{ object.url_name }}</td>
+                            </tr>
+                    {% endifequal %}
+
+                    {% ifequal set_type 'writer' %}
+                        {% if forloop.first %}
+                            <table class="manageList">
+                                <tr>
+                                    <th class="size60"></th>
+                                    <th class="size100">カテゴリ名</th>
+                                    <th>著者</th>
+                                </tr>
+                        {% endif %}
+                            <tr>
+                                <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                <td>{{ object.category }}</td>
+                                <td><a href="./{{ object.id }}/">{{ object.name }}</a></td>
+                            </tr>
+                    {% endifequal %}
+
+                    {% ifequal set_type 'publisher' %}
+                        {% if forloop.first %}
+                            <table class="manageList">
+                                <tr>
+                                    <th class="size60"></th>
+                                    <th>出版社</th>
+                                </tr>
+                        {% endif %}
+                            <tr>
+                                <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                <td><a href="./{{ object.id }}/">{{ object.name }}</a></td>
+                            </tr>
+                    {% endifequal %}
+
+                {% endfor %}
+                <!-- /.manageList --></table>
+                <table class="manageButton">
+                    <tr>
+                        <td>
+                            <input class="button" type="submit" value="DELETE" onclick="this.form.action='./delete_checked/'" />
+                            <input type="hidden" value="{{ set_type }}" />
+                        </td>
+                    </tr>
+                <!-- .manageButton --></table>
+            </form>
+    <!-- /.manageSection --></div>
+
+    <div align="center">
+        <table class="paging_list">
+            <tr>
+                {% if keyword %}
+                   <td>
+                    {% if has_previous %}
+                        <a href="?page={{ previous }}&keyword={{ keyword }}">&lt; Prev</a>
+                    {% else %}
+                        <p>&lt; Prev</p>
+                    {% endif %}
+                    </td>
+                    <td>
+                      [{% for page_num in page_range %}
+                          {% ifequal page page_num %}
+                              {{ page_num }}
+                          {% else %}
+                              <a href="?page={{ page_num }}&keyword={{ keyword }}">{{ page_num }}</a>
+                          {% endifequal %}
+                      {% endfor %}]
+                    </td>
+                    <td>
+                        {% if has_next %}
+                            <a href="?page={{ next }}&keyword={{ keyword }}">Next &gt;</a>
+                        {% else %}
+                            <p>Next &gt;</p>
+                        {% endif %}
+                    </td>
+                {% else %}
+                   <td>
+                    {% if has_previous %}
+                        <a href="?page={{ previous }}">&lt; Prev</a>
+                    {% else %}
+                        <p>&lt; Prev</p>
+                    {% endif %}
+                    </td>
+                    <td>
+                      [{% for page_num in page_range %}
+                          {% ifequal page page_num %}
+                              {{ page_num }}
+                          {% else %}
+                              <a href="?page={{ page_num }}">{{ page_num }}</a>
+                          {% endifequal %}
+                      {% endfor %}]
+                    </td>
+                    <td>
+                        {% if has_next %}
+                            <a href="?page={{ next }}">Next &gt;</a>
+                        {% else %}
+                            <p>Next &gt;</p>
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+        <!-- .paging_list --></table>
+    </div>
+{% endblock %}

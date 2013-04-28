@@ -1,0 +1,75 @@
+{% extends 'book/base.html' %}
+
+{% block contentsNavi %}
+    <!-- {% ifequal param_category 'it' %} -->
+    <!--     <h2><img src="{{ MEDIA_URL }}{{ NAVI_SEARCH }}" alt="SEARCH" width="190" height="45" /></h2> -->
+    <!--     <ul class="contentsSearch"> -->
+    <!--     <\!-- <div class="contentsSearch"> -\-> -->
+    <!--         <li><h3>全文検索</h3></li> -->
+    <!--         <form method="POST" action="{{ MEDIA_BASE }}{{ BOOK_SEARCH }}"> -->
+    <!--             <li><input class="id_search" type="text" maxlength="100" name="search"></li> -->
+    <!--             <li><input class="button" type="submit" value="SEARCH" /></li> -->
+    <!--         </form> -->
+    <!--     <\!-- /.contenetsSearch -\-></ul> -->
+    <!-- {% endifequal %} -->
+
+    <h2><img src="{{ MEDIA_URL }}{{ NAVI_CATEAGORY }}" alt="CATEGORY" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul>
+        {% for category in category_list %}
+            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+        {% endfor %}
+        </ul>
+    <!-- .localContentsNavi --></div>
+
+    <h2><img src="{{ MEDIA_URL }}{{ NAVI_SUBCATEGORY }}" alt="SUBCATEGORY" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul>
+        {% for category in category_list %}
+            {% ifequal category.url_name param_category %}
+                {% for subcategory in subcategory_list %}
+                    {% ifequal category.id subcategory.category_id %}
+                        <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a></li>
+                    {% endifequal %}
+                {% endfor %}
+            {% endifequal %}
+        {% endfor %}
+        </ul>
+    <!-- .localContentsNavi --></div>
+{% endblock %}
+
+{% block contentsMain %}
+        {% block localCategory %}
+        {% endblock %}
+
+        <div align="center">
+            <table class="paging_list">
+                <tr>
+                    <td>
+                    {% if has_previous %}
+                        <a href="?page={{ previous }}">&lt; Prev</a>
+                    {% else %}
+                        <p>&lt; Prev</p>
+                    {% endif %}
+                    </td>
+                    <td>
+                      [{% for page_num in page_range %}
+                          {% ifequal page page_num %}
+                              {{ page_num }}
+                          {% else %}
+                              <a href="?page={{ page_num }}">{{ page_num }}</a>
+                          {% endifequal %}
+                      {% endfor %}]
+                    </td>
+                    <td>
+                        {% if has_next %}
+                            <a href="?page={{ next }}">Next &gt;</a>
+                        {% else %}
+                            <p>Next &gt;</p>
+                        {% endif %}
+                    </td>
+                          </tr>
+            <!-- .paging_list --></table>
+        </div>
+    <!-- /.section --></div>
+{% endblock %}

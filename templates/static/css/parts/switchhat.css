@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+=================================================================== */
+.allOpenBtn,
+.switchHat {
+	display: none;
+}
+
+.switchOn {
+	display: block;
+}
+
+span.switchOn {
+	display: inline;
+}
+
+.closeBtnHat {
+	margin: 30px 0 20px;
+}
+
+.allOpenBtn,
+.closeBtnHat span,
+.switchHat {
+	/* color: #00c; */
+}
+
+.closeBtnHat span {
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.allOpenBtn:after,
+.switchHat:after {
+	content: " [＋]";
+}
+
+.allOpenBtn:hover,
+.closeBtnHat span:hover,
+.switchHat:hover {
+	/* color: #090; */
+}
+
+.nowOpen {
+	/* color: #f0f; */
+}
+
+.nowOpen:after {
+	content: " [－]";
+}
+

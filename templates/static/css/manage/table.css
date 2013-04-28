@@ -1,0 +1,349 @@
+@charset "utf-8";
+
+/* =======================================
+
+    manage table
+
+ -----------------------------------------
+    INDEX
+ -----------------------------------------
+ 
+    1.table-add
+    2.table-list
+    3.book-table
+    4.text field
+    
+========================================== */
+
+
+/*  1.table-add
+========================================== */
+
+#wrapper #manageContents table.manageAdd {
+    border: 1px solid #daa520;
+    border-spacing: 1;
+    empty-cells: show;
+    width: 100%;
+    margin-top: 15px;
+}
+
+#wrapper #manageContents table.manageAdd th {
+    border: 1px solid #cd950c;
+    color: #b22222;
+    width: 130px;
+    background-color: #deb887;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+#wrapper #manageContents table.manageAdd td {
+    border:1px solid #cd950c;
+    padding: 15px;
+}
+
+#wrapper #manageContents table.manageAdd td {
+    border:1px solid #cd950c;
+    padding: 15px;
+}
+
+
+/*  2.table-list
+========================================== */
+
+#wrapper #manageContents table.manageList {
+    border: 1px solid #8b7500;
+    border-spacing: 1;
+    margin-top: 15px;
+    empty-cells: show;
+    width: 100%;
+}
+
+#wrapper #manageContents table.manageList th {
+    border: 1px solid #8b7500;
+    color: #eedd82;
+    background-color: #b22222;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+#wrapper #manageContents table.manageList td {
+    color: #8b3e2f;
+    border:1px solid #8b7500;
+    padding: 5px 5px 5px 20px;
+}
+
+#wrapper #manageContents table.manageList tr.trcolor1 {
+    background-color: #cdaa7d;
+}
+
+#wrapper #manageContents table.manageList tr.trcolor2 {
+    background-color: #deb887;
+}
+
+
+/*  3.book table
+========================================== */
+
+#wrapper #manageContents div.addSection {
+    margin: 30px 0;
+}
+
+
+/*  3.text field
+========================================== */
+
+#wrapper #manageContents table.manageAdd tr td input {
+    color: #fafad2;
+    background: #8b5a2b;
+    width: 350px;
+    height: 28px;
+    padding: 3px 8px;
+    border: 1px double #8b5a2b;
+    vertical-align: middle;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+/* タイトル詳細の整数フィールド */
+#wrapper #manageContents table.manageAdd tr td input#id_volume,
+#wrapper #manageContents table.manageAdd tr td input#id_pdf_size,
+#wrapper #manageContents table.manageAdd tr td input#id_epud_size,
+#wrapper #manageContents table.manageAdd tr td input#id_total_page {
+    color: #fafad2;
+    background: #8b5a2b;
+    width: 50px;
+    height: 28px;
+    padding: 3px 8px;
+    border: 1px double #8b5a2b;
+    vertical-align: middle;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+/* タイトル詳細のチェックボックス */
+#wrapper #manageContents table.manageAdd tr td input#id_exit_pdf,
+#wrapper #manageContents table.manageAdd tr td input#id_exit_epud,
+#wrapper #manageContents table.manageAdd tr td input#id_exit_attachment {
+    padding: 0;
+    height: 16px;
+    width: 16px;
+    color: none;
+    border: none;
+    background: white;
+}
+
+ /* アップロードのラジオボタン */
+#wrapper #manageContents table.manageAdd tr td ul li label input#id_data_type_0,
+#wrapper #manageContents table.manageAdd tr td ul li label input#id_data_type_1,
+#wrapper #manageContents table.manageAdd tr td ul li label input#id_data_type_2,
+#wrapper #manageContents table.manageAdd tr td ul li label input#id_data_type_3 {
+    height: 15px;
+    width: 15px;
+    padding: 0;
+    color: none;
+    border: none;
+    background: none;
+}
+
+/* 全てのセレクトボックス */
+#wrapper #manageContents table.manageAdd tr td select {
+    color: #fafad2;
+    background: #8b5a2b;
+    height: 28px;
+    padding: 3px 8px;
+    border: 1px double #8b5a2b;
+    vertical-align: middle;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+/* 全てのテキストエリア */
+#wrapper #manageContents table.manageAdd textarea {
+     position: relative;
+     width: 440px;
+     height: 100px;
+     color: #fafad2;
+     background: #8b5a2b;
+     border: 1px double #8b5a2b;
+     padding: 3px;
+     resize: vertical;
+     vertical-align: middle;
+     border-radius: 3px;
+     -moz-border-radius: 3px;
+     -webkit-border-radius: 3px;
+}
+
+/*  5.analysis Table
+========================================== */
+
+    /*  analysis structure
+------------------------------------------ */
+#wrapper #manageContents div#book {
+    padding: 15px 35px 20px;
+}
+
+#wrapper #manageContents div.leftCol {
+    float: left;
+    display: inline;
+    width: 250px;
+}
+
+#wrapper #manageContents div.rightCol {
+    float: right;
+    display: inline;
+    width: 390px;
+}
+
+#wrapper #manageContents div#book:after { /* for Modern Browser */
+    content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+}
+
+
+    /*  5-1. title
+    ------------------------------------------ */
+    #wrapper #manageContents table.analysisTitle {
+        border: 1px solid #daa520;
+        width: 230px;
+    }
+     
+    #wrapper #manageContents table.analysisTitle th {
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        vertical-align: middle;
+     
+    }
+     
+    #wrapper #manageContents table.analysisTitle td {
+        border:1px solid #cd950c;
+        /* text-align: center; */
+        padding: 2px 15px;
+    }
+     
+    /*  5-2. book
+    ------------------------------------------ */
+    #wrapper #manageContents table.analysisBook {
+        border: 1px solid #daa520;
+        width: 230px;
+        margin-top: 50px;
+    }
+     
+    #wrapper #manageContents table.analysisBook th {
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        vertical-align: middle;
+    }
+     
+    #wrapper #manageContents table.analysisBook td {
+        border:1px solid #cd950c;
+        /* text-align: center; */
+        padding: 2px 15px;
+    }
+
+    /*  5-3. category
+    ------------------------------------------ */
+    #wrapper #manageContents table.analysisCategory {
+    }
+     
+    #wrapper #manageContents table.analysisCategory th {
+        border-top: 1px solid #daa520;
+        border-left: 1px solid #daa520;
+        border-right: 1px solid #daa520;
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        vertical-align: middle;
+    }
+     
+    #wrapper #manageContents table.analysisCategory td {
+    }
+
+        /*  5-3-1. category local
+        ------------------------------------------ */
+        #wrapper #manageContents table.analysisLocalCategory {
+            border: 1px solid #daa520;
+            border-spacing: 1;
+            empty-cells: show;
+            /* width: 100%; */
+            /* margin-top: 15px; */
+        }
+         
+        #wrapper #manageContents table.analysisLocalCategory th {
+            vertical-align: middle;
+            font-size: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+         
+        #wrapper #manageContents table.analysisLocalCategory td {
+            border:1px solid #cd950c;
+            padding: 2px 15px;
+        }
+
+/* 6.manageSearchForm
+========================================== */
+
+#wrapper #manageContents div.manageSection div.manageSearchForm {
+}
+
+#wrapper #manageContents div.manageSection div.manageSearchForm ul {
+}
+
+#wrapper #manageContents div.manageSection div.manageSearchForm ul li {
+    float: left;
+    display: inline;
+    bottom: 0px;
+    margin: 12px 5px; 
+}
+
+/* #wrapper #manageContents ul.manageSearchForm li h3 { */
+/*     color: #ffdead; */
+/*     border-style: solid; */
+/*     border-color: #daa520; */
+/*     border-width: 1px 0 1px 0px; */
+/*     font-weight: bold; */
+/*     margin: 10px 0px; */
+/* } */
+
+#wrapper #manageContents div.manageSection div.manageSearchForm ul li input.search_result {
+    color: #fafad2;
+    background: #8b5a2b;
+    width: 185px;
+    padding: 3px 7px;
+    border: 1px double #8b5a2b;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+#wrapper #manageContents div.manageSection div.manageSearchForm ul li input.id_search {
+    color: #fafad2;
+    background: #8b5a2b;
+    width: 185px;
+    padding: 3px 7px;
+    border: 1px double #8b5a2b;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+#wrapper #manageContents div.manageSection div.manageSearchForm ul li input.button {
+    color: #eedd82;
+    background: #556b2f;
+    width: 85px;
+    font-weight: bold;
+    margin: 3px 20px 0px;
+    position: relative;
+    border: 1px solid #deb887;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+#wrapper #manageContents div.manageSection div.manageSearchForm:after {     /* for Modern Browser */
+    content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+}

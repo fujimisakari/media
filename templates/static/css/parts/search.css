@@ -1,0 +1,133 @@
+@charset "utf-8";
+
+/* =======================================
+
+    manage css
+
+ -----------------------------------------
+    INDEX
+ -----------------------------------------
+ 
+    1.layout
+    2.searchform table
+    3.searchList Table
+    4.link
+    
+========================================== */
+
+
+/*  1.layout
+========================================== */
+#wrapper #searchContent {
+    margin: 15px 0 0;
+    padding: 0 0 70px;
+}
+
+#wrapper #searchContent div.searchSection {
+    margin: 0 auto;
+    width: 930px;
+    padding: 20px;
+    background: url(../../images/body_bg_02.jpg) repeat;
+}    
+
+
+/*  2.searchform Table
+========================================== */
+
+#wrapper #searchContent div.searchSection table.searchform {
+    margin: 10px auto 0;
+    width: 100px;
+}    
+
+#wrapper #searchContent div.searchSection table.searchform td {
+    padding: 0 15px;
+}    
+
+    /*  2.searchform decoration
+    ------------------------------------------ */
+    #wrapper #searchContent div.searchSection table.searchform td input#id_search {
+         color: #fafad2;
+         background: #8b5a2b;
+         width: 250px;
+         padding: 3px 5px;
+         border: 1px double #8b5a2b;
+         vertical-align: middle;
+         border-radius: 3px;
+         -moz-border-radius: 3px;
+         -webkit-border-radius: 3px;
+    }
+
+    #wrapper #searchContent div.searchSection table.searchform td input.button {
+        color: #eedd82;
+        background: #556b2f;
+        padding: 2px 5px;
+        width: 80px;
+        font-weight: bold;
+        margin: 0 20px;
+        position: relative;
+        border: 1px solid #deb887;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+
+/*  3.searchList Table
+========================================== */
+#wrapper #searchContent div.searchSection table.searchList {
+    width: 100%;
+    margin: 0 auto;
+}    
+
+#wrapper #searchContent div.searchSection table.searchList tr {
+    border-bottom: #daa520 1px solid;
+}
+
+#wrapper #searchContent div.searchSection table.searchList tr td {
+    padding: 20px 0;
+}
+
+
+    /*  3-1.td.searchTd1
+    ------------------------------------------ */
+    #wrapper #searchContent div.searchSection table.searchList tr td.searchTd1 {
+        width: 120px;
+        text-align: left;
+    }
+     
+    #wrapper #searchContent div.searchSection table.searchList tr td.searchTd1 img {
+        margin: 0 0 10px;
+    }
+
+
+
+    /*  3-2.td.searchTd1
+    ------------------------------------------ */
+    #wrapper #searchContent div.searchSection table.searchList tr td.searchTd2 {
+        height: 150px;
+        word-wrap: break-word;
+    }
+
+    
+/*  4.link
+========================================== */
+#wrapper #searchContent a {
+    color: #fff68f;
+    text-decoration: none;
+    border-bottom: 1px dotted;    
+}
+
+#wrapper #searchContent a:hover {
+    color: #ff0000;
+    position: relative;
+    border-bottom: 0px;
+}
+
+#wrapper #searchContent a:visited {
+    color: #bf3eff;
+}
+
+#wrapper #contents #contentsMain div.section div.back {
+    margin: 15px 0 5px;
+    text-align: center;
+}

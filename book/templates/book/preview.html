@@ -1,0 +1,9 @@
+{% extends 'book/preview_base.html' %}
+
+{% block contentsMain %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_PREVIEW }}" alt="PREVIEW" width="795" height="45" /></h2>
+    <div class="section">
+        <iframe src="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ object.volume }}{{ BOOK_PDF }}" style="width:750px; height:800px;" frameborder="0"></iframe>
+        <div class="back"><a href="javascript:void(0)" onClick="window.close(); return false;"><img src="{{ MEDIA_URL }}{{ MAIN_BACK }}" alt="BACK" width="125" height="35" /></a></div>
+    <!-- /.section --></div>
+{% endblock %}
