@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.conf import settings
 from django.db.models import permalink
+
 
 class Category(models.Model):
     name = models.CharField(u'カテゴリ名 ※', max_length=100, unique=True, db_index=True)
@@ -13,11 +13,12 @@ class Category(models.Model):
         return self.name
 
     @permalink
-    def get_absolute_url(self) :
+    def get_absolute_url(self):
         return ('category', (), { 'category': self.url_name })
 
+
 class SubCategory(models.Model):
-    category =  models.ForeignKey(Category, verbose_name=u'カテゴリ ※')
+    category = models.ForeignKey(Category, verbose_name=u'カテゴリ ※')
     name = models.CharField(u'サブカテゴリ名 ※', max_length=100, unique=True, db_index=True)
     url_name = models.CharField(u'URL名 ※', max_length=100, unique=True, db_index=True)
     sort_num = models.IntegerField(u'Sort番号', blank=True, null=True)
@@ -29,9 +30,10 @@ class SubCategory(models.Model):
     def get_absolute_url(self) :
         return ('subcategory', (), {'category': self.category.url_name, 'subcategory': self.url_name})
 
+
 class Entry(models.Model):
-    category =  models.ForeignKey(Category, verbose_name=u'カテゴリ ※')
-    subcategory =  models.ForeignKey(SubCategory, verbose_name=u'サブカテゴリ ※')
+    category = models.ForeignKey(Category, verbose_name=u'カテゴリ ※')
+    subcategory = models.ForeignKey(SubCategory, verbose_name=u'サブカテゴリ ※')
     title = models.CharField(u'タイトル名 ※', max_length=100, unique=True, db_index=True)
     url_title = models.CharField(u'URL名 ※', max_length=100, unique=True, db_index=True)
 
@@ -39,21 +41,24 @@ class Entry(models.Model):
         return self.title
 
     @permalink
-    def get_absolute_url(self) :
+    def get_absolute_url(self):
         return ('detail', (), {'category': self.category.url_name, 'subcategory': self.subcategory.url_name, 'title': self.url_title})
 
+
 class Writer(models.Model):
-    category =  models.ForeignKey(Category, verbose_name=u'カテゴリ ※')
+    category = models.ForeignKey(Category, verbose_name=u'カテゴリ ※')
     name = models.CharField(u'著者 ※', max_length=100, unique=True, db_index=True)
 
     def __unicode__(self):
         return self.name
+
 
 class Publisher(models.Model):
     name = models.CharField(u'出版社 ※', max_length=100, unique=True, db_index=True)
 
     def __unicode__(self):
         return self.name
+
 
 class Entry_Detail(models.Model):
     entry = models.ForeignKey(Entry, verbose_name=u'タイトル ※')
@@ -74,6 +79,5 @@ class Entry_Detail(models.Model):
         return self.entry.title
 
     @permalink
-    def get_absolute_url(self) :
+    def get_absolute_url(self):
         return ('detail', (), {'category': self.entry.category.url_name, 'subcategory': self.entry.subcategory.url_name, 'title': self.entry.url_title})
-

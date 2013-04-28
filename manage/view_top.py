@@ -12,10 +12,10 @@ from manage.forms import WhatNewForm
 from top.models import WhatNew
 from manage.view_common import *
 
-# 定数
 BASE_TYPE = 'top'
 TMPL_NAME = 'manage/top/top.html'
 LIST_TMPL_NAME = 'manage/top/top_list.html'
+
 
 @login_required
 def top_add(request, set_type='whatnew'):
@@ -46,6 +46,7 @@ def top_add(request, set_type='whatnew'):
                                'title': getTitle},
                               context_instance=RequestContext(request))
 
+
 @login_required
 def top_edit_list(request, set_type):
     getTitle = titleSelecter(BASE_TYPE, set_type)
@@ -53,7 +54,7 @@ def top_edit_list(request, set_type):
     try:
         page_id = request.GET['page']
     except:
-        page_id = 1;
+        page_id = 1
     p = Paginator(query_set, settings.NUM_IN_MANAGE_LIST)
     pageData = p.page(page_id)
     return object_list(request,
@@ -65,6 +66,7 @@ def top_edit_list(request, set_type):
                                         'end_index': pageData.end_index()
                                         },
                        paginate_by=settings.NUM_IN_MANAGE_LIST)
+
 
 @login_required
 def top_edit(request, set_type, id):
@@ -98,6 +100,7 @@ def top_edit(request, set_type, id):
                                'title': getTitle},
                               context_instance=RequestContext(request))
 
+
 @login_required
 def top_delete(request, set_type, id):
     if request.method == 'POST':
@@ -110,6 +113,7 @@ def top_delete(request, set_type, id):
                                    'base_type': BASE_TYPE,
                                    'title': getTitle},
                                   context_instance=RequestContext(request))
+
 
 @login_required
 def top_delete_checked(request, set_type):
@@ -125,6 +129,7 @@ def top_delete_checked(request, set_type):
                                    'title': getTitle},
                                   context_instance=RequestContext(request))
 
+
 @login_required
 def top_search(request, set_type):
     getTitle = titleSelecter(BASE_TYPE, set_type)
@@ -138,7 +143,7 @@ def top_search(request, set_type):
     try:
         page_id = request.GET['page']
     except:
-        page_id = 1;
+        page_id = 1
     p = Paginator(query_set, settings.NUM_IN_MANAGE_LIST)
     pageData = p.page(page_id)
     return object_list(request,
@@ -151,5 +156,3 @@ def top_search(request, set_type):
                                         'end_index': pageData.end_index()
                                         },
                        paginate_by=settings.NUM_IN_MANAGE_LIST)
-
-

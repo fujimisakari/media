@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Django settings for media project.
 
 DEBUG = True
@@ -61,8 +63,8 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.csrf.CsrfViewMiddleware',  
-    'django.middleware.csrf.CsrfResponseMiddleware',  
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import sys, re
+
+import sys
 from ctypes import *
 from django.conf import settings
+
 
 def search_index(keyword):
     # enums were in 'estraier.h'
@@ -12,7 +14,7 @@ def search_index(keyword):
     ecode = c_int()
 
     # データベースを開く
-    db = est.est_db_open( settings.HYPER_ESTRAIER_INDEX, ESTDBREADER, byref(ecode))
+    db = est.est_db_open(settings.HYPER_ESTRAIER_INDEX, ESTDBREADER, byref(ecode))
     if not db:
         func = est.est_err_msg
         func.restype = c_char_p
@@ -27,7 +29,7 @@ def search_index(keyword):
 
     # データベースから検索結果を得る
     func = est.est_db_search
-    func.restype = POINTER(c_int) # int *は基本型としては定義されてない
+    func.restype = POINTER(c_int)  # int *は基本型としては定義されてない
     resnum = c_int()
     result = func(db, cond, byref(resnum), None)
 

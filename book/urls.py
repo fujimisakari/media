@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls.defaults import *
 from django.conf import settings
 from book.views import all_list, category, subcategory, detail, extend_detail, preview, search
@@ -10,5 +12,3 @@ urlpatterns = patterns('',
     (r'^(?P<category>\w+)/(?P<subcategory>\w+)/(?P<title>\w+)/$', detail, {}, 'detail'),
     (r'^(?P<category>\w+)/(?P<subcategory>\w+)/(?P<title>\w+)/(?P<volume>\d+)/$', preview, {}, 'preview'),
 )
-
-

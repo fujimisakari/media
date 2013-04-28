@@ -15,11 +15,14 @@ class UploadEntryForm(forms.ModelForm):
         model = Entry
         fields = ('category', 'subcategory')
 
+
 class UploadFileForm(forms.ModelForm):
     upload_file = forms.FileField()
+
     class Meta:
         model = Entry_Detail
         fields = ('entry', 'volume')
+
 
 def create_path(post_data):
     volume = forms.IntegerField()
@@ -34,8 +37,8 @@ def create_path(post_data):
     filename = "%s%s" % (post_data['volume'], get_data_type)
 
     path = os.path.join(settings.MANAGE_BOOK_PATH, category.url_name, subcategory.url_name, entry.url_title, filename)
-
     return path
+
 
 @login_required
 def uploader(request, set_type='book'):
@@ -50,7 +53,7 @@ def uploader(request, set_type='book'):
                 create_file = open(path, mode='w')
                 upfile = request.FILES['upload_file']
                 for chunk in upfile.chunks():
-                   create_file.write(chunk)
+                    create_file.write(chunk)
                 create_file.close()
             except:
                 return render_to_response(tmplName,

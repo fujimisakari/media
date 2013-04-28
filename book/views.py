@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.db import connection
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
@@ -8,9 +9,10 @@ from django.views.generic.list_detail import object_list
 from django.db.models.query import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.core.paginator import Paginator
+
 from book.models import Entry, Entry_Detail, Category, SubCategory
 from book.hyperestraier import search_index
-from django.db import connection
+
 
 @login_required
 def all_list(request):
@@ -57,7 +59,7 @@ ORDER BY
     category_arr = []
     roop_num1 = 1
     for row1 in cursor.fetchall():
-        tmp_arr = {};
+        tmp_arr = {}
         tmp_arr['title'] = row1[0]
         tmp_arr['url'] = row1[1]
         tmp_arr['cid'] = row1[2]
@@ -85,7 +87,7 @@ ORDER BY
         for item_row in item_arr:
             if limit >= loop_num2:
                 if cid == item_row['cid']:
-                    tmp_arr = {};
+                    tmp_arr = {}
                     tmp_arr['title'] = item_row['title']
                     tmp_arr['url'] = item_row['url']
                     tmp_arr['cid'] = item_row['cid']
@@ -96,7 +98,8 @@ ORDER BY
             else:
                 roop_num2 = 1
                 break
-    return render_to_response('book/all_list.html',context_instance=RequestContext(request, {'aobject': new_item_arr, 'limit_num': settings.ALL_LIST_LIMIT}))
+    return render_to_response('book/all_list.html', context_instance=RequestContext(request, {'aobject': new_item_arr, 'limit_num': settings.ALL_LIST_LIMIT}))
+
 
 @login_required
 def category(request, category):
@@ -115,6 +118,7 @@ def category(request, category):
                                                                               start_index=pageData.start_index(),
                                                                               end_index=pageData.end_index()
                                                                               ))
+
 
 @login_required
 def subcategory(request, category, subcategory):
@@ -135,6 +139,7 @@ def subcategory(request, category, subcategory):
                                                                                  end_index=pageData.end_index()
                                                                                  ))
 
+
 @login_required
 def detail(request, category, subcategory, title):
     query_set = Entry_Detail.objects.filter(entry__url_title__exact=title).order_by('volume').select_related()
@@ -150,15 +155,18 @@ def detail(request, category, subcategory, title):
                                                                             end_index=pageData.end_index()
                                                                             ))
 
+
 @login_required
 def preview(request, category, subcategory, title, volume):
     query_set = Entry_Detail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
-    return render_to_response('book/preview.html',context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
+    return render_to_response('book/preview.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
+
 
 @login_required
 def extend_detail(request, category, subcategory, title, volume):
     query_set = Entry_Detail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
-    return render_to_response('book/extend_detail.html',context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
+    return render_to_response('book/extend_detail.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
+
 
 @login_required
 def search(request):
@@ -168,7 +176,7 @@ def search(request):
         keyword = request.GET.get('keyword', '').encode('utf-8')
     query_set = Entry.objects.all()
     for word in keyword.split():
-        query_set = query_set.filter(Q(title__icontains=word)|Q(url_title__icontains=word)).order_by('title')
+        query_set = query_set.filter(Q(title__icontains=word) | Q(url_title__icontains=word)).order_by('title')
     try:
         page_id = request.GET['page']
     except:

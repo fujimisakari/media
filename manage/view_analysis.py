@@ -7,8 +7,8 @@ from django.shortcuts import render_to_response
 from book.models import Entry, Entry_Detail, Category, SubCategory, Writer, Publisher
 from manage.view_common import *
 
-# 定数
 BASE_TYPE = 'analysis'
+
 
 @login_required
 def analysis(request, set_type):
@@ -48,4 +48,3 @@ def analysis(request, set_type):
                                    'subcategoryArr': subcategoryArr,
                                    'title': getTitle},
                                   context_instance=RequestContext(request))
-

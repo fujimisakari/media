@@ -12,20 +12,20 @@ MSG_UPLOAD = 'アップロードしました'
 ERROR_MSG_UPLOAD_FILEPATH = 'カテゴリ、サブカテゴリ、タイトルの組み合わせが正しくありません'
 ERROR_MSG_UPLOAD = '入力値が正常でないため、アップロードが行えませんでした'
 
-# 管理画面のタイトル設定
+
 def titleSelecter(type, value):
-    title_list = {
-                  'top' : {'whatnew': '[TOP] What New'},
+    # 管理画面のタイトル設定
+    title_list = {'top': {'whatnew': '[TOP] What New'},
                   'book': {'entry': '[BOOK] タイトル',
                            'detail': '[BOOK] タイトル詳細',
                            'category': '[BOOK] カテゴリ',
                            'subcategory': '[BOOK] サブカテゴリ',
                            'writer': '[BOOK] 著者',
                            'publisher': '[BOOK] 出版社'},
-                  'upload' : {'book': '[UPLOAD] BOOK'},
-                  'analysis' : {'book': '[ANALYSIS] BOOK',
-                                'movie': '[ANALYSIS] MOVIE',
-                                'music': '[ANALYSIS] MUSIC'},
-                 }
+                  'upload': {'book': '[UPLOAD] BOOK'},
+                  'analysis': {'book': '[ANALYSIS] BOOK',
+                               'movie': '[ANALYSIS] MOVIE',
+                               'music': '[ANALYSIS] MUSIC'},
+                  }
     title_list[type][value]
     return title_list[type][value]

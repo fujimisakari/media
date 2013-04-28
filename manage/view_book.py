@@ -15,10 +15,10 @@ from book.models import Entry, Entry_Detail, Category, SubCategory, Writer, Publ
 from manage.dirhandler import mkdir, rmdir, movedir
 from manage.view_common import *
 
-# 定数
 BASE_TYPE = 'book'
 TMPL_NAME = 'manage/book/book.html'
 LIST_TMPL_NAME = 'manage/book/book_list.html'
+
 
 @login_required
 def book_add(request, set_type='entry'):
@@ -72,6 +72,7 @@ def book_add(request, set_type='entry'):
                                'title': getTitle},
                               context_instance=RequestContext(request))
 
+
 @login_required
 def book_edit_list(request, set_type):
     getModel = {'entry': Entry,
@@ -106,6 +107,7 @@ def book_edit_list(request, set_type):
                                         'end_index': pageData.end_index()
                                         },
                        paginate_by=settings.NUM_IN_MANAGE_LIST)
+
 
 @login_required
 def book_search(request, set_type):
@@ -179,14 +181,15 @@ def book_search(request, set_type):
                                         },
                        paginate_by=settings.NUM_IN_MANAGE_LIST)
 
+
 @login_required
 def book_edit(request, set_type, id):
     getModel = {'entry': Entry,
-               'detail': Entry_Detail,
-               'category': Category,
-               'subcategory': SubCategory,
-               'writer': Writer,
-               'publisher': Publisher,
+                'detail': Entry_Detail,
+                'category': Category,
+                'subcategory': SubCategory,
+                'writer': Writer,
+                'publisher': Publisher,
               }[set_type]
 
     getForm = {'entry': EntryForm,
@@ -236,6 +239,7 @@ def book_edit(request, set_type, id):
                                'id': id},
                               context_instance=RequestContext(request))
 
+
 @login_required
 def book_delete(request, set_type, id):
     getmodel = {'entry': Entry,
@@ -256,6 +260,7 @@ def book_delete(request, set_type, id):
                                    'title': getTitle,
                                    'set_type': set_type},
                                   context_instance=RequestContext(request))
+
 
 @login_required
 def book_delete_checked(request, set_type):

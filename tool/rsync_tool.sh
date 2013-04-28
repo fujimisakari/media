@@ -17,7 +17,7 @@ MAIN() {
     echo "------------ rsync start. --------------"
 
     /usr/bin/rsync -avz -e ssh --bwlimit=1000 /home/fujimo/media moon:/home/fujimo
- 
+
     echo "------------ rsync done. --------------"
 }
 

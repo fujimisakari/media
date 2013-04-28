@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import os
 import shutil
 from book.models import Entry, Category, SubCategory
 from django.conf import settings
+
 
 def mkdir(post_data):
     if post_data['set_type'] == 'category':
@@ -19,6 +22,7 @@ def mkdir(post_data):
         path = os.path.join(settings.MANAGE_BOOK_PATH, category.url_name, subcategory.url_name, post_data['url_title'])
         os.mkdir(path)
 
+
 def rmdir(post_data):
     if post_data['set_type'] == 'category':
         path = os.path.join(settings.MANAGE_BOOK_PATH, post_data['url_name'])
@@ -34,6 +38,7 @@ def rmdir(post_data):
         subcategory = SubCategory.objects.get(pk=post_data['subcategory'])
         path = os.path.join(settings.MANAGE_BOOK_PATH, category.url_name, subcategory.url_name, post_data['url_title'])
         shutil.rmtree(path)
+
 
 def movedir(post_data, modele_id):
     if post_data['set_type'] == 'category':
