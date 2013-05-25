@@ -6,8 +6,8 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django import forms
-from book.models import Category, SubCategory, Book, BookDetail
-from manage.view_common import *
+from module.book.models import Category, SubCategory, Book, BookDetail
+from module.manage.view_common import *
 
 
 class UploadEntryForm(forms.ModelForm):

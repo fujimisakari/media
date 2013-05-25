@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse
-from book.models import Book, BookDetail, SubCategory, Writer
+from module.book.models import Book, BookDetail, SubCategory, Writer
 
 
 def getSubcategoryList(request):

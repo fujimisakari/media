@@ -2,8 +2,8 @@
 
 import os
 import shutil
-from book.models import Book, Category, SubCategory
 from django.conf import settings
+from module.book.models import Book, Category, SubCategory
 
 
 def mkdir(post_data):

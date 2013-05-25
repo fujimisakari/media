@@ -14,11 +14,11 @@ MANAGERS = ADMINS
 
 # テンプレートで使用
 import os
-ROOT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # インポートのパスを設定
 import sys
-sys.path.append(ROOT_PATH + 'module/')
+sys.path.append(ROOT_PATH + '/module/')
 
 DATABASES = {
     'default': {
@@ -93,7 +93,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PATH, 'static'),
+    os.path.join(ROOT_PATH, '../static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -131,7 +131,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PATH, 'templates'),
+    os.path.join(ROOT_PATH, '../templates'),
 )
 
 INSTALLED_APPS = (
@@ -144,20 +144,20 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'south',
-    'book',
-    'top',
-    'manage',
-    'common',
+    'module.book',
+    'module.top',
+    'module.manage',
+    'module.common',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    'context_processors.common_context',
-    'context_processors.book_context',
-    'context_processors.movie_context',
-    'context_processors.music_context',
-    'context_processors.manage_context',
-    'context_processors.image_context',
+    'module.context_processors.common_context',
+    'module.context_processors.book_context',
+    'module.context_processors.movie_context',
+    'module.context_processors.music_context',
+    'module.context_processors.manage_context',
+    'module.context_processors.image_context',
 )
 
 # A sample logging configuration. The only tangible logging

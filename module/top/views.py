@@ -3,8 +3,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from book.models import BookDetail
-from top.models import WhatNew
+from module.book.models import BookDetail
+from module.top.models import WhatNew
 
 
 def _render(template_file, context):

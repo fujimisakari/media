@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from common.abustractmodel import AbustractCachedModel
+from module.common.abustractmodel import AbustractCachedModel
 
 
 class WhatNew(AbustractCachedModel):

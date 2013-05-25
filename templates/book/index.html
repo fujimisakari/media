@@ -1,0 +1,26 @@
+{% extends 'book/base.html' %}
+{% load url from future %}
+
+{% block contentsMain %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_ALL_LIST }}" alt="ALL LIST" width="795" height="45" /></h2>
+    <div class="section">
+        {% for category in category_list %}
+            <h3>{{ category.name }}</h3>
+            <ul class="column">
+                {% for book in category.get_book_list %}
+                    <li>
+                        <div class="block">
+                           <a href="">
+                               <img src="" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                           </a>
+                           <div class="bookName"><a href="">{{ book.title }}</a></div>
+                        </div>
+                    </li>
+                    {% if forloop.counter|divisibleby:limit_num %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p class="extendPage"><a href="{% url 'book_category' category.id %}" title="{{ category.name }}">もっと見る</a></p>
+       {% endfor %}
+    </div>
+{% endblock %}

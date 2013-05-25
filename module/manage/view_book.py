@@ -7,10 +7,10 @@ from django.db.models.query import Q
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
-from manage.forms import EntryForm, Entry_DetailForm, CategoryForm, SubCategoryForm, WriterForm, PublisherForm
-from book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
-from manage.dirhandler import mkdir, rmdir, movedir
-from manage.view_common import *
+from module.manage.forms import EntryForm, Entry_DetailForm, CategoryForm, SubCategoryForm, WriterForm, PublisherForm
+from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
+from module.common.dirhandler import mkdir, rmdir, movedir
+from module.manage.view_common import *
 
 BASE_TYPE = 'book'
 TMPL_NAME = 'manage/book/book.html'

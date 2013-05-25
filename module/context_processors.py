@@ -7,7 +7,7 @@ def common_context(request):
     return {
         'MEDIA_TITLE': settings.MEDIA_TITLE,
         'MEDIA_BASE': settings.MEDIA_BASE,
-        'MEDIA_URL': 'static/',
+        'MEDIA_URL': '/static/',
         'MEDIA_DATA': settings.MEDIA_DATA,
         'MEDIA_CSS': settings.MEDIA_CSS,
         'MEDIA_JS': settings.MEDIA_JS,

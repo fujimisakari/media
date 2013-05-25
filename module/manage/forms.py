@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from top.models import WhatNew
-from book.models import Category, SubCategory, Book, BookDetail, Writer, Publisher
+from module.top.models import WhatNew
+from module.book.models import Category, SubCategory, Book, BookDetail, Writer, Publisher
 
 
 class WhatNewForm(forms.ModelForm):

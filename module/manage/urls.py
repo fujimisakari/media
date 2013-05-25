@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, url
-from manage.view_book import book_add, book_edit, book_edit_list, book_delete, book_delete_checked, book_search
-from manage.view_top import top_add, top_edit, top_edit_list, top_delete, top_delete_checked, top_search
-from manage.view_ajax import getSubcategoryList, getTitleList, getVolumeList, getWriterList
-from manage.view_upload import uploader
-from manage.view_analysis import analysis
+from module.manage.view_book import book_add, book_edit, book_edit_list, book_delete, book_delete_checked, book_search
+from module.manage.view_top import top_add, top_edit, top_edit_list, top_delete, top_delete_checked, top_search
+from module.manage.view_ajax import getSubcategoryList, getTitleList, getVolumeList, getWriterList
+from module.manage.view_upload import uploader
+from module.manage.view_analysis import analysis
 
 urlpatterns = patterns(
     '',

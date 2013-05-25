@@ -137,6 +137,7 @@
     }
      
     #wrapper #contents #contentsMain div.section table.detailList tr td.dlSection div.dlSection2_extend dl dt {
+        padding-top: 1px;
         clear: both;
         float: left;
         font-weight: bold;

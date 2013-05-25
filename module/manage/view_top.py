@@ -6,9 +6,9 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
-from manage.forms import WhatNewForm
-from top.models import WhatNew
-from manage.view_common import *
+from module.manage.forms import WhatNewForm
+from module.top.models import WhatNew
+from module.manage.view_common import *
 
 BASE_TYPE = 'top'
 TMPL_NAME = 'manage/top/top.html'
