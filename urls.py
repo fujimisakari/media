@@ -1,27 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls.defaults import *
-from django.conf import settings
-
-from django.contrib.auth.views import login, logout_then_login, password_change, password_change_done
-
+from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    (r'^media/', include('top.urls')),
-    (r'^media/book/', include('book.urls')),
-    # (r'^media/music/', include('music.urls')),
-    # (r'^media/movie/', include('movie.urls')),
-    (r'^media/manage/', include('manage.urls')),
-    (r'^media/login/$', login),
-    (r'^media/logout/$', logout_then_login),
-    (r'^media/change_passwd/$', password_change, {'post_change_redirect': '/media/change_passwd_done/'}),
-    (r'^media/change_passwd_done/$', password_change_done),
-    (r'^media/admin/(.*)', admin.site.root),
+urlpatterns = patterns(
+    '',
+    url(r'^', include('module.top.urls')),
+    url(r'^book/', include('module.book.urls')),
+    # url(r'^manage/', include('manage.urls')),
+    url(r'^login/$', 'django.contrib.auth.views.login', name='auth_login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name='auth_logout'),
+    # url(r'^change_passwd/$', 'django.contrib.auth.views.password_change', kwargs={'post_change_redirect': 'change_passwd_done/'}, name='auth_password_change'),
+    # url(r'^change_passwd_done/$', 'django.contrib.auth.views.password_change_done', name='auth_password_change_done'),
+    url(r'^admin/', include(admin.site.urls)),
 )
-
-#if settings.DEBUG:
-#    urlpatterns += patterns('',
-#        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-#    )

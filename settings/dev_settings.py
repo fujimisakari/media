@@ -34,12 +34,11 @@ DATABASES = {
 # media設定
 #==================================================
 
-import os
-ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-MEDIA_ROOT = os.path.join(ROOT_PATH, '../static')
-MEDIA_URL = '/static'
+# import os
+# # ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+# # MEDIA_ROOT = os.path.join(ROOT_PATH, '../static')
+# # MEDIA_URL = '/static'
 
-MEDIA_CSS = '/static/css'
-MEDIA_JS = '/static/js'
-MEDIA_IMG = '/static/img'
-MEDIA_USER_BK_IMG = '/static/user'
+# MEDIA_CSS = '/static/css/import.css'
+# MEDIA_JS = '/static/js/import.js'
+# MEDIA_IMG = '/static/img'

@@ -14,11 +14,11 @@ MANAGERS = ADMINS
 
 # テンプレートで使用
 import os
-ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+ROOT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
 
 # インポートのパスを設定
 import sys
-sys.path.append(ROOT_PATH + '/module/')
+sys.path.append(ROOT_PATH + 'module/')
 
 DATABASES = {
     'default': {
@@ -65,6 +65,9 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+# If you set this to False, Django will not use timezone-aware datetimes.
+USE_TZ = True
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = ''
@@ -73,6 +76,33 @@ MEDIA_ROOT = ''
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = ''
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(ROOT_PATH, 'static'),
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = DJANGO_SECRET_KEY
@@ -86,8 +116,8 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'module.misc.middleware.TemplateFilterMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
@@ -109,20 +139,19 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
-    'django.contrib.markup',
-    'django.contrib.formtools',
-    'south',
 
+    'south',
     'book',
     'top',
     'manage',
+    'common',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
+    'django.contrib.auth.context_processors.auth',
     'context_processors.common_context',
     'context_processors.book_context',
     'context_processors.movie_context',
@@ -160,7 +189,11 @@ LOGGING = {
     }
 }
 
+
 #####################################################################
+# csv data
+CSV_DATA_PATH = os.path.join(ROOT_PATH, 'data/')
+
 # search
 HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
 
@@ -169,10 +202,10 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = u'314572800'
 FILE_UPLOAD_TEMP_DIR = os.path.join(ROOT_PATH, 'templates/static/media/tmp')
 
 # login
-LOGIN_REDIRECT_URL = '/media/'
-LOGIN_URL = '/media/login/'
-LOGOUT_URL = '/media/logout/'
-CHANGE_PASSWD = '/media/change_passwd/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+CHANGE_PASSWD = '/change_passwd/'
 
 # paging
 LIST_COUNT = 5
@@ -185,8 +218,8 @@ ALL_LIST_LIMIT = 15
 
 # conmmon
 MEDIA_TITLE = "MEDIA SERVER"
-MEDIA_BASE = '/media/'
-MEDIA_URL = '/static/'
+MEDIA_BASE = '/'
+# MEDIA_URL = '/static/'
 MEDIA_DATA = '/static'
 MEDIA_CSS = 'css/import.css'
 MEDIA_JS = 'js/import.js'
@@ -212,8 +245,8 @@ MOVIE_BASE = 'movie/'
 MUSIC_BASE = 'music/'
 
 # manage
-MANAGE_BASE = 'manage/'
-MANAGE_TOP = 'manage/top/'
+MANAGE_BASE = '/'
+MANAGE_TOP = 'top/'
 MANAGE_BOOK = 'manage/book/'
 MANAGE_MOVIE = 'manage/movie/'
 MANAGE_MUSIC = 'manage/music/'
@@ -224,33 +257,33 @@ MANAGE_MOVIE_PATH = os.path.join(ROOT_PATH, 'templates/static/media/movie')
 MANAGE_MUSIC_PATH = os.path.join(ROOT_PATH, 'templates/static/media/music')
 
 # image
-RECENT_BOOK = '/images/cnavi_tit_book.png'
-RECENT_MOVIE = '/images/cnavi_tit_movie.png'
-RECENT_MUSIC = '/images/cnavi_tit_music.png'
-HEADER_TITLE = '/images/headertit_tit_01.png'
-HEADER_TOP1 = '/images/headernavi_ico_top01.png'
-HEADER_BOOK1 = '/images/headernavi_ico_book01.png'
-HEADER_MOVIE1 = '/images/headernavi_ico_movie01.png'
-HEADER_MUSIC1 = '/images/headernavi_ico_music01.png'
-HEADER_MANAGE1 = '/images/headernavi_ico_manage01.png'
-HEADER_UPLOAD = '/images/headernavi_ico_upload.png'
-HEADER_TOP2 = '/images/headernavi_ico_top02.png'
-HEADER_BOOK2 = '/images/headernavi_ico_book02.png'
-HEADER_MOVIE2 = '/images/headernavi_ico_movie02.png'
-HEADER_MUSIC2 = '/images/headernavi_ico_music02.png'
-HEADER_MANAGE2 = '/images/headernavi_ico_manage02.png'
-NAVI_CATEAGORY = '/images/cnavi_tit_cate.png'
-NAVI_MANAGE = '/images/cnavi_tit_manage.png'
-NAVI_SUBCATEGORY = '/images/cnavi_tit_scate.png'
-NAVI_SEARCH = '/images/cnavi_tit_search.png'
-MAIN_ALL_LIST = '/images/cmain_tit_alist.png'
-MAIN_WHATNEW = '/images/cmain_tit_whatnew.png'
-MAIN_INFO = '/images/cmain_tit_info.png'
-MAIN_SEARCH = '/images/cmain_tit_search.png'
-MAIN_CATEGORY = '/images/cmain_tit_clist.png'
-MAIN_SUBCATEGORY = '/images/cmain_tit_sclist.png'
-MAIN_DETAIL = '/images/cmain_tit_dlist.png'
-MAIN_PREVIEW = '/images/cmain_tit_prev.png'
-MAIN_BACK = '/images/cmain_btn_back.png'
-LOGIN_TITLE = '/images/login_tit_01.png'
-CHPW_TITLE = '/images/chpw_tit_01.png'
+RECENT_BOOK = 'img/cnavi_tit_book.png'
+RECENT_MOVIE = 'img/cnavi_tit_movie.png'
+RECENT_MUSIC = 'img/cnavi_tit_music.png'
+HEADER_TITLE = 'img/headertit_tit_01.png'
+HEADER_TOP1 = 'img/headernavi_ico_top01.png'
+HEADER_BOOK1 = 'img/headernavi_ico_book01.png'
+HEADER_MOVIE1 = 'img/headernavi_ico_movie01.png'
+HEADER_MUSIC1 = 'img/headernavi_ico_music01.png'
+HEADER_MANAGE1 = 'img/headernavi_ico_manage01.png'
+HEADER_UPLOAD = 'mg/headernavi_ico_upload.png'
+HEADER_TOP2 = 'img/headernavi_ico_top02.png'
+HEADER_BOOK2 = 'img/headernavi_ico_book02.png'
+HEADER_MOVIE2 = 'img/headernavi_ico_movie02.png'
+HEADER_MUSIC2 = 'img/headernavi_ico_music02.png'
+HEADER_MANAGE2 = 'img/headernavi_ico_manage02.png'
+NAVI_CATEAGORY = 'img/cnavi_tit_cate.png'
+NAVI_MANAGE = 'img/cnavi_tit_manage.png'
+NAVI_SUBCATEGORY = 'img/cnavi_tit_scate.png'
+NAVI_SEARCH = 'img/cnavi_tit_search.png'
+MAIN_ALL_LIST = 'img/cmain_tit_alist.png'
+MAIN_WHATNEW = 'img/cmain_tit_whatnew.png'
+MAIN_INFO = 'img/cmain_tit_info.png'
+MAIN_SEARCH = 'img/cmain_tit_search.png'
+MAIN_CATEGORY = 'img/cmain_tit_clist.png'
+MAIN_SUBCATEGORY = 'img/cmain_tit_sclist.png'
+MAIN_DETAIL = 'img/cmain_tit_dlist.png'
+MAIN_PREVIEW = 'img/cmain_tit_prev.png'
+MAIN_BACK = 'img/cmain_btn_back.png'
+LOGIN_TITLE = 'img/login_tit_01.png'
+CHPW_TITLE = 'img/chpw_tit_01.png'

@@ -1,0 +1,15 @@
+{% extends 'local_base.html' %}
+
+{% block contents %}
+    <div id="contents">
+        <div id="contentsNavi">
+            {% block contentsNavi %}
+            {% endblock %}
+        </div>
+
+        <div id="contentsMain">
+            {% block contentsMain %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

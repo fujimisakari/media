@@ -1,0 +1,71 @@
+{% extends 'top/base.html' %}
+
+{% block contentsNavi %}
+    <h2><img src="{{ MEDIA_URL }}{{ RECENT_BOOK }}" alt="RECENT BOOK" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul>
+            {% for book_detail in recent_book_list %}
+                {% if book_detail.volume %}
+                    {% if book_detail.exit_pdf %}
+                        <li><a href="" onclick="m_win(this.href,'preview',835, 1000); return false;">{{ book_detail.book.title }} {{ book_detail.volume}}</a></li>
+                    {% else %}
+                        <li>{{ book_detail.book.title }} {{ book_detail.volume}}</li>
+                    {% endif %}
+                {% else %}
+                    {% if book_detail.exit_pdf %}
+                        <li><a href="" onclick="m_win(this.href,'preview',835, 1000); return false;">{{ book_detail.book.title }}</a></li>
+                    {% else %}
+                        <li>{{ book_detail.book.title }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+    <h2><img src="{{ MEDIA_URL }}{{ RECENT_MOVIE }}" alt="RECENT MOVIE" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul class="localContentsNavi">
+            <li><a href="#">sample 1</a></li>
+            <li><a href="#">sample 2</a></li>
+            <li><a href="#">sample 3</a></li>
+            <li><a href="#">sample 4</a></li>
+            <li><a href="#">sample 5</a></li>
+        </ul>
+    </div>
+
+    <h2><img src="{{ MEDIA_URL }}{{ RECENT_MUSIC }}" alt="RECENT MUSIC" width="190" height="45" /></h2>
+    <div class="localContentsNavi">
+        <ul>
+            <li><a href="#">sample 1</a></li>
+            <li><a href="#">sample 2</a></li>
+            <li><a href="#">sample 3</a></li>
+            <li><a href="#">sample 4</a></li>
+            <li><a href="#">sample 5</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block contentsMain %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_WHATNEW }}" alt="WHAT NEW" width="795" height="45" /></h2>
+    <dl id="sectionWhatNew">
+        {% for whatnew in whatnew_list %}
+            <dt>{{ whatnew.create_date|date:"Y-m-d" }}</dt>
+            <dd>{{ whatnew.content|linebreaks|safe }}</dd>
+        {% endfor %}
+    </dl>
+
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_INFO }}" alt="INFOMATION" width="795" height="45" /></h2>
+    <div class="section">
+        <p>◆ 電子書籍の対象ファイル</p>
+        <ul>
+            <li>・pdfファイル</li>
+            <li>・epudファイル</li>
+        </ul>
+        <br />
+        <p>◆ 全文検索機能について</p>
+        <p>&nbsp;&nbsp;全文検索機能は技術本のみで利用できます。</p>
+        <br />
+        <p>◆ 統計情報</p>
+        <p>&nbsp;&nbsp;BOOkのタイトル数や冊数などの統計情報が見れます。→<a href="/media/manage/analysis/book">こちら</a></p>
+    </div>
+{% endblock %}

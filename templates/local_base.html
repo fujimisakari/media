@@ -5,9 +5,9 @@
         <h1><a href="{{ MEDIA_BASE }}"><img src="{{ MEDIA_URL }}{{ HEADER_TITLE }}"  alt="TITLE" width="340" height="180" /></a></h1>
         <ul id="headerAccount">
             <li>ようこそ {{ user.username }} さん</li>
-            <li><a href="{{ CHANGE_PASSWD }}">パスワードの変更</a></li>
-            <li><a href="{{ LOGOUT_URL }}">ログアウト</a></li>
-        <!-- /#headerAccount --></ul>
+            <li><a href="">パスワードの変更</a></li>
+            <li><a href="">ログアウト</a></li>
+        </ul>
         <div id="headerNavi">
             <ul class="localHeaderNavi" id="top">
                 <li><img src="{{ MEDIA_URL }}{{ HEADER_TOP1 }}" alt="TOP1" width="80" height="80" /></li>
@@ -15,20 +15,20 @@
                 <li><img src="{{ MEDIA_URL }}{{ HEADER_MOVIE1 }}" alt="MOVIE1" width="80" height="80" /></li>
                 <li><img src="{{ MEDIA_URL }}{{ HEADER_MUSIC1 }}" alt="MUSIC1" width="80" height="80" /></li>
                 <li><img src="{{ MEDIA_URL }}{{ HEADER_MANAGE1 }}" alt="MANAGE1" width="80" height="80" /></li>
-            <!-- /#localHeaderNavi --></ul>
+            </ul>
             <ul class="localHeaderNavi" id="bottom">
-                <li><a href="{{ MEDIA_BASE }}"><img src="{{ MEDIA_URL }}{{ HEADER_TOP2 }}" alt="TOP2" width="120" height="65" /></a></li>
-                <li><a href="{{ MEDIA_BASE }}{{ BOOK_BASE }}"><img src="{{ MEDIA_URL }}{{ HEADER_BOOK2 }}" alt="BOOK2" width="120" height="65" /></a></li>
-                <li><a href="#{{ MEDIA_BASE }}{{ MOVIE_BASE }}"><img src="{{ MEDIA_URL }}{{ HEADER_MOVIE2 }}" alt="MOVIE2" width="120" height="65" /></a></li>
-                <li><a href="#{{ MEDIA_BASE }}{{ MUSIC_BASE }}"><img src="{{ MEDIA_URL }}{{ HEADER_MUSIC2 }}" alt="MUSIC2" width="120" height="65" /></a></li>
-                <li><a href="{{ MEDIA_BASE }}{{ MANAGE_BASE }}"><img src="{{ MEDIA_URL }}{{ HEADER_MANAGE2 }}" alt="MANAGE2" width="120" height="65" /></a></li>
-            <!-- /#localHeaderNavi --></ul>
-        <!-- /#headerNavi --></div>
-    <!-- /#header --></div>
+                <li><a href="/"><img src="{{ MEDIA_URL }}{{ HEADER_TOP2 }}" alt="TOP2" width="120" height="65" /></a></li>
+                <li><a href="{% url 'top_index' %}"><img src="{{ MEDIA_URL }}{{ HEADER_BOOK2 }}" alt="BOOK2" width="120" height="65" /></a></li>
+                <li><a href="#"><img src="{{ MEDIA_URL }}{{ HEADER_MOVIE2 }}" alt="MOVIE2" width="120" height="65" /></a></li>
+                <li><a href="#"><img src="{{ MEDIA_URL }}{{ HEADER_MUSIC2 }}" alt="MUSIC2" width="120" height="65" /></a></li>
+                <li><a href="{% url 'manage_index' %}"><img src="{{ MEDIA_URL }}{{ HEADER_MANAGE2 }}" alt="MANAGE2" width="120" height="65" /></a></li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}
 
 {% block footer %}
     <div id="footer">
         <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
-    <!-- /#footer --></div>
+    </div>
 {% endblock %}
