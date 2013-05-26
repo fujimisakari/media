@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import patterns, url
 from module.manage.view_book import book_add, book_edit, book_list, book_delete, book_delete_checked, book_search
 from module.manage.view_top import whatnew_add, whatnew_edit, whatnew_list, whatnew_delete, whatnew_delete_checked, whatnew_search
-from module.manage.view_ajax import getSubcategoryList, getTitleList, getVolumeList, getWriterList
+from module.manage.view_ajax import get_title_list, get_subcategory_list, get_volume_list, get_writer_list
 # from module.manage.view_upload import uploader
 from module.manage.view_analysis import analysis
 
@@ -22,10 +22,10 @@ urlpatterns = patterns(
     url(r'^book/edit/(?P<set_type>\w+)/(?P<edit_id>\d+)/$', book_edit, name='manage_book_edit'),
     url(r'^book/edit/(?P<set_type>\w+)/(?P<del_id>\d+)/delete/$', book_delete, name='manage_book_delete'),
     url(r'^book/edit/(?P<set_type>\w+)/delete_checked/$', book_delete_checked, name='manage_book_delete_checked'),
-    url(r'^ajax/book_title/$', getTitleList, name='getTitleList'),
-    url(r'^ajax/book_subcategory/$', getSubcategoryList, name='getSubcategoryList'),
-    url(r'^ajax/book_volume/$', getVolumeList, name='getVolumeList'),
-    url(r'^ajax/book_writer/$', getWriterList, name='getWriterList'),
+    url(r'^ajax/book_title/$', get_title_list, name='manage_get_title_list'),
+    url(r'^ajax/book_subcategory/$', get_subcategory_list, name='manage_get_subcategory_list'),
+    url(r'^ajax/book_volume/$', get_volume_list, name='manage_get_volume_list'),
+    url(r'^ajax/book_writer/$', get_writer_list, name='manage_get_writer_list'),
     # url(r'^uploader/(?P<set_type>\w+)/$', uploader, 'manage_upload'),
     url(r'^analysis/$', analysis, name='manage_analysis_book'),
 )

@@ -52,7 +52,12 @@ def _render(template_file, context):
 
 @login_required
 def book_add(request, set_type='book'):
-    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    context = RequestContext(request, {
+        'title': TITLE_MAP[set_type],
+        'set_type': set_type,
+        'category_list': Category.get_category_list(),
+        'subcategory_list': SubCategory.get_subcategory_list(),
+    })
     form = FORM_MAP[set_type]
     if request.method == 'POST':
         set_form = form(request.POST)

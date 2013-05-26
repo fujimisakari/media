@@ -51,6 +51,10 @@ class SubCategory(AbustractCachedModel):
     def title_count(self):
         return len([book for book in Book.get_cache_all() if self.id == book.subcategory_id])
 
+    @classmethod
+    def get_subcategory_list(cls):
+        return sorted([subcategory for subcategory in cls.get_cache_all()], key=lambda x: x.sort)
+
 
 class Book(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID')

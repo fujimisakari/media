@@ -116,7 +116,7 @@ $(document).ready(function() {
      */
     $("#id_category").change( function(){
         $.ajax({
-               url: "/media/manage/ajax/book_subcategory/",
+               url: "/manage/ajax/book_subcategory/",
                type: 'GET',
                data: {"category_id": $(this).val()},
                dataType: 'text',
@@ -135,7 +135,7 @@ $(document).ready(function() {
      */
     $("#id_subcategory").change( function(){
         $.ajax({
-               url: "/media/manage/ajax/book_title/",
+               url: "/manage/ajax/book_title/",
                type: 'GET',
                data: {"subcategory_id": $(this).val()},
                dataType: 'text',
@@ -154,9 +154,9 @@ $(document).ready(function() {
      */
     $("#id_entry").change( function(){
         $.ajax({
-               url: "/media/manage/ajax/book_volume/",
+               url: "/manage/ajax/book_volume/",
                type: 'GET',
-               data: {"entry_id": $(this).val()},
+               data: {"book_id": $(this).val()},
                dataType: 'text',
                async: false,
                global: true,
@@ -173,7 +173,7 @@ $(document).ready(function() {
      */
     $("#id_category").change( function(){
         $.ajax({
-               url: "/media/manage/ajax/book_writer/",
+               url: "/manage/ajax/book_writer/",
                type: 'GET',
                data: {"category_id": $(this).val()},
                dataType: 'text',

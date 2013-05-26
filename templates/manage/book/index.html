@@ -15,7 +15,7 @@
             {% endif %}
             <form method="post">
                 <table class="manageAdd">
-                    {% ifequal set_type 'detail' %}
+                    {% if set_type == 'detail' %}
                         <tr>
                             <th><label for="id_category">カテゴリ</label></th>
                             <td>
@@ -38,7 +38,7 @@
                                 </select>
                             </td>
                         </tr>
-                    {% endifequal %}
+                    {% endif %}
                     {{ getForm.as_table }}
                 </table>
                 <table class="manageButton">
