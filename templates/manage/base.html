@@ -11,12 +11,12 @@
             </ul>
             <ul class="manageContentsNavi">
                 <li><b>BOOk</b></li>
-                <li>┣ <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/entry/">タイトル</a></li>
-                <li>┣ <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/detail/">タイトル詳細</a></li>
-                <li>┣ <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/category/">カテゴリ</a></li>
-                <li>┣ <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/subcategory/">サブカテゴリ</a></li>
-                <li>┣ <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/writer/">著者</a></li>
-                <li>┗ <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK }}add/publisher/">出版社</a></li>
+                <li>┣ <a href="{% url 'manage_book_add' 'book' %}">タイトル</a></li>
+                <li>┣ <a href="{% url 'manage_book_add' 'detail' %}">タイトル詳細</a></li>
+                <li>┣ <a href="{% url 'manage_book_add' 'category' %}">カテゴリ</a></li>
+                <li>┣ <a href="{% url 'manage_book_add' 'subcategory' %}">サブカテゴリ</a></li>
+                <li>┣ <a href="{% url 'manage_book_add' 'writer' %}">著者</a></li>
+                <li>┗ <a href="{% url 'manage_book_add' 'publisher' %}">出版社</a></li>
             </ul>
             {% comment %}
             <ul class="manageContentsNavi">

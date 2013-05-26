@@ -45,7 +45,7 @@ def whatnew_list(request):
 
 @login_required
 def whatnew_edit(request, whatnew_id):
-    context = RequestContext(request, {'title': settings.TOP_WHATNEW})
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW, 'id': whatnew_id})
     if request.method == 'POST':
         whatnew = WhatNew.get_cache(whatnew_id)
         whatnew = copy.copy(whatnew)
@@ -94,7 +94,7 @@ def whatnew_search(request):
     all_whatnew_list = WhatNew.all_list()
     for word in keyword.split():
         word = u'.*{}.*'.format(unicode(word))
-        r = re.compile(word)
+        r = re.compile(word, re.IGNORECASE)
         for whatnew in all_whatnew_list:
             if r.search(whatnew.content):
                 whatnew_list.append(whatnew)

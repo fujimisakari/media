@@ -44,6 +44,10 @@ class SubCategory(AbustractCachedModel):
     sort = models.IntegerField(u'Sort番号', blank=True, null=True)
 
     @property
+    def category(self):
+        return Category.get_cache(self.category_id)
+
+    @property
     def title_count(self):
         return len([book for book in Book.get_cache_all() if self.id == book.subcategory_id])
 
@@ -108,7 +112,15 @@ class Writer(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID', null=True, blank=True)
     name = models.CharField(u'著者', max_length=100, unique=True)
 
+    @property
+    def category(self):
+        return Category.get_cache(self.category_id)
+
 
 class Publisher(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID', null=True, blank=True)
     name = models.CharField(u'出版社', max_length=100, unique=True)
+
+    @property
+    def category(self):
+        return Category.get_cache(self.category_id)

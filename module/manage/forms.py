@@ -20,12 +20,12 @@ class SubCategoryForm(forms.ModelForm):
         model = SubCategory
 
 
-class EntryForm(forms.ModelForm):
+class BookForm(forms.ModelForm):
     class Meta:
         model = Book
 
 
-class Entry_DetailForm(forms.ModelForm):
+class BookDetailForm(forms.ModelForm):
     class Meta:
         model = BookDetail
 

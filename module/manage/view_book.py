@@ -1,292 +1,207 @@
 # -*- coding: utf-8 -*-
 
+import re
+import copy
+
 from django.conf import settings
 from django.template import RequestContext
-from django.core.paginator import Paginator
-from django.db.models.query import Q
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
-from django.views.generic.list_detail import object_list
-from module.manage.forms import EntryForm, Entry_DetailForm, CategoryForm, SubCategoryForm, WriterForm, PublisherForm
+
+from module.common.pager import get_pager
+from module.manage.forms import BookForm, BookDetailForm, CategoryForm, SubCategoryForm, WriterForm, PublisherForm
 from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
 from module.common.dirhandler import mkdir, rmdir, movedir
-from module.manage.view_common import *
 
-BASE_TYPE = 'book'
-TMPL_NAME = 'manage/book/book.html'
-LIST_TMPL_NAME = 'manage/book/book_list.html'
+FORM_MAP = {'book': BookForm,
+            'detail': BookDetailForm,
+            'category': CategoryForm,
+            'subcategory': SubCategoryForm,
+            'writer': WriterForm,
+            'publisher': PublisherForm,
+            }
+
+INIT_FORM_MAP = {'book': BookForm(label_suffix=''),
+                 'detail': BookDetailForm(label_suffix=''),
+                 'category': CategoryForm(label_suffix=''),
+                 'subcategory': SubCategoryForm(label_suffix=''),
+                 'writer': WriterForm(label_suffix=''),
+                 'publisher': PublisherForm(label_suffix=''),
+                 }
+
+MODEL_MAP = {'book': Book,
+             'detail': BookDetail,
+             'category': Category,
+             'subcategory': SubCategory,
+             'writer': Writer,
+             'publisher': Publisher,
+             }
+
+TITLE_MAP = {'book': settings.BOOK_BOOK,
+             'detail': settings.BOOK_DETAIL,
+             'category': settings.BOOK_CATEGORY,
+             'subcategory': settings.BOOK_SUBCATEGORY,
+             'writer': settings.BOOK_WRITER,
+             'publisher': settings.BOOK_PUBLISHER,
+             }
+
+
+def _render(template_file, context):
+    return render_to_response('manage/book/{}'.format(template_file), context)
 
 
 @login_required
-def book_add(request, set_type='entry'):
-    getTitle = titleSelecter(BASE_TYPE, set_type)
+def book_add(request, set_type='book'):
+    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    form = FORM_MAP[set_type]
     if request.method == 'POST':
-        getform = {'entry': EntryForm,
-                   'detail': Entry_DetailForm,
-                   'category': CategoryForm,
-                   'subcategory': SubCategoryForm,
-                   'writer': WriterForm,
-                   'publisher': PublisherForm,
-                  }[request.POST['set_type']]
-        set_form = getform(request.POST)
+        set_form = form(request.POST)
         if set_form.is_valid():
             try:
                 mkdir(request.POST)
-                entry_form = set_form.save()
-                entry_form.save()
+                set_form.save()
             except:
-                return render_to_response(TMPL_NAME,
-                                          {'msg': ERROR_MSG_FILEPATH,
-                                           'base_type': BASE_TYPE,
-                                           'set_type': set_type,
-                                           'title': getTitle},
-                                          context_instance=RequestContext(request))
+                context['msg'] = settings.ERROR_MSG_FILEPATH
+            context['msg'] = settings.MSG_ADD
         else:
-            return render_to_response(TMPL_NAME,
-                                      {'msg': ERROR_MSG_ADD,
-                                       'base_type': BASE_TYPE,
-                                       'set_type': set_type,
-                                       'title': getTitle},
-                                      context_instance=RequestContext(request))
-        return render_to_response(TMPL_NAME,
-                                  {'msg': MSG_ADD,
-                                   'base_type': BASE_TYPE,
-                                   'set_type': set_type,
-                                   'title': getTitle},
-                                  context_instance=RequestContext(request))
+            context['msg'] = settings.ERROR_MSG_ADD
     else:
-        getForm = {'entry': EntryForm(label_suffix=''),
-                   'detail': Entry_DetailForm(label_suffix=''),
-                   'category': CategoryForm(label_suffix=''),
-                   'subcategory': SubCategoryForm(label_suffix=''),
-                   'writer': WriterForm(label_suffix=''),
-                   'publisher': PublisherForm(label_suffix=''),
-                  }[set_type]
-    return render_to_response(TMPL_NAME,
-                              {'getForm': getForm,
-                               'base_type': BASE_TYPE,
-                               'set_type': set_type,
-                               'title': getTitle},
-                              context_instance=RequestContext(request))
+        context['getForm'] = INIT_FORM_MAP[set_type]
+    return _render('index.html', context)
 
 
 @login_required
-def book_edit_list(request, set_type):
-    getModel = {'entry': Book,
-                'detail': BookDetail,
-                'category': Category,
-                'subcategory': SubCategory,
-                'writer': Writer,
-                'publisher': Publisher,
-              }[set_type]
-    if set_type == 'entry':
-        query_set = getModel.objects.all().order_by('subcategory')
+def book_list(request, set_type):
+    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    model = MODEL_MAP[set_type]
+
+    if set_type == 'book':
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
     elif set_type == 'detail':
-        query_set = getModel.objects.all().order_by('entry', 'volume')
+        book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
+        edit_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
     elif set_type == 'category' or set_type == 'subcategory':
-        query_set = getModel.objects.all().order_by('sort_num')
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
     elif set_type == 'writer':
-        query_set = getModel.objects.all().order_by('category')
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
     else:
-        query_set = getModel.objects.all().order_by('name')
-    getTitle = titleSelecter(BASE_TYPE, set_type)
-    try:
-        page_id = request.GET['page']
-    except:
-        page_id = 1;
-    p = Paginator(query_set, settings.NUM_IN_MANAGE_LIST)
-    pageData = p.page(page_id)
-    return object_list(request, queryset=query_set,
-                       template_name = LIST_TMPL_NAME,
-                       extra_context = {'set_type': set_type,
-                                        'title': getTitle,
-                                        'start_index': pageData.start_index(),
-                                        'end_index': pageData.end_index()
-                                        },
-                       paginate_by=settings.NUM_IN_MANAGE_LIST)
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.name)
+
+    page_id = request.GET.get('page', 1)
+    pager, edit_list = get_pager(edit_list, page_id, settings.NUM_IN_MANAGE_LIST)
+    context['result_list'] = edit_list
+    context.update(pager)
+    return _render('list.html', context)
 
 
 @login_required
 def book_search(request, set_type):
-    getModel = {'entry': Book,
-                'detail': BookDetail,
-                'category': Category,
-                'subcategory': SubCategory,
-                'writer': Writer,
-                'publisher': Publisher,
-              }[set_type]
-
-    # タイトル取得
-    getTitle = titleSelecter(BASE_TYPE, set_type)
-
-    # キーワード取得
     if request.method == 'POST':
-        keyword = request.POST['search'].encode('utf-8')
+        keyword = request.POST['search']
     else:
-        keyword = request.GET.get('keyword', '').encode('utf-8')
+        keyword = request.GET.get('keyword', '')
+    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type, 'keyword': keyword})
+    model = MODEL_MAP[set_type]
 
     # 検索結果取得
-    query_set = getModel.objects.all()
-    if set_type == 'entry':
-        for word in keyword.split():
-            query_set = query_set.filter(Q(title__icontains=word)|
-                                         Q(url_title__icontains=word)|
-                                         Q(category__name__icontains=word)|
-                                         Q(category__url_name__icontains=word)|
-                                         Q(subcategory__name__icontains=word)|
-                                         Q(subcategory__url_name__icontains=word)).order_by('category', 'subcategory')
-    elif set_type == 'detail':
-        for word in keyword.split():
-            query_set = query_set.filter(Q(entry__title__icontains=word)|
-                                         Q(entry__url_title__icontains=word)|
-                                         Q(writer__name__icontains=word)|
-                                         Q(publisher__name__icontains=word)|
-                                         Q(description__icontains=word)).order_by('entry', 'volume')
-    elif set_type == 'category':
-        for word in keyword.split():
-            query_set = query_set.filter(Q(name__icontains=word)|
-                                         Q(url_name__icontains=word)).order_by('sort_num')
-    elif set_type == 'subcategory':
-        for word in keyword.split():
-            query_set = query_set.filter(Q(category__name__icontains=word)|
-                                         Q(category__url_name__icontains=word)|
-                                         Q(name__icontains=word)|
-                                         Q(url_name__icontains=word)).order_by('sort_num')
-    elif set_type == 'writer':
-        for word in keyword.split():
-            query_set = query_set.filter(name__icontains=word).order_by('category')
-    elif set_type == 'publisher':
-        for word in keyword.split():
-            query_set = query_set.filter(name__icontains=word)
+    result_list = []
+    for word in keyword.split():
+        word = u'.*{}.*'.format(unicode(word))
+        r = re.compile(word, re.IGNORECASE)
+        if set_type == 'book':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
+            for book in search_list:
+                if r.search(book.name) or r.search(book.category.name) or r.search(book.subcategory.name):
+                    result_list.append(book)
+        elif set_type == 'detail':
+            book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
+            search_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
+            for book_detail in search_list:
+                if r.search(book_detail.book.title) or r.search(book_detail.writer.name) or r.search(book_detail.publisher.name) or r.search(book_detail.description):
+                    result_list.append(book_detail)
+        elif set_type == 'category':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
+            for category in search_list:
+                if r.search(category.name):
+                    result_list.append(book)
+        elif set_type == 'subcategory':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
+            for subcategory in search_list:
+                if r.search(subcategory.name) or r.search(subcategory.category.name):
+                    result_list.append(subcategory)
+        elif set_type == 'writer':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
+            for writer in search_list:
+                if r.search(writer.name):
+                    result_list.append(subcategory)
+        elif set_type == 'publisher':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
+            for publisher in search_list:
+                if r.search(publisher.name):
+                    result_list.append(publisher)
 
-    # ページ情報取得
-    try:
-        page_id = request.GET['page']
-    except:
-        page_id = 1;
-    p = Paginator(query_set, settings.NUM_IN_MANAGE_LIST)
-    pageData = p.page(page_id)
-
-    return object_list(request,
-                       queryset=query_set,
-                       template_name=LIST_TMPL_NAME,
-                       extra_context = {'set_type': set_type,
-                                        'title': getTitle,
-                                        'keyword': keyword,
-                                        'start_index': pageData.start_index(),
-                                        'end_index': pageData.end_index()
-                                        },
-                       paginate_by=settings.NUM_IN_MANAGE_LIST)
+    page_id = request.GET.get('page', 1)
+    pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)
+    context['result_list'] = result_list
+    context.update(pager)
+    return _render('list.html', context)
 
 
 @login_required
-def book_edit(request, set_type, id):
-    getModel = {'entry': Book,
-                'detail': BookDetail,
-                'category': Category,
-                'subcategory': SubCategory,
-                'writer': Writer,
-                'publisher': Publisher,
-              }[set_type]
-
-    getForm = {'entry': EntryForm,
-               'detail': Entry_DetailForm,
-               'category': CategoryForm,
-               'subcategory': SubCategoryForm,
-               'writer': WriterForm,
-               'publisher': PublisherForm,
-              }[set_type]
-    getTitle = titleSelecter(BASE_TYPE, set_type)
+def book_edit(request, set_type, edit_id):
+    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type, 'id': edit_id})
+    model = MODEL_MAP[set_type]
+    form = FORM_MAP[set_type]
 
     if request.method == 'POST':
-        entry = getModel.objects.get(pk=id)
-        setForm = getForm(request.POST, instance=entry)
+        obj = model.get_cache(edit_id)
+        setForm = form(request.POST, instance=obj)
         if setForm.is_valid():
             try:
-                movedir(request.POST, id)
-                entry_form = setForm.save()
-                entry_form.save()
+                # movedir(request.POST, edit_id)
+                setForm.save()
+                context['msg'] = settings.MSG_EDIT
             except:
-                return render_to_response(TMPL_NAME,
-                                          {'msg': ERROR_MSG_FILEPATH,
-                                           'title': getTitle,
-                                           'base_type': BASE_TYPE,
-                                           'set_type': set_type},
-                                          context_instance=RequestContext(request))
+                context['msg'] = settings.ERROR_MSG_FILEPATH
         else:
-            return render_to_response(TMPL_NAME,
-                                      {'msg': ERROR_MSG_EDIT,
-                                       'title': getTitle,
-                                       'base_type': BASE_TYPE,
-                                       'set_type': set_type},
-                                      context_instance=RequestContext(request))
-        return render_to_response(TMPL_NAME,
-                                  {'msg': MSG_EDIT,
-                                   'title': getTitle,
-                                   'base_type': BASE_TYPE,
-                                   'set_type': set_type},
-                                   context_instance=RequestContext(request))
+            context['msg'] = settings.ERROR_MSG_EDIT
     else:
-        query_set = getModel.objects.get(pk=id)
-        setForm = getForm(instance=query_set, label_suffix='')
-    return render_to_response(TMPL_NAME,
-                              {'getForm': setForm,
-                               'title': getTitle,
-                               'set_type': set_type,
-                               'id': id},
-                              context_instance=RequestContext(request))
+        obj = model.get_cache(edit_id)
+        context['getForm'] = form(instance=obj, label_suffix='')
+    return _render('index.html', context)
 
 
 @login_required
-def book_delete(request, set_type, id):
-    getmodel = {'entry': Book,
-                'detail': BookDetail,
-                'category': Category,
-                'subcategory': SubCategory,
-                'writer': Writer,
-                'publisher': Publisher,
-               }[set_type]
-    getTitle = titleSelecter(BASE_TYPE, set_type)
+def book_delete(request, set_type, del_id):
+    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    model = MODEL_MAP[set_type]
     if request.method == 'POST':
         rmdir(request.POST)
-        query_set = getmodel.objects.get(pk=id)
-        query_set.delete()
-        return render_to_response(TMPL_NAME,
-                                  {'msg': MSG_DELET,
-                                   'base_type': BASE_TYPE,
-                                   'title': getTitle,
-                                   'set_type': set_type},
-                                  context_instance=RequestContext(request))
+        obj = model.get_cache(del_id)
+        obj = copy.copy(obj)
+        obj.delete()
+        return _render('index.html', context)
 
 
 @login_required
 def book_delete_checked(request, set_type):
-    getmodel = {'entry': Book,
-                'detail': BookDetail,
-                'category': Category,
-                'subcategory': SubCategory,
-                'writer': Writer,
-                'publisher': Publisher,
-               }[set_type]
-    getTitle = titleSelecter(BASE_TYPE, set_type)
-    dataArr = {'set_type': set_type}
+    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    model = MODEL_MAP[set_type]
+
     if request.method == 'POST':
-        for i in request.POST.getlist('del_flag'):
-            query_set = getmodel.objects.get(pk=i)
+        data_dict = {'set_type': set_type}
+        for del_id in request.POST.getlist('del_flag'):
+            obj = model.get_cache(del_id)
+            obj = copy.copy(obj)
             if set_type == 'category':
-                dataArr['url_name'] = query_set.url_name
+                data_dict['category'] = obj.id
             elif set_type == 'subcategory':
-                dataArr['url_name'] = query_set.url_name
-                dataArr['category'] = query_set.category_id
-            elif set_type == 'entry':
-                dataArr['category']    = query_set.category_id
-                dataArr['subcategory'] = query_set.subcategory_id
-                dataArr['url_title']   = query_set.url_title
-            rmdir(dataArr)
-            query_set.delete()
-        return render_to_response(TMPL_NAME,
-                                  {'msg': MSG_CHECKED_DELET,
-                                   'base_type': BASE_TYPE,
-                                   'title': getTitle,
-                                   'set_type': set_type},
-                                  context_instance=RequestContext(request))
+                data_dict['subcategory'] = obj.id
+                data_dict['category'] = obj.category_id
+            elif set_type == 'book':
+                data_dict['category'] = obj.category_id
+                data_dict['subcategory'] = obj.subcategory_id
+                data_dict['book'] = obj.id
+            rmdir(data_dict)
+            obj.delete()
+        return _render('index.html', context)

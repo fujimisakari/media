@@ -1,12 +1,17 @@
 {% extends 'manage/base.html' %}
+{% load url from future %}
+
+{% block manageContentsMenu %}
+    <div class="manageMode"><a href="{% url 'manage_book_add' set_type %}">add</a> / <a href="{% url 'manage_book_edit_list' set_type %}">edit</a></div>
+{% endblock %}
 
 {% block manageContentsMain %}
     {% if getForm %}
         <div class="addSection">
             {% if id %}
-                <div class="manageMode"><a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK}}add/{{ set_type }}/">add</a> / <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK}}edit/{{ set_type }}/">edit</a></div>
+                <div class="manageMode"><a href="{% url 'manage_book_add' set_type %}">add</a> / <a href="{% url 'manage_book_edit_list' set_type %}">edit</a></div>
             {% else %}
-                <div class="manageMode">add / <a href="{{ MEDIA_BASE }}{{ MANAGE_BOOK}}edit/{{ set_type }}/">edit</a></div>
+                <div class="manageMode">add / <a href="{% url 'manage_book_edit_list' set_type %}">edit</a></div>
             {% endif %}
             <form method="post">
                 <table class="manageAdd">
@@ -17,7 +22,7 @@
                                 <select id="id_category">
                                     <option selected="selected" value="">---------</option>
                                     {% for category in category_list %}
-                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
                             </td>
@@ -28,24 +33,23 @@
                                 <select id="id_subcategory">
                                     <option selected="selected" value="">---------</option>
                                     {% for subcategory in subcategory_list %}
-                                    <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                                        <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
                                     {% endfor %}
                                 </select>
                             </td>
                         </tr>
                     {% endifequal %}
                     {{ getForm.as_table }}
-                <!-- .manageAdd --></table>
+                </table>
                 <table class="manageButton">
                     <tr>
                         <td>
                         <input class="button" type="submit" value="ENTER" onclick="this.form.action='.'" />
                         {% if id %}<input class="button" type="submit" value="DERETE" onclick="this.form.action='./delete/'" />{% endif %}
-                        <input type="hidden" name="set_type" value="{{ set_type }}" />
                         </td>
                     </tr>
-                <!-- .manageButton --></table>
+                </table>
             </form>
-        <!-- .addSection --></div>
+        </div>
     {% endif %}
 {% endblock %}

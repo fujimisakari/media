@@ -87,12 +87,12 @@ def search(request):
         keyword = request.GET.get('keyword', '')
 
     book_list = []
-    all_book_list = Book.get_all_list()
+    all_book_list = sorted([x for x in Book.get_all_list()], key=lambda x: x.subcategory_id)
     for word in keyword.split():
         word = u'.*{}.*'.format(unicode(word))
-        r = re.compile(word)
+        r = re.compile(word, re.IGNORECASE)
         for book in all_book_list:
-            if r.search(book.title):
+            if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name):
                 book_list.append(book)
 
     page_id = request.GET.get('page', 1)
