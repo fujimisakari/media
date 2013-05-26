@@ -1,0 +1,65 @@
+{% extends 'manage/base.html' %}
+{% load url from future %}
+
+{% block manageContentsMain %}
+    <div id="book">
+        <div class="leftCol">
+            <table class="analysisTitle">
+                <tr>
+                    <th colspan="2">タイトル数</th>
+                </tr>
+                {% for category in category_list %}
+                    <tr>
+                        <td class="size185">{{ category.name }}</td>
+                        <td class="size30">{{ category.title_count }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>合計タイトル数</td>
+                    <td width="25px">{{ total_title_count }}</td>
+                </tr>
+            </table>
+
+            <table class="analysisBook">
+                <tr>
+                    <th colspan="2">冊数</th>
+                </tr>
+                {% for category in category_list %}
+                    <tr>
+                        <td class="size185">{{ category.name }}</td>
+                        <td class="size30">{{ category.book_count }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>合計冊数</td>
+                    <td width="25px">{{ total_book_count }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="rightCol">
+            <table class="analysisCategory">
+                <tr>
+                    <th colspan="2">カテゴリ別タイトル数</th>
+                </tr>
+                <tr >
+                    {% for category in category_list %}
+                        <td>
+                            <table class="analysisLocalCategory">
+                                <tr>
+                                    <th colspan="2">{{ category.name }}</th>
+                                </tr>
+                                {% for subcategory in category.get_subcategory_list %}
+                                    <tr>
+                                        <td>{{ subcategory.name }}</td>
+                                        <td>{{ subcategory.title_count }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}

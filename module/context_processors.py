@@ -6,22 +6,15 @@ from django.conf import settings
 def common_context(request):
     return {
         'MEDIA_TITLE': settings.MEDIA_TITLE,
-        'MEDIA_BASE': settings.MEDIA_BASE,
         'MEDIA_URL': '/static/',
-        'MEDIA_DATA': settings.MEDIA_DATA,
         'MEDIA_CSS': settings.MEDIA_CSS,
         'MEDIA_JS': settings.MEDIA_JS,
         'MEDIA_FOTTER': settings.MEDIA_FOTTER,
-        'LOGOUT_URL': settings.LOGOUT_URL,
-        'CHANGE_PASSWD': settings.CHANGE_PASSWD,
     }
 
 
 def book_context(request):
     return {
-        'BOOK_BASE': settings.BOOK_BASE,
-        'BOOK_DETAIL': settings.BOOK_DETAIL,
-        'BOOK_SEARCH': settings.BOOK_SEARCH,
         'BOOK_PDF': settings.BOOK_PDF,
         'BOOK_IPAD': settings.BOOK_IPAD,
         'BOOK_IPHONE': settings.BOOK_IPHONE,
@@ -30,24 +23,6 @@ def book_context(request):
         'BOOK_VOLUME_THUMBNAIL': settings.BOOK_VOLUME_THUMBNAIL,
         'BOOK_THUMB_HEIGHT': settings.BOOK_THUMB_HEIGHT,
         'BOOK_THUMB_WIDTH': settings.BOOK_THUMB_WIDTH,
-        # 'it_list': Book.objects.filter(category__url_name='it').order_by('title').select_related()[:settings.ALL_LIST_LIMIT],
-        # 'managa_list': Book.objects.filter(category__url_name='manga').order_by('title').select_related()[:settings.ALL_LIST_LIMIT],
-        # 'recent_book_list': BookDetail.objects.order_by('-create_date')[:settings.LIST_COUNT],
-        # 'category_list': Category.objects.all().order_by('sort_num'),
-        # 'subcategory_list': SubCategory.objects.all().order_by('sort_num'),
-        # 'entry_list': Book.objects.all().order_by('title')
-    }
-
-
-def manage_context(request):
-    return {
-        'MANAGE_BASE': settings.MANAGE_BASE,
-        'MANAGE_TOP': settings.MANAGE_TOP,
-        'MANAGE_BOOK': settings.MANAGE_BOOK,
-        'MANAGE_MOVIE': settings.MANAGE_MOVIE,
-        'MANAGE_MUSIC': settings.MANAGE_MUSIC,
-        'MANAGE_UPLOAD': settings.MANAGE_UPLOAD,
-        'MANAGE_ANALYSIS': settings.MANAGE_ANALYSIS,
     }
 
 

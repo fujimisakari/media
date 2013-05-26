@@ -10,12 +10,20 @@ class Category(AbustractCachedModel):
     url_name = models.CharField(u'URL名', max_length=100, unique=True)
     sort = models.IntegerField(u'Sort番号', blank=True, null=True)
 
+    @property
+    def title_count(self):
+        return len([book for book in Book.get_cache_all() if self.id == book.category_id])
+
+    @property
+    def book_count(self):
+        return len([book_detail for book_detail in BookDetail.get_cache_all() if self.id == book_detail.book.category_id])
+
     @classmethod
     def get_category_list(cls):
-        return sorted([category for category in cls.get_cache_all()], key=lambda x: x.id, reverse=True)
+        return sorted([category for category in cls.get_cache_all()], key=lambda x: x.sort)
 
     def get_subcategory_list(self):
-        return [subcategory for subcategory in SubCategory.get_cache_all() if self.id == subcategory.category_id]
+        return sorted([subcategory for subcategory in SubCategory.get_cache_all() if self.id == subcategory.category_id], key=lambda x: x.sort)
 
     def get_book_list(self):
         book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
@@ -34,6 +42,10 @@ class SubCategory(AbustractCachedModel):
     name = models.CharField(u'サブカテゴリ名', max_length=100, unique=True)
     url_name = models.CharField(u'URL名', max_length=100, unique=True)
     sort = models.IntegerField(u'Sort番号', blank=True, null=True)
+
+    @property
+    def title_count(self):
+        return len([book for book in Book.get_cache_all() if self.id == book.subcategory_id])
 
 
 class Book(AbustractCachedModel):
@@ -88,7 +100,7 @@ class BookDetail(AbustractCachedModel):
 
     @classmethod
     def get_recent_book_list(cls, limit=3):
-        book_detail_list = sorted([book_detail for book_detail in cls.get_cache_all()], key=lambda x: x.id, reverse=True)
+        book_detail_list = sorted([book_detail for book_detail in cls.get_cache_all()], key=lambda x: x.update_date, reverse=True)
         return book_detail_list[:limit]
 
 

@@ -153,7 +153,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'module.context_processors.common_context',
     'module.context_processors.book_context',
-    'module.context_processors.manage_context',
     'module.context_processors.image_context',
 )
 
@@ -188,8 +187,9 @@ LOGGING = {
 
 
 #####################################################################
+
 # csv data
-CSV_DATA_PATH = os.path.join(ROOT_PATH, 'data/')
+CSV_DATA_PATH = os.path.join(ROOT_PATH, '../data/')
 
 # search
 # HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
@@ -197,12 +197,6 @@ CSV_DATA_PATH = os.path.join(ROOT_PATH, 'data/')
 # upload
 FILE_UPLOAD_MAX_MEMORY_SIZE = u'314572800'
 FILE_UPLOAD_TEMP_DIR = os.path.join(ROOT_PATH, 'templates/static/media/tmp')
-
-# login
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
-CHANGE_PASSWD = '/change_passwd/'
 
 # paging
 LIST_COUNT = 5
@@ -215,17 +209,11 @@ ALL_LIST_LIMIT = 15
 
 # conmmon
 MEDIA_TITLE = "MEDIA SERVER"
-MEDIA_BASE = '/'
-# MEDIA_URL = '/static/'
-MEDIA_DATA = '/static'
 MEDIA_CSS = 'css/import.css'
 MEDIA_JS = 'js/import.js'
 MEDIA_FOTTER = '2011 Fujimo-net.com'
 
 # book
-BOOK_BASE = 'book/'
-BOOK_DETAIL = 'detail/'
-BOOK_SEARCH = 'book/search/'
 BOOK_PDF = '_pc.pdf'
 BOOK_IPAD = '_ipad.epub'
 BOOK_IPHONE = '_iphone.epub'
@@ -235,20 +223,7 @@ BOOK_VOLUME_THUMBNAIL = '_thumbnail.jpg'
 BOOK_THUMB_HEIGHT = '110'
 BOOK_THUMB_WIDTH = '77'
 
-# movie
-MOVIE_BASE = 'movie/'
-
-# music
-MUSIC_BASE = 'music/'
-
 # manage
-MANAGE_BASE = '/'
-MANAGE_TOP = 'top/'
-MANAGE_BOOK = 'manage/book/'
-MANAGE_MOVIE = 'manage/movie/'
-MANAGE_MUSIC = 'manage/music/'
-MANAGE_UPLOAD = 'manage/uploader/'
-MANAGE_ANALYSIS = 'manage/analysis/'
 MANAGE_BOOK_PATH = os.path.join(ROOT_PATH, 'templates/static/media/book')
 MANAGE_MOVIE_PATH = os.path.join(ROOT_PATH, 'templates/static/media/movie')
 MANAGE_MUSIC_PATH = os.path.join(ROOT_PATH, 'templates/static/media/music')
