@@ -25,6 +25,7 @@ class Command(BaseCommand):
         cur = connection.cursor()
         for app_name in settings.INSTALLED_APPS:
             if not r.match(app_name):
+                app_name = app_name.replace('module.', '')
                 for model in get_models(get_app(app_name)):
                     csv_file_path = '{}{}.csv'.format(settings.CSV_DATA_PATH, model._meta.db_table)
                     try:

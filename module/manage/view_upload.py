@@ -13,7 +13,7 @@ from module.manage.view_common import *
 class UploadEntryForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ('category', 'subcategory')
+        fields = ('category_id', 'subcategory_id')
 
 
 class UploadFileForm(forms.ModelForm):
@@ -21,7 +21,7 @@ class UploadFileForm(forms.ModelForm):
 
     class Meta:
         model = BookDetail
-        fields = ('entry', 'volume')
+        fields = ('book_id', 'volume')
 
 
 def create_path(post_data):

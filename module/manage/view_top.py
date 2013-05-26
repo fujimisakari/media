@@ -1,156 +1,106 @@
 # -*- coding: utf-8 -*-
 
+import copy
+import re
+
 from django.conf import settings
 from django.template import RequestContext
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
-from django.views.generic.list_detail import object_list
+
+from module.common.pager import get_pager
 from module.manage.forms import WhatNewForm
 from module.top.models import WhatNew
-from module.manage.view_common import *
 
-BASE_TYPE = 'top'
-TMPL_NAME = 'manage/top/top.html'
-LIST_TMPL_NAME = 'manage/top/top_list.html'
+
+def _render(template_file, context):
+    return render_to_response('manage/top/{}'.format(template_file), context)
 
 
 @login_required
-def top_add(request, set_type='whatnew'):
-    getTitle = titleSelecter(BASE_TYPE, set_type)
+def whatnew_add(request):
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW})
     if request.method == 'POST':
         set_form = WhatNewForm(request.POST, label_suffix='')
         if set_form.is_valid():
-            entry_form = set_form.save()
-            entry_form.save()
-            return render_to_response(TMPL_NAME,
-                                      {'msg': MSG_ADD,
-                                       'set_type': set_type,
-                                       'base_type': BASE_TYPE,
-                                       'title': getTitle},
-                                      context_instance=RequestContext(request))
+            set_form.save()
+            context['msg'] = settings.MSG_ADD
         else:
-            return render_to_response(TMPL_NAME,
-                                      {'msg': ERROR_MSG_ADD,
-                                       'set_type': set_type,
-                                       'base_type': BASE_TYPE,
-                                       'title': getTitle},
-                                      context_instance=RequestContext(request))
+            context['msg'] = settings.ERROR_MSG_ADD
     else:
-        getForm = WhatNewForm(label_suffix='')
-    return render_to_response(TMPL_NAME,
-                              {'getForm': getForm,
-                               'set_type': set_type,
-                               'title': getTitle},
-                              context_instance=RequestContext(request))
+        context['getForm'] = WhatNewForm(label_suffix='')
+    return _render('index.html', context)
 
 
 @login_required
-def top_edit_list(request, set_type):
-    getTitle = titleSelecter(BASE_TYPE, set_type)
-    query_set = WhatNew.objects.all().order_by('-regist_date')
-    try:
-        page_id = request.GET['page']
-    except:
-        page_id = 1
-    p = Paginator(query_set, settings.NUM_IN_MANAGE_LIST)
-    pageData = p.page(page_id)
-    return object_list(request,
-                       queryset=query_set,
-                       template_name=LIST_TMPL_NAME,
-                       extra_context = {'set_type': set_type,
-                                        'title': getTitle,
-                                        'start_index': pageData.start_index(),
-                                        'end_index': pageData.end_index()
-                                        },
-                       paginate_by=settings.NUM_IN_MANAGE_LIST)
+def whatnew_list(request):
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW})
+    whatnew_list = WhatNew.all_list()
+    page_id = request.GET.get('page', 1)
+    pager, whatnew_list = get_pager(whatnew_list, page_id, settings.NUM_IN_MANAGE_LIST)
+    context['whatnew_list'] = whatnew_list
+    context.update(pager)
+    return _render('list.html', context)
 
 
 @login_required
-def top_edit(request, set_type, id):
-    getTitle = titleSelecter(BASE_TYPE, set_type)
+def whatnew_edit(request, whatnew_id):
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW})
     if request.method == 'POST':
-        query_set = WhatNew.objects.get(pk=id)
-        set_form = WhatNewForm(request.POST, instance=query_set, label_suffix='')
+        whatnew = WhatNew.get_cache(whatnew_id)
+        whatnew = copy.copy(whatnew)
+        set_form = WhatNewForm(request.POST, instance=whatnew, label_suffix='')
         if set_form.is_valid():
-            entry_form = set_form.save()
-            entry_form.save()
-            return render_to_response(TMPL_NAME,
-                                      {'msg': MSG_EDIT,
-                                       'set_type': set_type,
-                                       'base_type': BASE_TYPE,
-                                       'title': getTitle},
-                                      context_instance=RequestContext(request))
+            set_form.save()
+            context['msg'] = settings.MSG_EDIT
         else:
-            return render_to_response(TMPL_NAME,
-                                      {'msg': ERROR_EDIT_ADD,
-                                       'set_type': set_type,
-                                       'base_type': BASE_TYPE,
-                                       'title': getTitle},
-                                      context_instance=RequestContext(request))
+            context['msg'] = settings.ERROR_EDIT_ADD
     else:
-        query_set = WhatNew.objects.get(pk=id)
-        getForm = WhatNewForm(instance=query_set, label_suffix='')
-    return render_to_response(TMPL_NAME,
-                              {'getForm': getForm,
-                               'set_type': set_type,
-                               'id': id,
-                               'title': getTitle},
-                              context_instance=RequestContext(request))
+        whatnew = WhatNew.get_cache(whatnew_id)
+        context['getForm'] = WhatNewForm(instance=whatnew, label_suffix='')
+    return _render('index.html', context)
 
 
 @login_required
-def top_delete(request, set_type, id):
+def whatnew_delete(request, whatnew_id):
     if request.method == 'POST':
-        getTitle = titleSelecter(BASE_TYPE, set_type)
-        query_set = WhatNew.objects.get(pk=id)
-        query_set.delete()
-        return render_to_response(TMPL_NAME,
-                                  {'msg': MSG_DELET,
-                                   'set_type': set_type,
-                                   'base_type': BASE_TYPE,
-                                   'title': getTitle},
-                                  context_instance=RequestContext(request))
+        context = RequestContext(request, {'title': settings.TOP_WHATNEW, 'msg': settings.MSG_DELET})
+        whatnew = WhatNew.get_cache(whatnew_id)
+        whatnew = copy.copy(whatnew)
+        whatnew.delete()
+        return _render('index.html', context)
 
 
 @login_required
-def top_delete_checked(request, set_type):
+def whatnew_delete_checked(request):
     if request.method == 'POST':
-        getTitle = titleSelecter(BASE_TYPE, set_type)
-        for i in request.POST.getlist('del_flag'):
-            query_set = WhatNew.objects.get(pk=i)
-            query_set.delete()
-        return render_to_response(TMPL_NAME,
-                                  {'msg': MSG_CHECKED_DELET,
-                                   'set_type': set_type,
-                                   'base_type': BASE_TYPE,
-                                   'title': getTitle},
-                                  context_instance=RequestContext(request))
+        context = RequestContext(request, {'title': settings.TOP_WHATNEW, 'msg': settings.MSG_CHECKED_DELET})
+        for whatnew_id in request.POST.getlist('del_flag'):
+            whatnew = WhatNew.get_cache(whatnew_id)
+            whatnew = copy.copy(whatnew)
+            whatnew.delete()
+        return _render('index.html', context)
 
 
 @login_required
-def top_search(request, set_type):
-    getTitle = titleSelecter(BASE_TYPE, set_type)
+def whatnew_search(request):
     if request.method == 'POST':
-        keyword = request.POST['search'].encode('utf-8')
+        keyword = request.POST['search']
     else:
-        keyword = request.GET.get('keyword', '').encode('utf-8')
-    query_set = WhatNew.objects.all()
+        keyword = request.GET.get('keyword', '')
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW, 'keyword': keyword})
+
+    whatnew_list = []
+    all_whatnew_list = WhatNew.all_list()
     for word in keyword.split():
-        query_set = query_set.filter(content__icontains=word).order_by('-regist_date')
-    try:
-        page_id = request.GET['page']
-    except:
-        page_id = 1
-    p = Paginator(query_set, settings.NUM_IN_MANAGE_LIST)
-    pageData = p.page(page_id)
-    return object_list(request,
-                       queryset=query_set,
-                       template_name=LIST_TMPL_NAME,
-                       extra_context = {'set_type': set_type,
-                                        'title': getTitle,
-                                        'keyword': keyword,
-                                        'start_index': pageData.start_index(),
-                                        'end_index': pageData.end_index()
-                                        },
-                       paginate_by=settings.NUM_IN_MANAGE_LIST)
+        word = u'.*{}.*'.format(unicode(word))
+        r = re.compile(word)
+        for whatnew in all_whatnew_list:
+            if r.search(whatnew.content):
+                whatnew_list.append(whatnew)
+
+    page_id = request.GET.get('page', 1)
+    pager, whatnew_list = get_pager(whatnew_list, page_id, settings.NUM_IN_LIST_PAGE)
+    context['whatnew_list'] = whatnew_list
+    context.update(pager)
+    return _render('list.html', context)

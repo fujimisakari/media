@@ -18,7 +18,7 @@ class Command(BaseCommand):
             print >> sys.stderr, 'Please input app_name.'
             return
 
-        app_name_list = [_app_name for _app_name in settings.INSTALLED_APPS]
+        app_name_list = [_app_name.replace('module.', '') for _app_name in settings.INSTALLED_APPS]
         if not app_name in app_name_list:
             print >> sys.stderr, 'Please input valid app_name.'
             return
@@ -35,6 +35,6 @@ class Command(BaseCommand):
         call_command('migrate', app_name, database=connection.alias, delete_ghosts=True)
 
         print 'import csv data start.'
-        klass = load_command_class('common', 'importcsv')
+        klass = load_command_class('module.common', 'importcsv')
         klass.execute()
         print 'import csv data done.'
