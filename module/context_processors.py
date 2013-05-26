@@ -39,18 +39,6 @@ def book_context(request):
     }
 
 
-def movie_context(request):
-    return {
-        'MOVIE_BASE': settings.MOVIE_BASE,
-    }
-
-
-def music_context(request):
-    return {
-        'MUSIC_BASE': settings.MUSIC_BASE,
-    }
-
-
 def manage_context(request):
     return {
         'MANAGE_BASE': settings.MANAGE_BASE,

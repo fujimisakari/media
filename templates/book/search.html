@@ -1,75 +1,21 @@
-{% extends 'book/base.html' %}
+{% extends 'book/local_base.html' %}
+{% load url from future %}
 
-{% block contentsNavi %}
-    <h2><img src="{{ MEDIA_URL }}{{ NAVI_CATEAGORY }}" alt="CATEGORY" width="190" height="45" /></h2>
-    <div class="localContentsNavi">
-        <ul>
-        {% for category in category_list %}
-            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
-        {% endfor %}
-        </ul>
-    <!-- .localContentsNavi --></div>
-
-    <h2><img src="{{ MEDIA_URL }}{{ NAVI_SUBCATEGORY }}" alt="SUBCATEGORY" width="190" height="45" /></h2>
-    <div class="localContentsNavi">
-        {% for category in category_list %}
-            <h3>{{ category }}</h3>
-            <ul>
-            {% for subcategory in subcategory_list %}
-                {% ifequal category.id subcategory.category_id %}
-                    <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a></li>
-                {% endifequal %}
-            {% endfor %}
-            </ul>
-        {% endfor %}
-    <!-- .localContentsNavi --></div>
+{% block localTitle %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_ALL_LIST }}" alt="ALL LIST" width="795" height="45" /></h2>
 {% endblock %}
 
-{% block contentsMain %}
-    <h2><img src="{{ MEDIA_URL }}{{ MAIN_ALL_LIST }}" alt="ALL LIST" width="795" height="45" /></h2>
-    <div class="section">
-        <p class="page_result">検索結果：{{ hits }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
-        <ul class="column">
-            {% for object in object_list %}
-                <li>
-                    <div class="block">
-                       <a href="{{ object.get_absolute_url }}">
-                           <img src="{{ MEDIA_DATA }}{{ object.get_absolute_url }}{{ BOOK_THUMBNAIL }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
-                       </a>
-                       <div class="bookName"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></div>
-                    <!-- /.block --></div>
-                </li>
-            {% endfor %}
-        <!-- /.column --></ul>
-
-        <div align="center">
-            <table class="paging_list">
-                <tr>
-                    <td>
-                    {% if has_previous %}
-                        <a href="?page={{ previous }}&keyword={{ keyword }}">&lt; Prev</a>
-                    {% else %}
-                        <p>&lt; Prev</p>
-                    {% endif %}
-                    </td>
-                    <td>
-                      [{% for page_num in page_range %}
-                          {% ifequal page page_num %}
-                              {{ page_num }}
-                          {% else %}
-                              <a href="?page={{ page_num }}&keyword={{ keyword }}">{{ page_num }}</a>
-                          {% endifequal %}
-                      {% endfor %}]
-                    </td>
-                    <td>
-                        {% if has_next %}
-                            <a href="?page={{ next }}&keyword={{ keyword }}">Next &gt;</a>
-                        {% else %}
-                            <p>Next &gt;</p>
-                        {% endif %}
-                    </td>
-                          </tr>
-            <!-- .paging_list --></table>
-        </div>
-    <!-- /.section --></div>
+{% block localContents %}
+    <ul class="column">
+        {% for book in book_list %}
+            <li>
+                <div class="block">
+                   <a href="{% url 'book_detail' book.id %}" class="thumbnail">
+                       <img src="" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                   </a>
+                   <div class="bookName"><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

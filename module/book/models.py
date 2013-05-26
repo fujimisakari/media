@@ -50,6 +50,10 @@ class Book(AbustractCachedModel):
     def subcategory(self):
         return SubCategory.get_cache(self.subcategory_id)
 
+    @classmethod
+    def get_all_list(cls):
+        return sorted([book for book in cls.get_cache_all()], key=lambda x: x.subcategory_id)
+
 
 class BookDetail(AbustractCachedModel):
     book_id = models.IntegerField(u'ブックID')

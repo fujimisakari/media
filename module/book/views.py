@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import re
+
 from django.conf import settings
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
-from django.views.generic.list_detail import object_list
-from django.db.models.query import Q
-from django.core.paginator import Paginator
 
 from module.common.pager import get_pager
+# from module.common.hyperestraier import search_index
 from module.book.models import Book, BookDetail, Category, SubCategory
-# from book.hyperestraier import search_index
 
 
 def _render(template_file, context):
@@ -83,23 +82,28 @@ def extend_detail(request, category_id, subcategory_id, title, volume):
 @login_required
 def search(request):
     if request.method == 'POST':
-        keyword = request.POST['search'].encode('utf-8')
+        keyword = request.POST['search']
     else:
-        keyword = request.GET.get('keyword', '').encode('utf-8')
-    query_set = Book.objects.all()
+        keyword = request.GET.get('keyword', '')
+
+    book_list = []
+    all_book_list = Book.get_all_list()
     for word in keyword.split():
-        query_set = query_set.filter(Q(title__icontains=word) | Q(url_title__icontains=word)).order_by('title')
-    try:
-        page_id = request.GET['page']
-    except:
-        page_id = 1
-    p = Paginator(query_set, settings.NUM_IN_LIST_PAGE)
-    pageData = p.page(page_id)
-    return object_list(request, queryset=query_set, paginate_by=settings.NUM_IN_LIST_PAGE,
-                       template_name='book/search.html', extra_context=dict(keyword=keyword,
-                                                                            start_index=pageData.start_index(),
-                                                                            end_index=pageData.end_index()
-                                                                            ))
+        word = u'.*{}.*'.format(unicode(word))
+        r = re.compile(word)
+        for book in all_book_list:
+            if r.search(book.title):
+                book_list.append(book)
+
+    page_id = request.GET.get('page', 1)
+    pager, book_list = get_pager(book_list, page_id, settings.NUM_IN_LIST_PAGE)
+    context = RequestContext(request, {
+        'book_list': book_list,
+        'category_list': Category.get_category_list(),
+    })
+    context.update(pager)
+    return _render('search.html', context)
+
 
 # @login_required
 # def search(request):
