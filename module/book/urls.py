@@ -9,5 +9,5 @@ urlpatterns = patterns(
     url(r'^detail/(?P<book_id>\d+)/$', 'detail', name='book_detail'),
     url(r'^category/(?P<category_id>\d+)/$', 'category', name='book_category'),
     url(r'^subcategory/(?P<category_id>\d+)/(?P<subcategory_id>\d+)/$', 'subcategory', name='book_subcategory'),
-    url(r'^(?P<category_id>\d+)/(?P<subcategory_id>\d+)/(?P<title>\w+)/(?P<volume>\d+)/$', 'preview', name='book_preview'),
+    url(r'^preview/(?P<book_id>\d+)/(?P<volume>\d+)/$', 'preview', name='book_preview'),
 )

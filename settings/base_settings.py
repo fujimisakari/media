@@ -192,7 +192,7 @@ LOGGING = {
 CSV_DATA_PATH = os.path.join(ROOT_PATH, 'data/')
 
 # search
-HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
+# HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
 
 # upload
 FILE_UPLOAD_MAX_MEMORY_SIZE = u'314572800'

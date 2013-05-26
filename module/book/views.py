@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 
 from module.common.pager import get_pager
-# from module.common.hyperestraier import search_index
 from module.book.models import Book, BookDetail, Category, SubCategory
 
 
@@ -68,9 +67,10 @@ def detail(request, book_id):
 
 
 @login_required
-def preview(request, category_id, subcategory_id, title, volume):
-    query_set = BookDetail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
-    return render_to_response('book/preview.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
+def preview(request, book_id, volume):
+    pass
+    # query_set = BookDetail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
+    # return render_to_response('book/preview.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
 
 
 @login_required
@@ -103,27 +103,3 @@ def search(request):
     })
     context.update(pager)
     return _render('search.html', context)
-
-
-# @login_required
-# def search(request):
-
-#     if request.method == 'POST':
-#         keyword = request.POST['search'].encode('utf-8')
-#     else:
-#         keyword = request.GET.get('keyword', '').encode('utf-8')
-
-#     result_list = search_index(keyword)
-#     paginator = Paginator(result_list, 10)
-
-#     try:
-#         page = int(request.GET.get('page', '1'))
-#     except ValueError:
-#         page = 1
-
-#     try:
-#         contacts = paginator.page(page)
-#     except (EmptyPage, InvalidPage):
-#         contacts = paginator.page(paginator.num_pages)
-
-#     return render_to_response('book/search.html',context_instance=RequestContext(request, {'contacts': contacts, 'param_keyword': keyword}))
