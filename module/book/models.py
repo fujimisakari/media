@@ -7,7 +7,6 @@ from module.common.abustractmodel import AbustractCachedModel
 
 class Category(AbustractCachedModel):
     name = models.CharField(u'カテゴリ名', max_length=100, unique=True)
-    url_name = models.CharField(u'URL名', max_length=100, unique=True)
     sort = models.IntegerField(u'Sort番号', blank=True, null=True)
 
     @property
@@ -40,7 +39,6 @@ class Category(AbustractCachedModel):
 class SubCategory(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID')
     name = models.CharField(u'サブカテゴリ名', max_length=100, unique=True)
-    url_name = models.CharField(u'URL名', max_length=100, unique=True)
     sort = models.IntegerField(u'Sort番号', blank=True, null=True)
 
     @property
@@ -60,7 +58,6 @@ class Book(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID')
     subcategory_id = models.IntegerField(u'サブカテゴリID')
     title = models.CharField(u'タイトル名', max_length=100, unique=True)
-    url_name = models.CharField(u'URL名', max_length=100, unique=True)
 
     @property
     def category(self):

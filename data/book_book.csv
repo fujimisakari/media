@@ -1,46 +1,46 @@
-1,2,1,naruto,naruto
-2,2,2,鋼の錬金術師,hagaren
-3,2,2,エヴァンゲリオン,eva
-4,2,1,ドラゴンボール,dragon_ball
-5,2,1,one piece,one_piece
-6,2,3,バガボンド,vagabond
-7,1,13,Emacsテクニックバイブル,emacs_rubikichi
-8,1,8,DjangoxPython,django_python
-9,1,5,サーバーインフラを支える技術,server_infra
-10,1,5,Linuxアドバンスシステム構築ガイド,linux_ha1
-11,1,9,ApacheStrutsアプリケーション開発入門,apache_struts
-12,1,6,ふつうのLinuxプログラミング,linux_basic
-13,1,13,zsh最強シェル,zsh_saikyou
-19,1,6,Linuxサーバ構築　標準教科書,lpic_basic
-20,1,6,高信頼システム標準教科書,lpic_ha
-21,2,1,幽遊白書,yuyu
-22,2,3,行け！稲中卓球部,inatyu
-23,2,1,Dr.SLUMP,dr_slump
-24,2,1,北斗の拳,hokuto
-25,2,1,るろうに剣心,rurouni
-26,2,4,風の谷のナウシカ,naushika
-27,2,1,ダイの大冒険,dai
-29,1,16,初めてのPHP5,first_php5
-30,2,1,HUNTERxHUNTER,hunter
-31,1,5,Linux-DBシステム構築/運用　入門,linux_db_system
-33,1,5,Perlテクニックブック,perl_technic_book
-34,1,7,Smarty動的Webサイト構築入門,smarty_web_site
-36,1,11,Web+DBPress2011,wbpress2011
-37,1,7,作って覚えるPHP+MySQLアプリケーション,make_php_mywql_app
-38,1,13,現場のプロから学ぶweb製作ワークフロー,study_webcreate_flow
-39,1,6,図解でわかるLinux環境のすべて,all_of_linux_env
-40,1,16,JavaScriptパターン,javascript_pattern
-41,1,13,XHTML&CSS超高速コーディング術,xhtml_css_coding
-42,1,7,プログラミングPHP第2版,programming_php
-43,1,18,現場のプロから学ぶXHTML+CSS,xhtml_css_study
-44,1,10,CCNA/CCENT ICND1 教科書,ccna_icnd1
-45,1,10,CCNA ICND2 教科書,ccna_icnd2
-46,1,8,PerlユーザのためのPython移行ガイド,perl_to_python
-47,1,10,パケットキャプチャ入門,packet_capture_init
-48,1,10,パケットキャプチャ実践技術,packet_capture_expert
-49,1,8,標準Django,basic_django
-50,1,9,Javaセンスアッププログラミング,java_sence_up
-51,1,8,みんなのPython,our_python
-52,1,8,みんなのPython Webアプリ,our_python_webapp
-53,1,13,Webサイト製作者のためのJavaScript入門講座,website_javascript_init
-54,2,3,エンジェル・ハート,angel_heart
+1,2,1,naruto
+2,2,2,鋼の錬金術師
+3,2,2,エヴァンゲリオン
+4,2,1,ドラゴンボール
+5,2,1,one piece
+6,2,3,バガボンド
+7,1,13,Emacsテクニックバイブル
+8,1,8,DjangoxPython
+9,1,5,サーバーインフラを支える技術
+10,1,5,Linuxアドバンスシステム構築ガイド
+11,1,9,ApacheStrutsアプリケーション開発入門
+12,1,6,ふつうのLinuxプログラミング
+13,1,13,zsh最強シェル
+19,1,6,Linuxサーバ構築　標準教科書
+20,1,6,高信頼システム標準教科書
+21,2,1,幽遊白書
+22,2,3,行け！稲中卓球部
+23,2,1,Dr.SLUMP
+24,2,1,北斗の拳
+25,2,1,るろうに剣心
+26,2,4,風の谷のナウシカ
+27,2,1,ダイの大冒険
+29,1,16,初めてのPHP5
+30,2,1,HUNTERxHUNTER
+31,1,5,Linux-DBシステム構築/運用　入門
+33,1,5,Perlテクニックブック
+34,1,7,Smarty動的Webサイト構築入門
+36,1,11,Web+DBPress2011
+37,1,7,作って覚えるPHP+MySQLアプリケーション
+38,1,13,現場のプロから学ぶweb製作ワークフロー
+39,1,6,図解でわかるLinux環境のすべて
+40,1,16,JavaScriptパターン
+41,1,13,XHTML&CSS超高速コーディング術
+42,1,7,プログラミングPHP第2版
+43,1,18,現場のプロから学ぶXHTML+CSS
+44,1,10,CCNA/CCENT ICND1 教科書
+45,1,10,CCNA ICND2 教科書
+46,1,8,PerlユーザのためのPython移行ガイド
+47,1,10,パケットキャプチャ入門
+48,1,10,パケットキャプチャ実践技術
+49,1,8,標準Django
+50,1,9,Javaセンスアッププログラミング
+51,1,8,みんなのPython
+52,1,8,みんなのPython Webアプリ
+53,1,13,Webサイト製作者のためのJavaScript入門講座
+54,2,3,エンジェル・ハート

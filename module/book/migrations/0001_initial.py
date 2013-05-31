@@ -12,7 +12,6 @@ class Migration(SchemaMigration):
         db.create_table('book_category', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('url', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
             ('sort', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
         ))
         db.send_create_signal('book', ['Category'])
@@ -22,7 +21,6 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('category_id', self.gf('django.db.models.fields.IntegerField')()),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('url', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
             ('sort', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
         ))
         db.send_create_signal('book', ['SubCategory'])
@@ -33,7 +31,6 @@ class Migration(SchemaMigration):
             ('category_id', self.gf('django.db.models.fields.IntegerField')()),
             ('subcategory_id', self.gf('django.db.models.fields.IntegerField')()),
             ('title', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('url', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
         ))
         db.send_create_signal('book', ['Book'])
 
@@ -59,7 +56,7 @@ class Migration(SchemaMigration):
         # Adding model 'Writer'
         db.create_table('book_writer', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('category_id', self.gf('django.db.models.fields.IntegerField')()),
+            ('category_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
         ))
         db.send_create_signal('book', ['Writer'])
@@ -67,7 +64,7 @@ class Migration(SchemaMigration):
         # Adding model 'Publisher'
         db.create_table('book_publisher', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('category_id', self.gf('django.db.models.fields.IntegerField')()),
+            ('category_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
         ))
         db.send_create_signal('book', ['Publisher'])
@@ -99,8 +96,7 @@ class Migration(SchemaMigration):
             'category_id': ('django.db.models.fields.IntegerField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'subcategory_id': ('django.db.models.fields.IntegerField', [], {}),
-            'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'url': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
+            'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
         },
         'book.bookdetail': {
             'Meta': {'object_name': 'BookDetail'},
@@ -123,12 +119,11 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'sort': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'url': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
+            'sort': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'book.publisher': {
             'Meta': {'object_name': 'Publisher'},
-            'category_id': ('django.db.models.fields.IntegerField', [], {}),
+            'category_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
         },
@@ -137,12 +132,11 @@ class Migration(SchemaMigration):
             'category_id': ('django.db.models.fields.IntegerField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'sort': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'url': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
+            'sort': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'book.writer': {
             'Meta': {'object_name': 'Writer'},
-            'category_id': ('django.db.models.fields.IntegerField', [], {}),
+            'category_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
         }
