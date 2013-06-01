@@ -11,8 +11,8 @@
             <tr>
                 <td class="dlSection">
                     <div class="dlSection1">
-                        <a href="" class="thumbnail_view">
-                            <img src="" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                        <a href="{{ MEDIA_URL }}{{ book_detail.img_path }}" class="thumbnail_view">
+                            <img src="{{ MEDIA_URL }}{{ book_detail.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
                         </a>
                         <ul>
                             {% if book_detail.exit_pdf %}

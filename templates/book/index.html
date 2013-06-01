@@ -11,7 +11,7 @@
                     <li>
                         <div class="block">
                            <a href="{% url 'book_detail' book.id %}">
-                               <img src="" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                               <img src="{{ MEDIA_URL }}{{ book.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
                            </a>
                            <div class="bookName"><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></div>
                         </div>

@@ -60,6 +60,10 @@ class Book(AbustractCachedModel):
     title = models.CharField(u'タイトル名', max_length=100, unique=True)
 
     @property
+    def img_path(self):
+        return u'book/{}/{}/{}/{}'.format(self.category_id, self.subcategory_id, self.id, settings.BOOK_THUMBNAIL)
+
+    @property
     def category(self):
         return Category.get_cache(self.category_id)
 
@@ -90,6 +94,10 @@ class BookDetail(AbustractCachedModel):
     @property
     def book(self):
         return Book.get_cache(self.book_id)
+
+    @property
+    def img_path(self):
+        return u'book/{}/{}/{}/{}_{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
 
     @property
     def writer(self):

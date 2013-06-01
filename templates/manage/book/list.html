@@ -74,16 +74,14 @@
                         <table class="manageList">
                             <tr>
                                 <th class="size60"></th>
-                                <th class="size75">Sort番号</th>
+                                <th class="size75">表示順</th>
                                 <th>カテゴリ名</th>
-                                <th>URLカテゴリ</th>
                             </tr>
                     {% endif %}
                         <tr>
                             <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
-                            <td>{{ object.sort_num }}</td>
+                            <td>{{ object.sort }}</td>
                             <td><a href="{% url 'manage_book_edit' set_type object.id %}">{{ object.name }}</a></td>
-                            <td>{{ object.url_name }}</td>
                         </tr>
                 {% endifequal %}
 
@@ -92,14 +90,14 @@
                         <table class="manageList">
                             <tr>
                               <th class="size60"></th>
-                              <th class="size75">Sort番号</th>
+                              <th class="size75">表示順</th>
                               <th class="size100">カテゴリ名</th>
                               <th>サブカテゴリ名</th>
                             </tr>
                     {% endif %}
                         <tr>
                             <td><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
-                            <td>{{ object.sort_num }}</td>
+                            <td>{{ object.sort }}</td>
                             <td>{{ object.category.name }}</td>
                             <td><a href="{% url 'manage_book_edit' set_type object.id %}">{{ object.name }}</a></td>
                         </tr>
