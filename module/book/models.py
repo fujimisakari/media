@@ -27,13 +27,13 @@ class Category(AbustractCachedModel):
     def get_book_list(self):
         book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
         book_list = list(set([book_detail.book for book_detail in book_detail_list]))
-        return [book for book in book_list if book.category_id == self.id][:settings.ALL_LIST_LIMIT]
+        return [book for book in book_list if book and book.category_id == self.id][:settings.ALL_LIST_LIMIT]
 
     @classmethod
     def get_book_list_by_category_id(cls, category_id):
         book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
         book_list = list(set([book_detail.book for book_detail in book_detail_list]))
-        return [book for book in book_list if book.category_id == category_id]
+        return [book for book in book_list if book and book.category_id == category_id]
 
 
 class SubCategory(AbustractCachedModel):
