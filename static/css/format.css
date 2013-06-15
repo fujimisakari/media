@@ -1,0 +1,97 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body { 
+  word-break:break-all; 
+  font:13px arial, Osaka,"ＭＳ Ｐゴシック",Verdana,helvetica,sans-serif;
+  *font-size: small;
+  *font: x-small;
+}
+
+table {
+  font-size:inherit;
+  font:100%;
+}
+
+pre,code,kbd,samp,tt {
+  font-family:monospace;
+  *font-size:108%;
+  line-height:99%;
+}
+
+body *{
+  line-height:1.5em;
+  *line-height:1.56em;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+/* Reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+  margin: 0;
+  padding: 0;
+}
+
+a, ins {
+  text-decoration: none;
+}
+
+a {
+  outline: 0;
+}
+
+address, em, cite, dfn, var {
+  font-style: normal;
+}
+
+input, textarea {
+  font-family: sans-serif;
+  font-weight: normal;
+}
+
+img {
+  vertical-align: baseline;
+}
+
+a img {
+  border: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+fieldset,img {
+  border: 0;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var {
+  font-style: normal;
+  font-weight: normal;
+}
+small {
+  font-size: 77%;
+}
+
+ol,ul {
+  list-style: none;
+}
+
+caption,th {
+  text-align: left;
+}
+
+textarea { overflow: auto; }
+
+em { font-style: italic; }
+
+fieldset,table,pre{ margin-bottom: 1em; }
+

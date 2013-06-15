@@ -1,0 +1,77 @@
+{% extends 'book/local_base.html' %}
+{% load url from future %}
+
+{% block localTitle %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_DETAIL }}" alt="DETAIL_LIST" width="795" height="45" /></h2>
+{% endblock %}
+
+{% block localContents %}
+    <table class="detailList">
+        {% for book_detail in book_detail_list %}
+            <tr>
+                <td class="dlSection">
+                    <div class="dlSection1">
+                        <a href="{{ MEDIA_URL }}{{ book_detail.img_path }}" class="thumbnail_view">
+                            <img src="{{ MEDIA_URL }}{{ book_detail.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                        </a>
+                        <ul>
+                            {% if book_detail.exit_pdf %}
+                                <li><a href="" onclick="m_win(this.href,'preview',835, 1000); return false;">preview</a></li>
+                                <li><a href="" target="_blank">pc(pdf)</a></li>
+                            {% endif %}
+                            {% if book_detail.exit_epud %}
+                                <li><a href="">ipad(epub)</a></li>
+                            {% endif %}
+                            <!-- <li><a href="{{ MEDIA_DATA }}{{ book_detail.get_absolute_url }}{{ book_detail.volume }}{{ BOOK_IPHONE }}">iphone(epub)</a></li> -->
+                            {% if book_detail.exit_attachment  %}
+                                <li><a href="" target="_blank">付属CD</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+                <td class="dlSection">
+                    <div class="dlSection2_extend">
+                        <dl>
+                            <dt>タイトル :</dt><dd>{{ book_detail.book.title }}</dd>
+                            {% if book_detail.book.category_id == 1 %}
+                                <dt>著者 :</dt><dd>{{ book_detail.writer.name }}</dd>
+                                <dt>出版社 :</dt><dd>{{ book_detail.publisher.name }}</dd>
+                                <dt>ページ数 :</dt><dd>{{ book_detail.total_page }}</dd>
+                                <dt>カテゴリ :</dt><dd>{{ book_detail.book.category.name }}</dd>
+                                <dt>サブカテゴリ :</dt><dd>{{ book_detail.book.subcategory.name }}</dd>
+                                {% if book_detail.exit_pdf %}
+                                    <dt>PDFサイズ :</dt><dd>{{ book_detail.pdf_size }} M</dd>
+                                {% endif %}
+                                {% if book_detail.exit_epud %}
+                                    <dt>EPUDサイズ :</dt><dd>{{ book_detail.epud_size }} M</dd>
+                                {% endif %}
+                                <dt>作成日 :</dt><dd>{{ book_detail.create_date|date:"Y-m-d" }}</dd>
+                                <dt>備考 :</dt><dd>{{ book_detail.description|linebreaks|safe }}</dd>
+                                <dt class="editLink"><a href="">編集する</a></dt>
+                            {% else %}
+                                <dt>巻 :</dt><dd>{{ book_detail.volume }}</dd>
+                                <dt>著者 :</dt><dd>{{ book_detail.writer.name }}</dd>
+                                <dt>出版社 :</dt><dd>{{ book_detail.publisher.name }}</dd>
+                                <dt>ページ数 :</dt><dd>{{ book_detail.total_page }}</dd>
+                                <dt class="editLink"><span class="switchHat">さらに詳しく</span></dt><dd>&nbsp;</dd>
+                                <div class="switchDetail">
+                                    {% if book_detail.exit_pdf %}
+                                        <dt>PDFサイズ :</dt><dd>{{ book_detail.pdf_size }} M</dd>
+                                    {% endif %}
+                                    {% if book_detail.exit_epud %}
+                                        <dt>EPUDサイズ :</dt><dd>{{ book_detail.epud_size }} M</dd>
+                                    {% endif %}
+                                    <dt>カテゴリ :</dt><dd>{{ book_detail.book.category.name }}</dd>
+                                    <dt>サブカテゴリ :</dt><dd>{{ book_detail.book.subcategory.name }}</dd>
+                                    <dt>作成日 :</dt><dd>{{ book_detail.create_date|date:"Y-m-d" }}</dd>
+                                    <dt>備考 :</dt><dd>{{ book_detail.description|linebreaks|safe }}</dd>
+                                    <dt class="editLink"><a href="">編集する</a></dt>
+                                </div>
+                            {% endif %}
+                        </dl>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'local_base.html' %}
+{% load url from future %}
+
+{% block contents %}
+    {% comment %}
+    <div id="contents">
+        <div id="contentsNavi">
+            <h2><img src="{{ MEDIA_URL }}{{ NAVI_SEARCH }}" alt="SEARCH" width="190" height="45" /></h2>
+            <ul class="contentsSearch">
+                <form method="post" action="{% url 'book_search' %}">
+                    {% if keyword %}
+                        <li><input class="search_result" type="text" maxlength="100" name="search" value="{{ keyword }}" /></li>
+                    {% else %}
+                        <li><input class="id_search" type="text" maxlength="100" name="search" value="タイトル検索" /></li>
+                    {% endif %}
+                    <li><input class="button" type="submit" value="ENTER" /></li>
+                </form>
+            </ul>
+
+            <h2><img src="{{ MEDIA_URL }}{{ NAVI_CATEAGORY }}" alt="CATEGORY" width="190" height="45" /></h2>
+            <div class="localContentsNavi">
+                <ul>
+                {% for category in category_list %}
+                    <li><a href="{% url 'book_category' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+
+            <h2><img src="{{ MEDIA_URL }}{{ NAVI_SUBCATEGORY }}" alt="SUBCATEGORY" width="190" height="45" /></h2>
+            <div class="localContentsNavi">
+                {% for category in category_list %}
+                    <h3>{{ category.name }}</h3>
+                    <ul>
+                    {% for subcategory in category.get_subcategory_list %}
+                        <li><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    {% endcomment %}
+
+            {% block contentsMain %}
+            {% endblock %}
+
+        <div id="contentsMain">
+        </div>
+    </div>
+{% endblock %}

@@ -15,7 +15,7 @@ def _render(template_file, context):
 def index(request):
 
     context = RequestContext(request, {
-        'recent_book_list': BookDetail.get_recent_book_list(),
+        'recent_book_list': BookDetail.get_recent_book_list(limit=12),
         'whatnew_list': WhatNew.all_list(),
     })
 

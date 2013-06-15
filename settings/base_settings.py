@@ -201,16 +201,16 @@ FILE_UPLOAD_TEMP_DIR = os.path.join(ROOT_PATH, 'templates/static/media/tmp')
 # paging
 LIST_COUNT = 5
 NUM_IN_RSS = 8
-NUM_IN_LIST_PAGE = 30
+NUM_IN_LIST_PAGE = 40
 NUM_IN_DETAIL_PAGE = 20
 NUM_IN_WHATNEW_LIST = 20
 NUM_IN_MANAGE_LIST = 50
-ALL_LIST_LIMIT = 15
+ALL_LIST_LIMIT = 32
 
 # conmmon
 MEDIA_TITLE = "MEDIA SERVER"
-MEDIA_CSS = 'css/import.css'
-MEDIA_JS = 'js/import.js'
+MEDIA_CSS = '/css/import.css'
+MEDIA_JS = '/js/import.js'
 MEDIA_FOTTER = '2011 Fujimo-net.com'
 
 # book
@@ -221,7 +221,7 @@ BOOK_DATA = '_data.zip'
 BOOK_THUMBNAIL = 'thumbnail.jpg'
 BOOK_VOLUME_THUMBNAIL = '_thumbnail.jpg'
 BOOK_THUMB_HEIGHT = '110'
-BOOK_THUMB_WIDTH = '77'
+BOOK_THUMB_WIDTH = '80'
 
 # manage
 MANAGE_BOOK_PATH = os.path.join(ROOT_PATH, 'templates/static/media/book')

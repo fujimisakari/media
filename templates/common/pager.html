@@ -1,55 +1,44 @@
-<div align="center">
-    <table class="paging_list">
-        <tr>
+<div class='box center'>
+    <div class="paging">
             {% if keyword %}
-                <td>
                 {% if has_previous %}
                     <a href="?page={{ previous_page }}&keyword={{ keyword }}">&lt; Prev</a>
                 {% else %}
-                    <p>&lt; Prev</p>
+                    <a class="disenable">&lt; Prev</a>
                 {% endif %}
-                </td>
-                <td>
-                  [{% for page_num in page_range %}
-                      {% if current_page == page_num %}
-                          &nbsp;<span style='text-decoration: underline;'>{{ page_num }}</span>&nbsp;
-                      {% else %}
-                          <a href="?page={{ page_num }}&keyword={{ keyword }}">&nbsp;{{ page_num }}&nbsp;</a>
-                      {% endif %}
-                  {% endfor %}]
-                </td>
-                <td>
-                    {% if has_next %}
-                        <a href="?page={{ next_page }}&keyword={{ keyword }}">Next &gt;</a>
+
+                {% for page_num in page_range %}
+                    {% if current_page == page_num %}
+                        <span class="active">{{ page_num }}</span>
                     {% else %}
-                        <p>Next &gt;</p>
+                        <a href="?page={{ page_num }}&keyword={{ keyword }}">&nbsp;{{ page_num }}&nbsp;</a>
                     {% endif %}
-                </td>
+                {% endfor %}
+
+                {% if has_next %}
+                    <a href="?page={{ next_page }}&keyword={{ keyword }}">Next &gt;</a>
+                {% else %}
+                    <a class="disenable">Next &gt;</a>
+                {% endif %}
             {% else %}
-                <td>
                 {% if has_previous %}
                     <a href="?page={{ previous_page }}">&lt; Prev</a>
                 {% else %}
-                    <p>&lt; Prev</p>
+                    <a class="disenable">&lt; Prev</a>
                 {% endif %}
-                </td>
-                <td>
-                  [{% for page_num in page_range %}
-                      {% if current_page == page_num %}
-                          &nbsp;<span style='text-decoration: underline;'>{{ page_num }}</span>&nbsp;
-                      {% else %}
-                          <a href="?page={{ page_num }}">&nbsp;{{ page_num }}&nbsp;</a>
-                      {% endif %}
-                  {% endfor %}]
-                </td>
-                <td>
-                    {% if has_next %}
-                        <a href="?page={{ next_page }}">Next &gt;</a>
+
+                {% for page_num in page_range %}
+                    {% if current_page == page_num %}
+                        <span class="active">{{ page_num }}</span>
                     {% else %}
-                        <p>Next &gt;</p>
+                        <a href="?page={{ page_num }}">{{ page_num }}</a>
                     {% endif %}
-                </td>
+                {% endfor %}
+
+                {% if has_next %}
+                    <a href="?page={{ next_page }}">Next &gt;</a>
+                {% else %}
+                    <a class="disenable">Next &gt;</a>
+                {% endif %}
             {% endif %}
-        </tr>
-    </table>
 </div>

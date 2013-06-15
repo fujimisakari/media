@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+  color: #333333;
+}
+
+strong { 
+  font-weight: bold;
+  color: #9b0000;
+}
+
+em {
+  font-weight: bold;
+  font-style: normal;
+  color: #573700;
+}
+
+img { vertical-align: top;}
+
+div.header a:link    { color: #fffae7; text-decoration:underline;}
+div.header a:visited { color: #fffae7; text-decoration:underline;}
+div.header a:hover   { color: #8d7565; text-decoration:underline;}
+div.header a:active  { color: #8d7565; text-decoration:underline;}
+div.header { color: #9b9b9b;}
+
+a:link    { color: #783b00; text-decoration: none;}
+a:visited { color: #783b00; text-decoration: none;}
+a:hover   { color: #6d5a32; text-decoration: none;}
+a:active  { color: #6d5a32; text-decoration: none;}
+
+h1 {font-size: 270%; padding: 0 0 10px 0;   color:#fff;}
+h2 {font-size: 185%; padding: 0 0 15px 0;   color:#fffbf0;}
+h3 {font-size: 154%; padding: 0 0 5px 0;    color:#1e1e1e;}
+h4 {font-size: 124%; padding: 0 0 3px 0;    color:#503307;}
+h5 {font-size: 108%; padding: 0 0 1px 0;    color:#331f00;}
+h6 {font-size: 100%; padding: 0 0 1px 0;    color:#331f00;}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+hr {
+  margin: 20px auto;
+  width: 90%;
+	height: 0px;
+  border: 0px;
+  border-top: 1px dotted #794b0a;
+}
+
+/*---------------------------------------------
+Font Size
+10px 	77%
+11px 	85%
+12px 	93%
+13px 	100%
+14px 	108%
+15px 	116%
+16px 	124%
+17px 	131%
+18px 	139%
+19px 	147%
+20px 	154%
+21px 	162%
+22px 	170%
+23px 	177%
+24px 	185%
+25px 	193%
+26px 	200%
+
+36px  270%
+---------------------------------------------*/

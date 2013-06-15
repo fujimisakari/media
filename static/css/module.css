@@ -1,0 +1,69 @@
+@charset "utf-8";
+/* CSS Document */
+
+.mgnR10 { margin-right: 10px !important; }
+.mgnR20 { margin-right: 20px !important; }
+.mgnR30 { margin-right: 30px !important; }
+.mgnR40 { margin-right: 40px !important; }
+.mgnR50 { margin-right: 50px !important; }
+
+.mgnL10 { margin-left: 10px !important; }
+.mgnL20 { margin-left: 20px !important; }
+.mgnL30 { margin-left: 30px !important; }
+.mgnL40 { margin-left: 40px !important; }
+.mgnL50 { margin-left: 50px !important; }
+
+.mgnB10 { margin-bottom: 10px !important; }
+.mgnB20 { margin-bottom: 20px !important; }
+.mgnB30 { margin-bottom: 30px !important; }
+.mgnB40 { margin-bottom: 40px !important; }
+.mgnB50 { margin-bottom: 50px !important; }
+
+.mgnT10 { margin-top: 10px !important; }
+.mgnT20 { margin-top: 20px !important; }
+.mgnT30 { margin-top: 30px !important; }
+.mgnT40 { margin-top: 40px !important; }
+.mgnT50 { margin-top: 50px !important; }
+
+/* clearfix */
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  content: " ";
+  font-size: 0.1em;
+  line-height: 0; 
+}
+.clearfix { display: inline-block; }
+/* exlude MacIE5 \*/
+* html .clearfix { height: 1% }
+.clearfix {display:block;}
+/* end MacIE5 */
+
+.clear {
+  clear: both;
+}
+
+.fontsize18 { font-size: 139% !important; }
+.fontsize16 { font-size: 124% !important; }
+.fontsize15 { font-size: 116% !important; }
+.fontsize14 { font-size: 108% !important; }
+.fontsize13 { font-size: 100% !important; }
+.fontsize12 { font-size:  93% !important; }
+.fontsize11 { font-size:  85% !important; }
+.fontsize10 { font-size:  77% !important; }
+
+/*---------------------------------------------
+Font Size
+ 
+18px : 139%
+16px : 124%
+15px : 116%
+14px : 108%
+13px : 100%
+12px :  93%
+11px :  85%
+10px :  77%
+---------------------------------------------*/

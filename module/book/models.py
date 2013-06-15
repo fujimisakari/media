@@ -15,7 +15,7 @@ class Category(AbustractCachedModel):
 
     @property
     def book_count(self):
-        return len([book_detail for book_detail in BookDetail.get_cache_all() if self.id == book_detail.book.category_id])
+        return len([book_detail for book_detail in BookDetail.get_cache_all() if book_detail.book and self.id == book_detail.book.category_id])
 
     @classmethod
     def get_category_list(cls):
@@ -26,13 +26,19 @@ class Category(AbustractCachedModel):
 
     def get_book_list(self):
         book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
-        book_list = list(set([book_detail.book for book_detail in book_detail_list]))
+        book_list = []
+        for book_detail in book_detail_list:
+            if not book_detail.book in book_list:
+                book_list.append(book_detail.book)
         return [book for book in book_list if book and book.category_id == self.id][:settings.ALL_LIST_LIMIT]
 
     @classmethod
     def get_book_list_by_category_id(cls, category_id):
         book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
-        book_list = list(set([book_detail.book for book_detail in book_detail_list]))
+        book_list = []
+        for book_detail in book_detail_list:
+            if not book_detail.book in book_list:
+                book_list.append(book_detail.book)
         return [book for book in book_list if book and book.category_id == category_id]
 
 
@@ -53,6 +59,14 @@ class SubCategory(AbustractCachedModel):
     def get_subcategory_list(cls):
         return sorted([subcategory for subcategory in cls.get_cache_all()], key=lambda x: x.sort)
 
+    def get_book_list(self):
+        book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
+        book_list = []
+        for book_detail in book_detail_list:
+            if not book_detail.book in book_list:
+                book_list.append(book_detail.book)
+        return [book for book in book_list if book and book.subcategory_id == self.id]
+
 
 class Book(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID')
@@ -61,7 +75,7 @@ class Book(AbustractCachedModel):
 
     @property
     def img_path(self):
-        return u'book/{}/{}/{}/{}'.format(self.category_id, self.subcategory_id, self.id, settings.BOOK_THUMBNAIL)
+        return u'/img/thumbnail/{}/{}/{}/{}'.format(self.category_id, self.subcategory_id, self.id, settings.BOOK_THUMBNAIL)
 
     @property
     def category(self):
@@ -97,7 +111,7 @@ class BookDetail(AbustractCachedModel):
 
     @property
     def img_path(self):
-        return u'book/{}/{}/{}/{}_{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
+        return u'/img/thumbnail/{}/{}/{}/{}_{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
 
     @property
     def writer(self):
@@ -114,7 +128,11 @@ class BookDetail(AbustractCachedModel):
     @classmethod
     def get_recent_book_list(cls, limit=3):
         book_detail_list = sorted([book_detail for book_detail in cls.get_cache_all()], key=lambda x: x.update_date, reverse=True)
-        return book_detail_list[:limit]
+        book_list = []
+        for book_detail in book_detail_list:
+            if not book_detail.book in book_list:
+                book_list.append(book_detail.book)
+        return [book for book in book_list if book][:limit]
 
 
 class Writer(AbustractCachedModel):

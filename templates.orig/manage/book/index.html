@@ -1,0 +1,55 @@
+{% extends 'manage/base.html' %}
+{% load url from future %}
+
+{% block manageContentsMenu %}
+    <div class="manageMode"><a href="{% url 'manage_book_add' set_type %}">add</a> / <a href="{% url 'manage_book_edit_list' set_type %}">edit</a></div>
+{% endblock %}
+
+{% block manageContentsMain %}
+    {% if getForm %}
+        <div class="addSection">
+            {% if id %}
+                <div class="manageMode"><a href="{% url 'manage_book_add' set_type %}">add</a> / <a href="{% url 'manage_book_edit_list' set_type %}">edit</a></div>
+            {% else %}
+                <div class="manageMode">add / <a href="{% url 'manage_book_edit_list' set_type %}">edit</a></div>
+            {% endif %}
+            <form method="post">
+                <table class="manageAdd">
+                    {% if set_type == 'book' or set_type == 'detail' %}
+                        <tr>
+                            <th><label for="id_category">カテゴリ</label></th>
+                            <td>
+                                <select id="id_category">
+                                    <option selected="selected" value="">---------</option>
+                                    {% for category in category_list %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="id_subcategory">サブカテゴリ</label></th>
+                            <td>
+                                <select id="id_subcategory">
+                                    <option selected="selected" value="">---------</option>
+                                    {% for subcategory in subcategory_list %}
+                                        <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {{ getForm.as_table }}
+                </table>
+                <table class="manageButton">
+                    <tr>
+                        <td>
+                        <input class="button" type="submit" value="ENTER" onclick="this.form.action='.'" />
+                        {% if id %}<input class="button" type="submit" value="DERETE" onclick="this.form.action='./delete/'" />{% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

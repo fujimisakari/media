@@ -1,7 +1,7 @@
-{% extends 'manage/base.html' %}
+{% extends 'base.html' %}
 {% load url from future %}
 
-{% block manageContentsMain %}
+{% block contents %}
     <div class="manageSection">
         <div class="manageMode"><a href="{% url 'manage_book_add' set_type %}">add</a> / edit</div>
         <div class="manageSearchForm">

@@ -17,22 +17,18 @@ def _render(template_file, context):
 
 @login_required
 def index(request):
-    context = RequestContext(request, {'category_list': Category.get_category_list()})
+    context = RequestContext(request, {})
     return _render('index.html', context)
 
 
 @login_required
 def category(request, category_id):
     category_id = int(category_id)
-    book_list = Category.get_book_list_by_category_id(category_id)
-    page_id = request.GET.get('page', 1)
-    pager, book_list = get_pager(book_list, page_id, settings.NUM_IN_LIST_PAGE)
+    subcategory_list = Category.get_cache(category_id).get_subcategory_list()
     context = RequestContext(request, {
-        'book_list': book_list,
-        'category_list': Category.get_category_list(),
-        'name': Category.get_cache(category_id).name,
+        'subcategory_list': subcategory_list,
+        'category': Category.get_cache(category_id),
     })
-    context.update(pager)
     return _render('category.html', context)
 
 
@@ -45,8 +41,7 @@ def subcategory(request, category_id, subcategory_id):
     pager, book_list = get_pager(book_list, page_id, settings.NUM_IN_LIST_PAGE)
     context = RequestContext(request, {
         'book_list': book_list,
-        'category_list': Category.get_category_list(),
-        'name': SubCategory.get_cache(subcategory_id).name,
+        'subcategory': SubCategory.get_cache(subcategory_id),
     })
     context.update(pager)
     return _render('subcategory.html', context)
@@ -59,8 +54,8 @@ def detail(request, book_id):
     page_id = request.GET.get('page', 1)
     pager, book_detail_list = get_pager(book_detail_list, page_id, settings.NUM_IN_DETAIL_PAGE)
     context = RequestContext(request, {
+        'book': Book.get_cache(book_id),
         'book_detail_list': book_detail_list,
-        'category_list': Category.get_category_list(),
     })
     context.update(pager)
     return _render('detail.html', context)
@@ -99,7 +94,6 @@ def search(request):
     pager, book_list = get_pager(book_list, page_id, settings.NUM_IN_LIST_PAGE)
     context = RequestContext(request, {
         'book_list': book_list,
-        'category_list': Category.get_category_list(),
     })
     context.update(pager)
     return _render('search.html', context)

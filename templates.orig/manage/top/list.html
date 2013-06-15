@@ -1,0 +1,52 @@
+{% extends 'manage/base.html' %}
+{% load url from future %}
+
+{% block manageContentsMain %}
+    <div class="manageSection">
+        <div class="manageMode"><a href="{% url 'manage_top_whatnew_add' %}">add</a> / edit</div>
+        <div class="manageSearchForm">
+            <ul>
+                <form method="post" action="{% url 'manage_top_whatnew_search' %}" >
+                    {% if keyword %}
+                        <li><input class="search_result" type="text" maxlength="100" name="search" value="{{ keyword }}" /></li>
+                    {% else %}
+                        <li><input class="id_search" type="text" maxlength="100" name="search" value="キーワード検索" /></li>
+                    {% endif %}
+                    <li><input class="button" type="submit" value="SEARCH" /></li>
+                </form>
+            </ul>
+        </div>
+        {% if keyword %}
+            <p class="page_result">検索結果：{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
+        {% else %}
+            <p class="page_result">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
+        {% endif %}
+
+        <form method="post">
+            <table class="manageList">
+                {% for whatnew in whatnew_list %}
+                    {% if forloop.first %}
+                        <tr>
+                            <th class="size60"></th>
+                            <th>登録日</th>
+                            <th>内容</th>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td><input type="checkbox" name="del_flag" value="{{ whatnew.id }}" /></td>
+                        <td><a href="{% url 'manage_top_whatnew_edit' whatnew.id %}">{{ whatnew.create_date|date:"Y-m-d" }}</a></td>
+                        <td>{{ whatnew.content|linebreaks|safe }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <table class="manageButton">
+                <tr>
+                    <td><input class="button" type="submit" value="DELETE" onclick="this.form.action='{% url 'manage_top_whatnew_delete_checked' %}'" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    {% include './common/pager.html' %}
+
+{% endblock %}

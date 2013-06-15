@@ -1,0 +1,21 @@
+{% extends 'book/local_base.html' %}
+{% load url from future %}
+
+{% block localTitle %}
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_CATEGORY }}" alt="CATEGORY" width="795" height="45" /></h2>
+{% endblock %}
+
+{% block localContents %}
+    <ul class="column">
+        {% for book in book_list %}
+            <li>
+                <div class="block">
+                   <a href="{% url 'book_detail' book.id %}" class="thumbnail">
+                       <img src="{{ MEDIA_URL }}{{ book.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                   </a>
+                   <div class="bookName"><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

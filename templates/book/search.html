@@ -18,4 +18,18 @@
             </li>
         {% endfor %}
     </ul>
+
+    {% if total %}
+        <p class="page_result">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
+
+        {% block localContents %}
+        {% endblock %}
+
+        {% include './common/pager.html' %}
+    {% else %}
+        <div class="mt30 ml10 mb20">
+            該当する本がありません
+        </div>
+    {% endif %}
+
 {% endblock %}

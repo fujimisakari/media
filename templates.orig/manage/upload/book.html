@@ -1,0 +1,53 @@
+{% extends 'manage/base.html' %}
+
+{% block manageContentsMain %}
+    {% if form_entry %}
+        <form method="post" enctype="multipart/form-data">
+            <table class="manageAdd">
+                {{ form_entry.as_table }}
+                <tr>
+                    <th><label for="id_entry">タイトル ※</label></th>
+                    <td>
+                        <select id="id_entry" name="entry">
+                            <option selected="selected" value="">---------</option>
+                            {% for entry in entry_list %}
+                            <option value="{{ entry.id }}">{{ entry.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="id_volume">巻 ※</label></th>
+                    <td>
+                        <select id="id_volume" name="volume">
+                            <option selected="selected" value="">---------</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>データ種別 ※</label></th>
+                    <td>
+                        <ul>
+                            <li><label for="id_data_type_0"><input type="radio" id="id_data_type_0" value="thumbnail" name="data_type" checked="checked" /> サムネイル用画像(jpgのみ)</label></li>
+                            <li><label for="id_data_type_1"><input type="radio" id="id_data_type_1" value="pdf" name="data_type" /> pdfファイル</label></li>
+                            <li><label for="id_data_type_2"><input type="radio" id="id_data_type_2" value="epud" name="data_type" /> epudファイル</label></li>
+                            <li><label for="id_data_type_3"><input type="radio" id="id_data_type_3" value="zip" name="data_type" /> 付属CD-R(zipファイル)</label></li>
+                            <li><p>※アップロード時間は150Mで3分くらいかかる</p></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>アップデータ ※</label></th>
+                    <td>{{ form_upload.upload_file }}</td>
+                </tr>
+            <!-- /.manageTop --></table>
+            <table class="manageButton">
+                <tr>
+                    <td>
+                    <input class="button" type="submit" value="ENTER" onclick="this.form.action='.'" />
+                    </td>
+                </tr>
+            <!-- /.manageButton --></table>
+        </form>
+    {% endif %}
+{% endblock %}

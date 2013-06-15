@@ -1,42 +1,112 @@
-<?xml version="1.0" encoding="utf-8"?>
+{% load url from future %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="content-style-type" content="text/css; charset=utf-8" />
-    <meta http-equiv="Content-Script-Type" content="text/javascript" />
-    <title>{{ MEDIA_TITLE }}</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="*,*" />
-    <link type="text/css" href="{{ MEDIA_URL }}{{ MEDIA_CSS }}" rel="stylesheet" media="all" />
-    <script type="text/javascript" src="{{ MEDIA_URL }}{{ MEDIA_JS }}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="text/css" http-equiv="Content-Style-Type"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title></title>
+<link href="{{ MEDIA_URL }}{{ MEDIA_CSS }}" type="text/css" rel="stylesheet" media="screen,tv" />
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=7" /><![endif]-->
+<!--[if lt IE 8]><style type="text/css" media="all">@import url("css/ie.css");</style><![endif]-->
+<link href="{{ MEDIA_URL }}/css/slimbox2.css" type="text/css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/slimbox2.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.date_input.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.droppy.js"></script>
+<!--[if IE 6]>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.png_bg');
+</script>
+<![endif]-->
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/custom.js"></script>
 </head>
-
 <body>
-    <div id="wrapper">
-        {% block header %}
-        {% endblock %}
+    <div class="wrapper clearfix">
+        <div class="header">
+            <div class="logo"><img src="{{ MEDIA_URL }}/img/logo.png" alt="Admin Template Logo" /></div>
+            <div class="headNavi">
+                {% comment %}
+                <form action="page.html">
+                    <input type="submit" class="submitA submitM" value="トップページ" />
+                </form>
+                <form action="index.html">
+                    <input type="submit" class="submitA submitM" value="Logout" />
+                </form>
+                <form action="" class="search">
+                    <input type="text" class="searchText" />
+                    <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
+                </form>
+                {% endcomment %}
+                <div class="user">
+                    Login:&nbsp;{{ user.username }}
+                </div>
+            </div>
+        </div>
 
-        {% block login %}
-        {% endblock %}
+        <div class="naviArea clear">
+            <ul class="navi clearfix droppy">
+                <li><a href="{% url 'top_index' %}">TOP</a></li>
+                <li><a href="{% url 'book_index' %}">BOOK</a></li>
+                <li><span><a>CATEGORY</a></span>
+                <ul class="navi_second">
+                    {% for category in category_list %}
+                        <li>
+                            <span><a href="{% url 'book_category' category.id %}">{{ category.name }}</a></span>
+                            <ul class="navi_third">
+                                {% for subcategory in category.get_subcategory_list %}
+                                    <li><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <li><span><a>MANAGE</a></span>
+                    <ul class="navi_second">
+                        <li><a href="{% url 'manage_top_whatnew_add' %}">新着情報</a></li>
+                        <li><a href="{% url 'manage_book_add' 'book' %}">タイトル</a></li>
+                        <li><a href="{% url 'manage_book_add' 'detail' %}">タイトル詳細</a></li>
+                        <li><a href="{% url 'manage_book_add' 'category' %}">カテゴリ</a></li>
+                        <li><a href="{% url 'manage_book_add' 'subcategory' %}">サブカテゴリ</a></li>
+                        <li><a href="{% url 'manage_book_add' 'writer' %}">著者</a></li>
+                        <li><a href="{% url 'manage_book_add' 'publisher' %}">出版社</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'manage_analysis_book' %}">STATUS</a></li>
+                <li><span><a>USER</a></span>
+                    <ul class="navi_second">
+                        <li><a href="{% url 'auth_password_change' %}">パスワードの変更</a></li>
+                        <li><a href="{% url 'auth_logout' %}">ログアウト</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-        {% block change_passwd %}
-        {% endblock %}
+        <div class="container clearfix">
+            <div class="conHeader clearfix">
+                <div class="contentArea clearfix">
+                    {% comment %}
+                    <div class="information notification">
+                        <div>
+                          登録内容を入力してください。【インフォメーションメッセージ】
+                        </div>
+                    </div>
+                    {% endcomment %}
 
-        {% block upload %}
-        {% endblock %}
+                    {% block contents %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
 
-        {% block contents %}
-        {% endblock %}
-
-        {% block search %}
-        {% endblock %}
-
-        {% block manage %}
-        {% endblock %}
-
-        {% block footer %}
-        {% endblock %}
+    <div class="footerArea clear">
+        <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
     </div>
 </body>
 </html>

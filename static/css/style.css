@@ -1,0 +1,136 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 1.Area
+----------------------------------------------- */
+div.naviArea {
+  border-bottom: 1px solid #f4f4f4;
+  background-color: #000;
+  background-repeat: repeat;
+}
+
+/* 2.css3
+----------------------------------------------- */
+div.naviArea {
+     -webkit-border-top-left-radius: 5px;
+     -webkit-border-top-right-radius: 5px;
+     -moz-border-radius-topleft: 5px;
+     -moz-border-radius-topright: 5px;
+}
+
+/* 3.Navigation
+----------------------------------------------- */
+/* Basic code - don't modify */
+.droppy { display: block; margin: 0; padding: 0; position: relative; z-index: 1;}
+.droppy li { display: block; list-style: none; margin: 0; padding: 0; float: left; position: relative; }
+.droppy a { display: block; }
+.droppy ul { display: none; position: absolute; left: 0; margin: 0; padding: 0; }
+* html .droppy ul { line-height: 0; } /* IE6 "fix" */
+.droppy ul a { zoom: 1; } /* IE6/7 fix */
+.droppy ul li { float: none;}
+.droppy ul ul { top: 0; }
+
+/* Essentials - configure this */
+.droppy ul ul { 
+  left: 140px;
+  top: -1px;
+}
+/* Everything else is theming */
+ul.navi {
+  position: relative;
+  padding:  0 0 0 10px;
+  color: #FFF;
+  z-index: 1;
+  
+}
+ul.navi a {
+  color: #000 !important; 
+}
+ul.navi li a {
+  font-weight: bold;
+  display: block;
+  padding: 9px 0 0 0;
+}
+
+ul.navi li:hover ul.navi_second li,
+ul.navi li ul.navi_second:hover li ul.navi_third li {
+  z-index: 5011;
+  margin: 0 0 0 0;
+}
+ul.navi li {
+  display: block;
+  position: relative;
+  text-align: center;
+  float: left;
+  width: 140px;
+  min-height: 36px;
+  height: auto !important; /* IE6 */
+  height: 36px; /* IE6 */
+  margin: 0 0 0 0;
+  /* background: url(../images/bg_navi.gif) repeat-x #e6b524 ; */
+  background: url(/static/img/bg_contents.gif) repeat-y;
+  border: 1px solid #000000;
+  margin: -10px 5px 5px 5px ;
+}
+ul.navi li span  {
+  display: block;
+  min-height: 36px;
+  height: auto !important; /* IE6 */
+  height: 36px; /* IE6 */
+  background: url(/static/img/navi_more.png) no-repeat ;
+  background-position: 115px 12px ;
+  padding: 0 16px 0 0 ;
+  margin-left: 5px ;
+}
+*html ul.navi li span  {
+  background: url(/static/img/navi_more.png) no-repeat 110px 50% !important;
+}
+
+ul.navi li.first ul li {
+  width: 150px;
+}
+ul.navi li ul.navi_second{
+  display:none;
+}
+.droppy li:hover {
+  background-color: #ffefce;
+  background-image: none;
+  background-repeat: repeat;
+}
+.droppy ul { 
+  top: 100%;
+  left:-1px;
+  border-top: 1px solid #000;
+}
+.droppy ul li {
+  background-color: #0a93fc;
+  background-image: url(/static/img/bg_navi.gif);
+  background-repeat: repeat;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+  margin: 0 0 0 0 ;
+}
+
+div.naviArea ul.navi li.first {
+  padding: 0 0 0 10px;
+}
+
+div.naviArea ul.navi li.first {
+  padding: 0 0 0 0;
+}
+
+
+/* 4.Information
+----------------------------------------------- */
+.notification {
+  position: relative;
+}
+
+
+/* 6.data_input
+----------------------------------------------- */
+.date_selector {
+  position: absolute;
+}
+

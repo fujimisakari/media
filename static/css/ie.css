@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document */
+
+*html body { behavior: url("/static/htc/csshover.htc");}
+
+*html hr { margin: 10px auto; }
+
+*html div.center { padding: 0 1%;}
+
+*html div.box table.tableLayout thead th span.sortT a,
+*html div.box table.tableLayout thead th span.sortB a {
+  overflow: hidden;
+}

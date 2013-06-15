@@ -1,0 +1,32 @@
+{% extends 'local_base.html' %}
+{% load url from future %}
+
+{% block contents %}
+    <div class="box clear">
+        <div class="boxHeader">
+            <h2>BOOK一覧</h2>
+        </div>
+        {% for category in category_list %}
+            <div class="boxContent">
+                <ul class="imageList clearfix">
+                    <h3><span>{{ category.name }}</span></h3>
+                    {% for book in category.get_book_list %}
+                            <li>
+                                <a href="{% url 'book_detail' book.id %}">
+                                    <div class="line">
+                                        <img src="{{ MEDIA_URL }}{{ book.img_path }}" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                                    </div>
+                                </a>
+                                <div class="bookName">
+                                    <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                                </div>
+                            </li>
+                        {% if forloop.counter|divisibleby:limit_num %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <p class="extendPage"><a href="{% url 'book_category' category.id %}" class="submitA submitM">もっと見る</a></p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

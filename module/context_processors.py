@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from module.book.models import Category
 
 
 def common_context(request):
     return {
         'MEDIA_TITLE': settings.MEDIA_TITLE,
-        'MEDIA_URL': '/static/',
+        'MEDIA_URL': '/static',
         'MEDIA_CSS': settings.MEDIA_CSS,
         'MEDIA_JS': settings.MEDIA_JS,
         'MEDIA_FOTTER': settings.MEDIA_FOTTER,
+        'category_list': Category.get_category_list()
     }
 
 

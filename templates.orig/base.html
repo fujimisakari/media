@@ -1,0 +1,563 @@
+{% load url from future %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="text/css" http-equiv="Content-Style-Type"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta name="copyright" content="(C) 2011- Jose. All Rights Reserved." />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title></title>
+<link href="{{ MEDIA_URL }}{{ MEDIA_CSS }}" type="text/css" rel="stylesheet" media="screen,tv" />
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=7" /><![endif]-->
+<!--[if lt IE 8]><style type="text/css" media="all">@import url("css/ie.css");</style><![endif]-->
+<link href="{{ MEDIA_URL }}/css/slimbox2.css" type="text/css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/slimbox2.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.date_input.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.droppy.js"></script>
+<!--[if IE 6]>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/DD_belatedPNG.js"></script>
+<script>
+  DD_belatedPNG.fix('.png_bg');
+</script>
+<![endif]-->
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/custom.js"></script>
+</head>
+
+<body>
+    <div class="wrapper clearfix">
+        <div class="header">
+            <div class="logo"><img src="{{ MEDIA_URL }}/img/logo.png" alt="Admin Template Logo" /></div>
+            <div class="headNavi">
+                {% comment %}
+                <form action="page.html">
+                    <input type="submit" class="submitA submitM" value="トップページ" />
+                </form>
+                <form action="index.html">
+                    <input type="submit" class="submitA submitM" value="Logout" />
+                </form>
+                <form action="" class="search">
+                    <input type="text" class="searchText" />
+                    <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
+                </form>
+                {% endcomment %}
+                <div class="user">
+                    Login:&nbsp;{{ user.username }}
+                </div>
+            </div>
+        </div>
+
+        <div class="naviArea clear">
+            <ul class="navi clearfix droppy">
+                <li class=""><a href="{% url 'top_index' %}" class="">TOP</a></li>
+                <li class=""><a href="{% url 'book_index' %}" class="">BOOK</a></li>
+                <li class=""><span><a>CATEGORY</a></span>
+                <ul class="navi_second">
+                    {% for category in category_list %}
+                        <li>
+                            <span><a href="{% url 'book_category' category.id %}">{{ category.name }}</a></span>
+                            <ul class="navi_third">
+                                {% for subcategory in category.get_subcategory_list %}
+                                    <li><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <li class=""><span><a href="#">MANAGE</a></span>
+                    <ul class="navi_second">
+                        <li><a href="{% url 'manage_top_whatnew_add' %}">新着情報</a></li>
+                        <li><a href="{% url 'manage_book_add' 'book' %}">タイトル</a></li>
+                        <li><a href="{% url 'manage_book_add' 'detail' %}">タイトル詳細</a></li>
+                        <li><a href="{% url 'manage_book_add' 'category' %}">カテゴリ</a></li>
+                        <li><a href="{% url 'manage_book_add' 'subcategory' %}">サブカテゴリ</a></li>
+                        <li><a href="{% url 'manage_book_add' 'writer' %}">著者</a></li>
+                        <li><a href="{% url 'manage_book_add' 'publisher' %}">出版社</a></li>
+                    </ul>
+                </li>
+                <li class=""><a href="{% url 'manage_analysis_book' %}">STATUS</a></li>
+                <li class=""><span><a href="#">USER</a></span>
+                    <ul class="navi_second">
+                        <li><a href="{% url 'auth_password_change' %}">パスワードの変更</a></li>
+                        <li><a href="{% url 'auth_logout' %}">ログアウト</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="container clearfix">
+            <div class="conHeader clearfix">
+                <div class="contentArea clearfix">
+                    {% comment %}
+                    <div class="information notification">
+                        <div>
+                          登録内容を入力してください。【インフォメーションメッセージ】
+                        </div>
+                    </div>
+                    {% endcomment %}
+
+                    {% block contents %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footerArea clear">
+        <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
+    </div>
+
+</body>
+</html>
+
+
+
+          {% comment %}
+          <div class="box"><!-- contentsBox1 -->
+            <div class="boxHeader"><!-- box1 header -->
+              <div class="boxHeaderTabs">
+                <ul class="boxTabs">
+                  <li><a href=".box1_tab1" class="default-tab">Table</a></li>
+                  <li><a href=".box1_tab2">Forms</a></li>
+                </ul>
+              </div>
+              <h2>Heading H2 ブロックタイトル</h2>
+            </div><!-- //box1 header -->
+
+            <div class="boxContent">
+            <div class="tab-content default-tab box1_tab1"><!-- box1 tab1 -->
+              <h3><span>Table Layout テーブルレイアウト</span></h3>
+              <table class="tableLayout tablesorter sort1">
+                <thead>
+                  <tr class="even">
+                    <th><input class="check-all" type="checkbox" /></th>
+                    <th><span class="sortJs">カラム１</span></th>
+                    <th><span class="sortJs">カラム２</span></th>
+                    <th><span class="sortJs">カラム３</span></th>
+                    <th><span class="sortJs">カラム４</span></th>
+                    <th>action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colspan="6">
+                      <div class="tableaction left">
+                        <form action="">
+                        <select>
+                          <option>- 動作を選択する</option>
+                          <option>Option two</option>
+                          <option>Option three</option>
+                        </select>
+                        <input type="submit" class="submitA submitM" value="選択した動作を実行する" />
+                        </form>
+                      </div>
+                      <div class="paging right">
+                        <a href="#">&lt;&lt;</a>
+                        <span class="active">1</span>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">6</a>
+                        <a href="#">&gt;&gt;</a>
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example aaa</a></td>
+                    <td>Categories zzz</td>
+                    <td>2011.02.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr class="even">
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example bbb</a></td>
+                    <td>Categories yyy</td>
+                    <td>2010.02.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example ccc</a></td>
+                    <td>Categories xxx</td>
+                    <td>2010.03.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr class="even">
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example www</a></td>
+                    <td>Categories yyy</td>
+                    <td>2010.04.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example vvv</a></td>
+                    <td>Categories uuu</td>
+                    <td>2010.05.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr class="even">
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example fff</a></td>
+                    <td>Categories ttt</td>
+                    <td>2010.06.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example ggg</a></td>
+                    <td>Categories sss</td>
+                    <td>2010.07.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr class="even">
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example hhh</a></td>
+                    <td>Categories rrr</td>
+                    <td>2010.08.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example iii</a></td>
+                    <td>Categories qqq</td>
+                    <td>2010.09.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                  <tr class="even">
+                    <td><input type="checkbox" /></td>
+                    <td><a href="#">Example jjj</a></td>
+                    <td>Categories ppp</td>
+                    <td>2010.10.01 22:00:00</td>
+                    <td>User Name</td>
+                    <td>
+                      <!-- Icons -->
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_setting.png" alt="Setting" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                      <a href="#"><img src="{{ MEDIA_URL }}/img/icon_database.png" alt="Database" /></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!-- //box1 tab1 -->
+
+            <div class="tab-content box1_tab2"><!-- box1 tab2 -->
+              <h3><span>Form Layout フォームレイアウト</span></h3>
+              <div class="attention notification"><!-- attention -->
+                <div>
+                  パスワードを変更してください。【注意、警告メッセージ】
+                </div>
+              </div><!-- //attention -->
+              <div class="success notification"><!-- success -->
+                <div>
+                  アップデートが完了しました。【完了、成功メッセージ】
+                </div>
+              </div><!-- //success -->
+              <form action="" method="post">
+                <div class="error notification"><!-- error -->
+                  <div>
+                    お名前が記入されていません。【エラーメッセージ】
+                  </div>
+                </div><!-- //error -->
+                <fieldset>
+                  <div class="UpBox clearfix">
+                    <dl>
+                      <dt>
+                        <label>年齢【size1 sample】</label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size1" maxlength="3" tabindex="2" /><span>&nbsp;歳</span>
+                      </dd>
+                      <dt>
+                        <label>電話番号【size2 sample】</label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size2" maxlength="4" tabindex="3" /><span>&nbsp;-&nbsp;</span>
+                        <input type="text" class="text size2" maxlength="4" tabindex="4" /><span>&nbsp;-&nbsp;</span>
+                        <input type="text" class="text size2" maxlength="4" tabindex="5" /><br /><span class="note">例）03-1111-1111</span>
+                      </dd>
+                      <dt>
+                        <label>お名前【size3 sample】</label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size3" tabindex="6" /><span class="note error">Error!</span>
+                      </dd>
+                      <dt>
+                        <label>メールアドレス【size4 sample】<br /><span class="requiredMes">※必須</span></label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size4" tabindex="7" /><br />
+                        <span class="note">例）info@admin-template.net</span>
+                      </dd>
+                      <dt>
+                        <label>ご住所【size5 sample】<br /><span class="requiredMes">※必須</span></label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size5" tabindex="8" /><br />
+                        <span class="note">例）東京都渋谷区渋谷１</span>
+                      </dd>
+                      <dt>
+                        <label>テキスト【size6 sample】</label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size6" tabindex="9" />
+                      </dd>
+                      <dt>
+                        <label>テキスト【size7 sample】</label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size7" tabindex="10" />
+                      </dd>
+                      <dt>
+                        <label>テキスト【size8 sample】</label>
+                      </dt>
+                      <dd>
+                        <input type="text" class="text size8" tabindex="11" />
+                      </dd>
+                      <dt>
+                       <label>テキストエリア Textarea label</label>
+                      </dt>
+                      <dd>
+                        <textarea rows="5" cols="50" tabindex="12"></textarea>
+                      </dd>
+                      <dt>
+                        <label>日付入力 Date</label>
+                      </dt>
+                      <dd>
+			                  <input type="text" class="date_input text" name="date" tabindex="13" />
+                      </dd>
+                      <dt><label>セレクトボックス SelectBox</label></dt>
+                      <dd>
+                        <select class="styled" tabindex="14">
+                          <optgroup label="Group 1">
+                            <option>Option one</option>
+                            <option>Option two</option>
+                            <option>Option three</option>
+                          </optgroup>
+                          <optgroup label="Group 2">
+                            <option>Option one</option>
+                            <option>Option two</option>
+                            <option>Option three</option>
+                          </optgroup>
+                          <optgroup label="Group 3">
+                            <option>Option one</option>
+                            <option>Option two</option>
+                            <option>Option three</option>
+                          </optgroup>
+                        </select>
+                      </dd>
+                      <dt><label>チェックボックス Checkbox</label></dt>
+                      <dd>
+                        <label><input type="checkbox" class="checkbox" checked="checked" tabindex="15" /> <span>Checkbox label</span></label>
+                        <label><input type="checkbox" class="checkbox" tabindex="16" /> <span>Checkbox label</span></label>
+                      </dd>
+                      <dt><label>ラジオボタン Radio button</label></dt>
+                      <dd>
+                        <label><input type="radio" name="radio1" tabindex="17" /> <span>This is a radio button</span></label>
+                        <label><input type="radio" name="radio1" tabindex="18" /> <span>This is a radio button</span></label>
+                      </dd>
+                      <dt><label>ファイル File input label</label></dt>
+                      <dd>
+                        <input type="file" class="file" tabindex="19" />
+                        <span class="note">Max size 3Mb</span>
+                      </dd>
+                    </dl>
+                  </div>
+                  <p>
+                    <input type="submit" class="submitA submitM" value="入力内容を確認する" tabindex="20" />&nbsp;<input type="submit" class="submitB submitM" value="カラーバリエーション" tabindex="21" />&nbsp;<input type="submit" class="submitA submitS" value="ボタン（小）" tabindex="22" />&nbsp;<input type="submit" class="submitA submitL" value="ボタン（大）" tabindex="23" />
+                  </p>
+                </fieldset>
+              </form>
+            </div><!-- //box1 tab2 -->
+            </div><!-- //boxContent -->
+          </div><!-- //contentsBox1 -->
+
+          <div class="block clearfix">
+            <div class="box small left"><!-- contentsBox2_1 2column -->
+              <div class="boxHeader"><!-- box2_1 header -->
+                <h2>Left column 左カラム</h2>
+              </div><!-- //box2_1 header -->
+              <div class="boxContent">
+                <h3><span>テキスト表示 Heading H3</span></h3>
+                <h4><span>見出し Heading H4</span></h4>
+                <h5>見出し Heading H5</h5>
+                <h6>見出し Heading H6</h6>
+                <strong>強調文字 Highlighted text strong</strong><br />
+                <em>強調文字 Highlighted text em</em><br />
+              </div>
+            </div><!-- //contentsBox2_1 2column -->
+
+            <div class="box small right"><!-- contentsBox2_2 2column -->
+              <div class="boxHeader"><!-- box2_2 header -->
+                <h2>Right column 右カラム</h2>
+              </div><!-- //box2_2 header -->
+              <div class="boxContent">
+                <h3><span>リスト表示</span></h3>
+                <ul class="list">
+                  <li>リスト</li>
+                  <li>リスト</li>
+                  <li>リスト</li>
+                </ul>
+                <ol class="list">
+                  <li>リスト</li>
+                  <li>リスト</li>
+                  <li>リスト</li>
+                </ol>
+                </div>
+            </div><!-- //contentsBox2_2 2column -->
+          </div>
+
+          <div class="box clear"><!-- contentsBox4 -->
+            <div class="boxHeader"><!-- box4 header -->
+              <div class="boxHeaderTabs">
+                <ul class="boxTabs">
+                  <li><a href=".box4_tab2" class="default-tab">2column</a></li>
+                  <li><a href=".box4_tab3">3column</a></li>
+                </ul>
+              </div>
+              <h2>Big text box with column カラム表示</h2>
+            </div><!-- //box4 header -->
+            <div class="boxContent clearfix">
+              <div class="tab-content default-tab clearfix box4_tab2"><!-- box4 tab2 -->
+              <h3><span>2カラム</span></h3>
+                <div class="small left mgnR10 vline">
+                  <p>吾輩（わがはい）は猫である。名前はまだ無い。<br />
+                  どこで生れたかとんと見当（けんとう）がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪（どうあく）な種族であったそうだ。この書生というのは時々我々を捕（つかま）えて煮（に）て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌（てのひら）に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。</p>
+                </div>
+                <div class="small left">
+                  <p>掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始（みはじめ）であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶（やかん）だ。その後（ご）猫にもだいぶ逢（あ）ったがこんな片輪（かたわ）には一度も出会（でく）わした事がない。のみならず顔の真中があまりに突起している。そうしてその穴の中から時々ぷうぷうと煙（けむり）を吹く。どうも咽（む）せぽくて実に弱った。これが人間の飲む煙草（たばこ）というものである事はようやくこの頃知った。</p>
+                </div>
+              </div><!-- //box4 tab2 -->
+
+              <div class="tab-content box4_tab3"><!-- box4 tab3 -->
+              <h3 class="clearfix"><span>3カラム</span></h3>
+                <div class="xsmall left vline">
+                  <p>この書生の掌の裏（うち）でしばらくはよい心持に坐っておったが、しばらくすると非常な速力で運転し始めた。書生が動くのか自分だけが動くのか分らないが無暗（むやみ）に眼が廻る。胸が悪くなる。到底（とうてい）助からないと思っていると、どさりと音がして眼から火が出た。それまでは記憶しているがあとは何の事やらいくら考え出そうとしても分らない。</p>
+                </div>
+                <div class="xsmall left center vline">
+                  <p>ふと気が付いて見ると書生はいない。たくさんおった兄弟が一疋（ぴき）も見えぬ。肝心（かんじん）の母親さえ姿を隠してしまった。その上今（いま）までの所とは違って無暗（むやみ）に明るい。眼を明いていられぬくらいだ。はてな何でも容子（ようす）がおかしいと、のそのそ這（は）い出して見ると非常に痛い。吾輩は藁（わら）の上から急に笹原の中へ棄てられたのである。</p>
+                </div>
+                <div class="xsmall left">
+                  <p>ようやくの思いで笹原を這い出すと向うに大きな池がある。吾輩は池の前に坐ってどうしたらよかろうと考えて見た。別にこれという分別（ふんべつ）も出ない。しばらくして泣いたら書生がまた迎に来てくれるかと考え付いた。ニャー、ニャーと試みにやって見たが誰も来ない。そのうち池の上をさらさらと風が渡って日が暮れかかる。腹が非常に減って来た。泣きたくても声が出ない。</p>
+                </div>
+              </div>
+            </div><!-- //box4 tab2 -->
+          </div><!-- //contentsBox4 -->
+        {% endcomment %}
+
+{% comment %}
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-style-type" content="text/css; charset=utf-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <title>{{ MEDIA_TITLE }}</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="*,*" />
+    <link type="text/css" href="{{ MEDIA_URL }}{{ MEDIA_CSS }}" rel="stylesheet" media="all" />
+    <script type="text/javascript" src="{{ MEDIA_URL }}{{ MEDIA_JS }}"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        {% block header %}
+        {% endblock %}
+
+        {% block login %}
+        {% endblock %}
+
+        {% block change_passwd %}
+        {% endblock %}
+
+        {% block upload %}
+        {% endblock %}
+
+        {% block contents %}
+        {% endblock %}
+
+        {% block search %}
+        {% endblock %}
+
+        {% block manage %}
+        {% endblock %}
+
+        {% block footer %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+{% endcomment %}

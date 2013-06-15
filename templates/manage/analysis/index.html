@@ -1,65 +1,59 @@
-{% extends 'manage/base.html' %}
+{% extends 'base.html' %}
 {% load url from future %}
 
-{% block manageContentsMain %}
-    <div id="book">
-        <div class="leftCol">
-            <table class="analysisTitle">
-                <tr>
-                    <th colspan="2">タイトル数</th>
-                </tr>
-                {% for category in category_list %}
-                    <tr>
-                        <td class="size185">{{ category.name }}</td>
-                        <td class="size30">{{ category.title_count }}</td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td>合計タイトル数</td>
-                    <td width="25px">{{ total_title_count }}</td>
-                </tr>
-            </table>
-
-            <table class="analysisBook">
-                <tr>
-                    <th colspan="2">冊数</th>
-                </tr>
-                {% for category in category_list %}
-                    <tr>
-                        <td class="size185">{{ category.name }}</td>
-                        <td class="size30">{{ category.book_count }}</td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td>合計冊数</td>
-                    <td width="25px">{{ total_book_count }}</td>
-                </tr>
-            </table>
+{% block contents %}
+    <div class="block clearfix">
+        <div class="boxHeader">
+            <h2>BOOK登録状況</h2>
         </div>
 
-        <div class="rightCol">
-            <table class="analysisCategory">
-                <tr>
-                    <th colspan="2">カテゴリ別タイトル数</th>
-                </tr>
-                <tr >
+        <div class="box small left">
+            <div class="boxContent">
+                <h3><span>タイトル数</span></h3>
+                <table>
                     {% for category in category_list %}
-                        <td>
-                            <table class="analysisLocalCategory">
-                                <tr>
-                                    <th colspan="2">{{ category.name }}</th>
-                                </tr>
-                                {% for subcategory in category.get_subcategory_list %}
-                                    <tr>
-                                        <td>{{ subcategory.name }}</td>
-                                        <td>{{ subcategory.title_count }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </td>
+                        <tr>
+                            <td width="185">{{ category.name }}</td>
+                            <td class="right" width="30">{{ category.title_count }}</td>
+                        </tr>
                     {% endfor %}
-                </tr>
-            </table>
+                    <tr>
+                        <td width="185">合計タイトル数</td>
+                        <td class="right" width="30">{{ total_title_count }}</td>
+                    </tr>
+                </table>
+
+                <h3><span>冊数</span></h3>
+                <table>
+                    {% for category in category_list %}
+                        <tr>
+                            <td width="185">{{ category.name }}</td>
+                            <td class="right" width="30">{{ category.book_count }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td width="185">合計タイトル数</td>
+                        <td class="right" width="30">{{ total_book_count }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box small right">
+            <div class="boxContent">
+                <h3><span>カテゴリ別タイトル数</span></h3>
+                {% for category in category_list %}
+                    <h4><span>{{ category.name }}</span></h4>
+                    <table>
+                        {% for subcategory in category.get_subcategory_list %}
+                            <tr>
+                                <td width="185">{{ subcategory.name }}</td>
+                                <td class="right" width="30">{{ subcategory.title_count }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

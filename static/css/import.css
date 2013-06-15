@@ -1,26 +1,14 @@
 @charset "utf-8";
+/* CSS Document */
 
-/* Base
-========================================== */
-@import "base/reset.css";
-@import "base/structure.css";
-@import "base/header.css";
-@import "base/footer.css";
-@import "base/navigation.css";
-@import "base/textdecorations.css";
+@import url(format.css);
+@import url(reset.css);
 
+@import url(module.css);
+@import url(common.css);
 
-/* Parts
-========================================== */
-@import "parts/style.css";
-@import "parts/table.css";
-@import "parts/search.css";
-@import "parts/login.css";
-@import "parts/change_passwd.css";
-@import "parts/switchhat.css";
-@import "parts/fancybox.css";
+@import url(basic.css);
+@import url(style.css);
 
-/* manage
-========================================== */
-@import "manage/manage.css";
-@import "manage/table.css";
+@import url(common-style.css);
+@import url(custom.css);

@@ -1,21 +1,42 @@
-{% extends 'book/local_base.html' %}
+{% extends 'base.html' %}
 {% load url from future %}
 
 {% block localTitle %}
-    <h2><img src="{{ MEDIA_URL }}{{ MAIN_SUBCATEGORY }}" alt="CATEGORY" width="795" height="45" /></h2>
+    <h2><img src="{{ MEDIA_URL }}{{ MAIN_CATEGORY }}" alt="CATEGORY" width="795" height="45" /></h2>
 {% endblock %}
 
-{% block localContents %}
-    <ul class="column">
-        {% for book in book_list %}
-            <li>
-                <div class="block">
-                   <a href="{% url 'book_detail' book.id %}" class="thumbnail">
-                       <img src="{{ MEDIA_URL }}{{ book.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
-                   </a>
-                   <div class="bookName"><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+{% block contents %}
+    <div class="box clear">
+        <div class="boxHeader">
+            <h2>{{ subcategory.name }}</h2>
+        </div>
+
+        <ol id="crumb">
+            <li><a href="{% url 'book_index' %}">BOOK</a></li>
+            <li><a href="{% url 'book_category' subcategory.category_id %}">{{ subcategory.category.name }}</a></li>
+            <li><strong>{{ subcategory.name }}</strong></li>
+        </ol>
+
+        <div class="resultPage mb10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+
+        <div class="boxContent imgLine">
+            <ul class="imageList clearfix">
+                {% for book in book_list %}
+                    <li>
+                        <a href="{% url 'book_detail' book.id %}">
+                            <div class="line">
+                                <img src="{{ MEDIA_URL }}{{ book.img_path }}" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                            </div>
+                        </a>
+                        <div class="bookName">
+                            <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                        </div>
+                    </li>
+                    {% if forloop.counter|divisibleby:limit_num %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% include './common/pager.html' %}
 {% endblock %}

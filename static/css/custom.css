@@ -1,0 +1,189 @@
+@charset "utf-8";
+
+/*  1.DetailList Table
+========================================== */
+detailList {
+    width: 100%;
+    margin: 0 auto;
+}
+
+div.dlSection {
+    padding: 10px 20px;
+    background: url(/static/img/line_02.gif) bottom repeat-x;
+}
+
+/*  2-1.dlSection1
+------------------------------------------ */
+div.dlSection1 {
+    float: left;
+    width: 120px;
+    padding: 0px 40px 5px 0;
+}
+ 
+div.dlSection1 img {
+    margin: 0 0 15px;
+}
+
+/*  2-2.dlSection2
+------------------------------------------ */
+div.dlSection2 {
+    float: left;
+    width: 300px;
+    padding: 0px 15px 0px 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+ 
+div.dlSection2 dl {
+}
+ 
+div.dlSection2 dl dt {
+    margin: 1.7px 0;
+    clear: both;
+    float: left;
+    font-weight: bold;
+}
+ 
+div.dlSection2 dl dd {
+    margin-left: 100px;
+    padding: 1.7px 0;
+}
+
+/*  2-4.dlSection3
+------------------------------------------ */
+div.dlSection3 {
+    float: left;
+    width: 250px;
+    padding: 0px 0px 0px 0;
+    margin-left: 10px;
+}
+ 
+div.dlSection3 dl {
+}
+
+ 
+div.dlSection3 dl dt {
+    margin: 1.7px 0;
+    clear: both;
+    float: left;
+    font-weight: bold;
+
+}
+ 
+div.dlSection3 dl dd {
+    margin-left: 60px;
+    padding: 1.7px 0;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+div.dlSection:after { /* for Modern Browser */
+    content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+}
+
+
+/*  2. 新着情報「WHATS NEW」
+========================================== */
+dl#sectionWhatNew {
+    height: 465px;
+    line-height: 1.8;
+    padding: 0 10px;
+    margin: 0 0px 25px;
+    overflow: auto;       /*この設定でiframe風に見える*/
+    background: url(/static/img/mono/66610.png);
+}
+
+dl#sectionWhatNew dt {
+    padding-top: 10px;
+    font-weight: bold;    /* 日付の文字は太字にする */
+}
+
+dl#sectionWhatNew dd {
+    padding: 0 0 15px 15px;
+    line-height: 1.5;
+    background: url(/static/img/line_02.gif) bottom repeat-x;
+}
+
+
+/*  3. part
+========================================== */
+.dwBtn {
+    color: #eedd82;
+    background: #556b2f;
+    padding: 3px 5px;
+    font-weight: bold;
+    border: 2px solid #deb887;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.resultPage{
+    font-size: 124%;
+    padding: 0 0 3px 10px;
+    color: #503307;
+    background: url(/static/img/line_02.gif) bottom repeat-x
+}
+
+.imgLine {
+    background: url(/static/img/line_02.gif) bottom repeat-x;
+}
+
+
+/*  4. topicPath
+========================================== */
+ol#crumb {
+    background: #83644c;
+    overflow: hidden;
+    width: 99.3%;
+    margin: 15px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+ol#crumb li {
+    float: left;
+    line-height: 1;
+}
+
+ol#crumb li a {
+    padding: .4em 1em .2em 3em;
+    float: left;
+    font-weight: bold;
+    position: relative;
+    background: #d3ba9a;
+}
+
+ol#crumb li:first-child a {
+    padding-left: 1.5em;
+    border-radius: 5px 0 0 5px;
+}
+
+ol#crumb a:after,
+ol#crumb a:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -1.5em;
+    border-top: 1.5em solid transparent;
+    border-bottom: 1.5em solid transparent;
+    border-left: 1.5em solid;
+    right: -1.5em;
+}
+
+ol#crumb a:after {
+    border-left-color: #d3ba9a;
+    z-index: 3;
+}
+
+ol#crumb a:before {
+    border-left-color: #333;
+    right: -1.6em;
+    z-index: 2;
+}
+
+ol#crumb strong {
+    padding: .4em 1em .2em 2.5em;
+    color: #FFF;
+    display: block;
+}
