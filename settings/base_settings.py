@@ -153,7 +153,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'module.context_processors.common_context',
     'module.context_processors.book_context',
-    'module.context_processors.image_context',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -227,38 +226,6 @@ BOOK_THUMB_WIDTH = '80'
 MANAGE_BOOK_PATH = os.path.join(ROOT_PATH, 'templates/static/media/book')
 MANAGE_MOVIE_PATH = os.path.join(ROOT_PATH, 'templates/static/media/movie')
 MANAGE_MUSIC_PATH = os.path.join(ROOT_PATH, 'templates/static/media/music')
-
-# image
-RECENT_BOOK = 'img/cnavi_tit_book.png'
-RECENT_MOVIE = 'img/cnavi_tit_movie.png'
-RECENT_MUSIC = 'img/cnavi_tit_music.png'
-HEADER_TITLE = 'img/headertit_tit_01.png'
-HEADER_TOP1 = 'img/headernavi_ico_top01.png'
-HEADER_BOOK1 = 'img/headernavi_ico_book01.png'
-HEADER_MOVIE1 = 'img/headernavi_ico_movie01.png'
-HEADER_MUSIC1 = 'img/headernavi_ico_music01.png'
-HEADER_MANAGE1 = 'img/headernavi_ico_manage01.png'
-HEADER_UPLOAD = 'mg/headernavi_ico_upload.png'
-HEADER_TOP2 = 'img/headernavi_ico_top02.png'
-HEADER_BOOK2 = 'img/headernavi_ico_book02.png'
-HEADER_MOVIE2 = 'img/headernavi_ico_movie02.png'
-HEADER_MUSIC2 = 'img/headernavi_ico_music02.png'
-HEADER_MANAGE2 = 'img/headernavi_ico_manage02.png'
-NAVI_CATEAGORY = 'img/cnavi_tit_cate.png'
-NAVI_MANAGE = 'img/cnavi_tit_manage.png'
-NAVI_SUBCATEGORY = 'img/cnavi_tit_scate.png'
-NAVI_SEARCH = 'img/cnavi_tit_search.png'
-MAIN_ALL_LIST = 'img/cmain_tit_alist.png'
-MAIN_WHATNEW = 'img/cmain_tit_whatnew.png'
-MAIN_INFO = 'img/cmain_tit_info.png'
-MAIN_SEARCH = 'img/cmain_tit_search.png'
-MAIN_CATEGORY = 'img/cmain_tit_clist.png'
-MAIN_SUBCATEGORY = 'img/cmain_tit_sclist.png'
-MAIN_DETAIL = 'img/cmain_tit_dlist.png'
-MAIN_PREVIEW = 'img/cmain_tit_prev.png'
-MAIN_BACK = 'img/cmain_btn_back.png'
-LOGIN_TITLE = 'img/login_tit_01.png'
-CHPW_TITLE = 'img/chpw_tit_01.png'
 
 # manage title
 TOP_WHATNEW = '[TOP] What New'

@@ -107,15 +107,22 @@ dl#sectionWhatNew dd {
 
 /*  3. part
 ========================================== */
-.dwBtn {
-    color: #eedd82;
-    background: #556b2f;
-    padding: 3px 5px;
+a.dwBtn{
+    background: url("/static/img/bg_button.gif") repeat-x scroll 0 0 #281a05;
+    color: #FFF;
+    border: 1px solid #4f331a;
+    cursor: pointer;
+    margin:0 0 10px;
     font-weight: bold;
-    border: 2px solid #deb887;
+    padding: 3px 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+}
+
+a.dwBtn:hover {
+  background: url("/static/img/bg_button_over.gif") repeat-x scroll 0 0 #ae7e4f;
+  color: #fff;
 }
 
 .resultPage{
@@ -125,7 +132,7 @@ dl#sectionWhatNew dd {
     background: url(/static/img/line_02.gif) bottom repeat-x
 }
 
-.imgLine {
+.line {
     background: url(/static/img/line_02.gif) bottom repeat-x;
 }
 
@@ -187,3 +194,31 @@ ol#crumb strong {
     color: #FFF;
     display: block;
 }
+
+
+/*  5.status Table
+========================================== */
+table.status {
+    border: 1px solid #83644c;
+    width: 100%;
+}
+ 
+table.status th {
+    width: 200px;
+    background: #d3ba9a;
+    border:1px solid #83644c;
+    height: 25px;
+    padding-top: 4px;
+    font-weight: bold;
+    text-align: center;
+	vertical-align: middle;
+}
+ 
+table.status td {
+    border:1px solid #83644c;
+    padding-top: 4px;
+    text-align: center;
+	vertical-align: middle;
+    height: 25px;
+    background: url(/static/img/mono/66610.png);
+}     

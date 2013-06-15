@@ -13,9 +13,7 @@
                     {% for book in category.get_book_list %}
                         <li>
                             <a href="{% url 'book_detail' book.id %}">
-                                <div class="line">
-                                    <img src="{{ MEDIA_URL }}{{ book.img_path }}" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
-                                </div>
+                                <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
                             </a>
                             <div class="bookName">
                                 <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>

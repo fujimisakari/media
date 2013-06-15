@@ -5,7 +5,7 @@
     <div class="block clearfix">
 
         <div class="boxHeader">
-            <h2>{{ book.title }}</h2>
+            <h2>BOOK詳細</h2>
         </div>
 
         <ol id="crumb">
@@ -22,7 +22,7 @@
                 <div class="dlSection">
                     <div class="dlSection1 center">
                         <a href="{{ MEDIA_URL }}{{ book_detail.img_path }}" class="thumbnail_view">
-                            <img src="{{ MEDIA_URL }}{{ book_detail.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                            <img src="{{ MEDIA_URL }}{{ book_detail.img_path }}"  class="imgLine" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
                         </a>
                         <div>
                             <a class="dwBtn">Download</a>
@@ -64,7 +64,7 @@
                         <dl>
                             <dt>作成日 :</dt><dd>{{ book_detail.create_date|date:"Y-m-d" }}</dd>
                             <dt>備考 :</dt><dd>{{ book_detail.description|linebreaks|safe }}</dd>
-                            <dt class="editLink"><a href="">編集する</a></dt>
+                            <dt><a href="">編集する</a></dt><dd></dd>
                         </dl>
                     </div>
                 </div>
