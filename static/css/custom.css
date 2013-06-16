@@ -223,4 +223,36 @@ table.status td {
 	vertical-align: middle;
     height: 25px;
     background: url(/static/img/mono/66610.png);
-}     
+}
+
+/*  6.manage search
+========================================== */
+div.box form.search {
+  display: block;
+  position: relative;
+  width: 240px;
+  height: 28px;
+  margin: 0 10px 0 0;
+  padding-bottom: 5px;
+  background: url("/static/img/bg_search.gif") left top no-repeat;
+}
+div.box form.search:focus {
+  /* background: url("/static/img/bg_search_focus.gif") left top no-repeat; */
+}
+div.box form.search .searchText {
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  width: 200px;
+  border: none;
+  background: none;
+  font-size: 93%;
+}
+
+div.box form.search .searchBtn {
+  position: absolute;
+  top: 6px;
+  left: 215px;
+}
+
+

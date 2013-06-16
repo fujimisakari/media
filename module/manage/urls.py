@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, url
 from module.manage.view_book import book_add, book_edit, book_list, book_delete, book_delete_checked, book_search
-from module.manage.view_top import whatnew_add, whatnew_edit, whatnew_list, whatnew_delete, whatnew_delete_checked, whatnew_search
+from module.manage.view_top import whatnew_index, whatnew_add, whatnew_edit, whatnew_list, whatnew_delete, whatnew_delete_checked, whatnew_search
 from module.manage.view_ajax import get_title_list, get_subcategory_list, get_volume_list, get_writer_list
 # from module.manage.view_upload import uploader
 from module.manage.view_status import status
 
 urlpatterns = patterns(
     '',
-    url(r'^$', whatnew_add, name='manage_index'),
+    url(r'^$', whatnew_index, name='manage_index'),
+    url(r'^top/$', whatnew_index, name='manage_top_index'),
     url(r'^top/add/$', whatnew_add, name='manage_top_whatnew_add'),
     url(r'^top/search/$', whatnew_search, name='manage_top_whatnew_search'),
     url(r'^top/list/$', whatnew_list, name='manage_top_whatnew_list'),

@@ -142,12 +142,12 @@ $(document).ready(function() {
      *  クリックしたら消える文字の処理
      */
     // 初期値の文字色
-    var d_color = '#d9d9d9';
+    var d_color = '#707070';
     // 通常入力時の文字色
-    var f_color = '#FAFAD2';
+    var f_color = '#000';
      
     // Searchフォーム
-    $("input.id_search").css('color', d_color).focus(function(){
+    $(".searchText").css('color', d_color).focus(function(){
         if(this.value == this.defaultValue){
             this.value = '';
             $(this).css('color', f_color);

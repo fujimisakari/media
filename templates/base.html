@@ -33,20 +33,12 @@
         <div class="header">
             <div class="logo"><img src="{{ MEDIA_URL }}/img/logo.png" alt="Admin Template Logo" /></div>
             <div class="headNavi">
-                {% comment %}
-                <form action="page.html">
-                    <input type="submit" class="submitA submitM" value="トップページ" />
-                </form>
-                <form action="index.html">
-                    <input type="submit" class="submitA submitM" value="Logout" />
-                </form>
                 <form action="" class="search">
-                    <input type="text" class="searchText" />
+                    <input type="text" class="searchText" value="カテゴリ or タイトル 検索" />
                     <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
                 </form>
-                {% endcomment %}
                 <div class="user">
-                    Login:&nbsp;{{ user.username }}
+                    Login:&nbsp;<span style="color: #fafad2; font-size: 17px;">{{ user.username }}</span>
                 </div>
             </div>
         </div>

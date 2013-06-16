@@ -18,6 +18,17 @@ def _render(template_file, context):
 
 
 @login_required
+def whatnew_index(request):
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW})
+    whatnew_list = WhatNew.all_list()
+    page_id = request.GET.get('page', 1)
+    pager, whatnew_list = get_pager(whatnew_list, page_id, settings.NUM_IN_MANAGE_LIST)
+    context['whatnew_list'] = whatnew_list
+    context.update(pager)
+    return _render('index.html', context)
+
+
+@login_required
 def whatnew_add(request):
     context = RequestContext(request, {'title': settings.TOP_WHATNEW})
     if request.method == 'POST':

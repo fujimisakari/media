@@ -63,12 +63,23 @@ class SubCategory(AbustractCachedModel):
         return sorted([subcategory for subcategory in cls.get_cache_all()], key=lambda x: x.sort)
 
     def get_book_list(self):
-        book_detail_list = sorted([book_detail for book_detail in BookDetail.get_cache_all()], key=lambda x: x.update_date, reverse=True)
+        from time import time
+        start = time()
+        print 'start:', start
+
+        book_detail_list = [book_detail for book_detail in BookDetail.get_cache_all() if book_detail.book and book_detail.book.category_id == self.category_id]
+        book_detail_list = [book_detail for book_detail in book_detail_list if book_detail.book.subcategory_id == self.id]
+        book_detail_list = list(sorted(book_detail_list, key=lambda x: x.update_date, reverse=True))
+
         book_list = []
         for book_detail in book_detail_list:
             if not book_detail.book in book_list:
                 book_list.append(book_detail.book)
-        return [book for book in book_list if book and book.subcategory_id == self.id]
+
+        end = time()
+        print 'end:', end
+
+        return book_list
 
 
 class Book(AbustractCachedModel):

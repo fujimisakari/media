@@ -1,27 +1,68 @@
-{% extends 'manage/base.html' %}
+{% extends 'base.html' %}
 {% load url from future %}
 
-{% block manageContentsMenu %}
-    <div class="manageMode"><a href="{% url 'manage_top_whatnew_add' %}">add</a> / <a href="{% url 'manage_top_whatnew_list' %}">edit</a></div>
-{% endblock %}
+{% block contents %}
 
-{% block manageContentsMain %}
-    {% if getForm %}
-        <div class="addSection">
-            <div class="manageMode">add / <a href="{% url 'manage_top_whatnew_list' %}">edit</a></div>
-            <form method="post">
-                <table class="manageAdd">
-                    {{ getForm.as_table }}
-                </table>
-                <table class="manageButton">
-                    <tr>
-                        <td>
-                        <input class="button" type="submit" value="ENTER" onclick="this.form.action='.'" />
-                        {% if id %}<input class="button" type="submit" value="DERETE" onclick="this.form.action='./delete/'" />{% endif %}
+<div class="box">
+    <div class="boxHeader">
+        <h2>新着情報管理</h2>
+        <div class="boxHeaderTabs">
+            <ul class="boxTabs">
+                <li><a href="" class="default-tab">一覧</a></li>
+                <li><a href="{% url 'manage_top_whatnew_add' %}">登録</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="ml10 mb5">
+        <form method="post" action="{% url 'manage_top_whatnew_search' %}" class="search">
+            {% if keyword %}
+               <input type="text" class="searchText" value="{{ keyword }}" />
+            {% else %}
+               <input type="text" class="searchText" value="キーワード検索" />
+            {% endif %}
+            <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
+        </form>
+    </div>
+
+    <div class="boxContent">
+        {% if keyword %}
+            <div class="resultPage mb10 pl10 pr10">検索結果：{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+        {% else %}
+            <div class="resultPage mb10 pl10 pr10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+        {% endif %}
+
+        <form method="post">
+            <table class="tableLayout">
+                <tr>
+                    <th></th>
+                    <th width="120px">登録日</th>
+                    <th>内容</th>
+                    <th width="60px">操作</th>
+                </tr>
+                {% for whatnew in whatnew_list %}
+                    {% if forloop.counter|divisibleby:2 %}
+                      <tr class="even">
+                    {% else %}
+                      <tr>
+                    {% endif %}
+                        <td class="center"><input class="checkBox" type="checkbox" name="del_flag" value="{{ whatnew.id }}" /></td>
+                        <td class="center">{{ whatnew.create_date|date:"Y-m-d" }}</td>
+                        <td class="left">{{ whatnew.content|linebreaks|safe }}</td>
+                        <td class="center">
+                            <a href="{% url 'manage_top_whatnew_edit' whatnew.id %}"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                            <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
                         </td>
                     </tr>
-                </table>
-            </form>
-        </div>
-    {% endif %}
+                {% endfor %}
+                <tr>
+                    <td class="center" colspan="4"><input class="submitA submitM" style="margin-bottom: 2.5px;" type="submit" value="チェック項目を削除" onclick="this.form.action='{% url 'manage_top_whatnew_delete_checked' %}'" /></td></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% include './common/pager.html' %}
+
 {% endblock %}

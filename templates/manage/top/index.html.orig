@@ -1,0 +1,27 @@
+{% extends 'manage/base.html' %}
+{% load url from future %}
+
+{% block manageContentsMenu %}
+    <div class="manageMode"><a href="{% url 'manage_top_whatnew_add' %}">add</a> / <a href="{% url 'manage_top_whatnew_list' %}">edit</a></div>
+{% endblock %}
+
+{% block manageContentsMain %}
+    {% if getForm %}
+        <div class="addSection">
+            <div class="manageMode">add / <a href="{% url 'manage_top_whatnew_list' %}">edit</a></div>
+            <form method="post">
+                <table class="manageAdd">
+                    {{ getForm.as_table }}
+                </table>
+                <table class="manageButton">
+                    <tr>
+                        <td>
+                        <input class="button" type="submit" value="ENTER" onclick="this.form.action='.'" />
+                        {% if id %}<input class="button" type="submit" value="DERETE" onclick="this.form.action='./delete/'" />{% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

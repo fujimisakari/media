@@ -83,7 +83,8 @@ div.header div.headNavi form.search {
   position: relative;
   width: 240px;
   height: 28px;
-  margin: 2px 15px 0 0;
+  margin: 0 10px 0 0;
+  padding-bottom: 5px;
   background: url("/static/img/bg_search.gif") left top no-repeat;
 }
 div.header div.headNavi form.search:focus {
@@ -91,7 +92,7 @@ div.header div.headNavi form.search:focus {
 }
 div.header div.headNavi form.search .searchText {
   position: absolute;
-  top: 8px;
+  top: 5px;
   left: 8px;
   width: 200px;
   border: none;
@@ -108,7 +109,6 @@ div.header div.headNavi div.user {
   clear: both;
   width: 620px;
   margin: 0 10px 0 0;
-  font-size: 85%;
 }
 
 /* Information
@@ -272,78 +272,66 @@ h5,h6{
 
 /* Table
 ----------------------------------------------- */
-table.tablesorter thead tr span.sortJs {
-  padding: 0 0 0 1em;
-  background: url("/static/img/sort_off.gif") no-repeat center left;
-  width: 4px;
-  height: 13px;
-  cursor: pointer;
-}
-table.tablesorter thead tr span.sortJs:hover {
-  background-image: url("/static/img/sort_on.gif");
-}
-table.tablesorter thead tr .headerSortUp span.sortJs {
-  background: url("/static/img/sort_asc_off.gif") no-repeat 0 9px;
-}
-table.tablesorter thead tr .headerSortUp span.sortJs {
-  background-image: url("/static/img/sort_asc_on.gif") !important;
-}
-table.tablesorter thead tr .headerSortDown span.sortJs {
-  background: url("/static/img/sort_desc_off.gif") no-repeat 0 2px;
-}
-table.tablesorter thead tr .headerSortDown:hover span.sortJs {
-  background-image: url("/static/img/sort_desc_on.gif") !important;
-}
 div.box table.tableLayout {
   width: 99%;
+  border:1px solid #83644c;
 }
-div.box table.tableLayout th,
-div.box table.tableLayout td {
-  line-height: 2.2em;
-}
-div.box table.tableLayout thead th {
+
+div.box table.tableLayout th {
+  background: #d3ba9a;
+  border:1px solid #83644c;
+  height: 25px;
+  padding-top: 4px;
   font-weight: bold;
-  background: url(/static/img/line_02.gif) repeat-x bottom;
+  text-align: center;
+  vertical-align: middle;
 }
-div.box table.tableLayout thead th div.sort {
-  float: left;
-  padding: 8px 5px 0 0;
+
+div.box table.tableLayout td {
+  border:1px solid #83644c;
+  background: url(/static/img/mono/66610.png);
 }
-div.box table.tableLayout thead th span.sortT,
-div.box table.tableLayout thead th span.sortB {
+
+div.box table.tableLayout td.center {
+  padding: 8px 0 4px 0;
+  text-align: center;
+  vertical-align: middle;
 }
-div.box table.tableLayout thead th span.sortT a,
-div.box table.tableLayout thead th span.sortB a {
-  display: block;
-  width: 9px;
-  height: 5px;
-  margin: 0 0 3px 0;
-  text-indent: -9998px;
+
+div.box table.tableLayout td.left{
+  padding: 8px 0 4px 10px;
 }
-div.box table.tableLayout thead th span.sortT a {
-  background: url("/static/img/sort.gif") no-repeat 0 0;
+
+div.box table.tableLayout td p{
+  margin: 0px;
 }
-div.box table.tableLayout thead th span.sortB a {
-  background: url("/static/img/sort.gif") no-repeat 0 -7px;
-}
-div.box table.tableLayout thead th span.sortT a:hover {
-  background-position: -10px 0;
-}
-div.box table.tableLayout thead th span.sortB a:hover {
-  background-position: -10px -7px;
-}
-div.box table.tableLayout tbody td {
-  background: url(/static/img/line_02.gif) repeat-x bottom;
-}
-div.box table.tableLayout tbody td a img { /* icon */
-  padding: 4px 3px;
-}
+
 div.box table.tableLayout tr.even {
   
 }
-div.box table tfoot tr td {
-}
 
+/* div.box table.tableLayout tr td input { */
+/*     color: #fafad2; */
+/*     background: #8b5a2b; */
+/*     width: 350px; */
+/*     height: 28px; */
+/*     padding: 3px 8px; */
+/*     border: 1px double #8b5a2b; */
+/*     vertical-align: middle; */
+/*     border-radius: 3px; */
+/*     -moz-border-radius: 3px; */
+/*     -webkit-border-radius: 3px; */
+/* } */
+
+/* div.box table.tableLayout tr td input.checkBox { */
+/*     padding: 0; */
+/*     height: 16px; */
+/*     width: 16px; */
+/*     color: none; */
+/*     border: 1px double #8b5a2b; */
+/*     color: #fafad2; */
+/*     background: #8b5a2b; */
+/* } */
 
 /* Paging
 ----------------------------------------------- */
