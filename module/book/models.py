@@ -44,8 +44,11 @@ class Category(AbustractCachedModel):
 
 class SubCategory(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID')
-    name = models.CharField(u'サブカテゴリ名', max_length=100, unique=True)
+    name = models.CharField(u'サブカテゴリ名', max_length=100)
     sort = models.IntegerField(u'Sort番号', blank=True, null=True)
+
+    class Meta:
+        unique_together = (('category_id', 'name'),)
 
     @property
     def category(self):
@@ -69,9 +72,9 @@ class SubCategory(AbustractCachedModel):
 
 
 class Book(AbustractCachedModel):
-    category_id = models.IntegerField(u'カテゴリID')
-    subcategory_id = models.IntegerField(u'サブカテゴリID')
-    title = models.CharField(u'タイトル名', max_length=100, unique=True)
+    category_id = models.IntegerField(u'カテゴリID', db_index=True)
+    subcategory_id = models.IntegerField(u'サブカテゴリID', db_index=True)
+    title = models.CharField(u'タイトル名', max_length=100)
 
     @property
     def img_path(self):
@@ -91,7 +94,7 @@ class Book(AbustractCachedModel):
 
 
 class BookDetail(AbustractCachedModel):
-    book_id = models.IntegerField(u'ブックID')
+    book_id = models.IntegerField(u'ブックID', db_index=True)
     volume = models.IntegerField(u'巻')
     pdf_size = models.IntegerField(u'PDFサイズ')
     epud_size = models.IntegerField(u'EPUDサイズ')
@@ -104,6 +107,9 @@ class BookDetail(AbustractCachedModel):
     exit_attachment = models.BooleanField(u'付属CD-R有無', default=False)
     update_date = models.DateTimeField(u'更新日', auto_now=True)
     create_date = models.DateTimeField(u'作成日', auto_now_add=True)
+
+    class Meta:
+        unique_together = (('book_id', 'volume'),)
 
     @property
     def book(self):
