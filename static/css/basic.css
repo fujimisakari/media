@@ -585,7 +585,7 @@ ul.imageList li {
   margin: 10px 13px 10px 13px;
 }
 
-.block .block_content .imglist li img {
+ul.imageList li img {
   background: #666666;
   margin: 0 auto;
   display: block;

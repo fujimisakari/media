@@ -13,11 +13,13 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=7" /><![endif]-->
 <!--[if lt IE 8]><style type="text/css" media="all">@import url("css/ie.css");</style><![endif]-->
 <link href="{{ MEDIA_URL }}/css/slimbox2.css" type="text/css" rel="stylesheet" media="screen" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/slimbox2.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.date_input.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.droppy.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/script.js"></script>
 <!--[if IE 6]>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/DD_belatedPNG.js"></script>
 <script>
@@ -77,7 +79,7 @@
                         <li><a href="{% url 'manage_book_add' 'publisher' %}">出版社</a></li>
                     </ul>
                 </li>
-                <li><a href="{% url 'manage_analysis_book' %}">STATUS</a></li>
+                <li><a href="{% url 'manage_book_status' %}">STATUS</a></li>
                 <li><span><a>USER</a></span>
                     <ul class="navi_second">
                         <li><a href="{% url 'auth_password_change' %}">パスワードの変更</a></li>

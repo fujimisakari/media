@@ -4,7 +4,7 @@ from module.manage.view_book import book_add, book_edit, book_list, book_delete,
 from module.manage.view_top import whatnew_add, whatnew_edit, whatnew_list, whatnew_delete, whatnew_delete_checked, whatnew_search
 from module.manage.view_ajax import get_title_list, get_subcategory_list, get_volume_list, get_writer_list
 # from module.manage.view_upload import uploader
-from module.manage.view_analysis import analysis
+from module.manage.view_status import status
 
 urlpatterns = patterns(
     '',
@@ -27,5 +27,5 @@ urlpatterns = patterns(
     url(r'^ajax/book_volume/$', get_volume_list, name='manage_get_volume_list'),
     url(r'^ajax/book_writer/$', get_writer_list, name='manage_get_writer_list'),
     # url(r'^uploader/(?P<set_type>\w+)/$', uploader, 'manage_upload'),
-    url(r'^analysis/$', analysis, name='manage_analysis_book'),
+    url(r'^status/$', status, name='manage_book_status'),
 )

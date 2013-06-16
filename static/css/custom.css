@@ -21,7 +21,9 @@ div.dlSection1 {
 }
  
 div.dlSection1 img {
-    margin: 0 0 15px;
+    background: #666666;
+    margin: 0 auto 15px;
+    display: block;
 }
 
 /*  2-2.dlSection2
