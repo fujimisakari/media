@@ -40,7 +40,22 @@ def whatnew_add(request):
             context['msg'] = settings.ERROR_MSG_ADD
     else:
         context['getForm'] = WhatNewForm(label_suffix='')
-    return _render('index.html', context)
+    return _render('regist.html', context)
+
+
+@login_required
+def whatnew_regist(request):
+    context = RequestContext(request, {'title': settings.TOP_WHATNEW})
+    if request.method == 'POST':
+        set_form = WhatNewForm(request.POST, label_suffix='')
+        if set_form.is_valid():
+            set_form.save()
+            context['msg'] = settings.MSG_ADD
+        else:
+            context['msg'] = settings.ERROR_MSG_ADD
+    else:
+        context['getForm'] = WhatNewForm(label_suffix='')
+    return _render('regist.html', context)
 
 
 @login_required
@@ -96,10 +111,10 @@ def whatnew_delete_checked(request):
 @login_required
 def whatnew_search(request):
     if request.method == 'POST':
-        keyword = request.POST['search']
+        keyword = request.POST['keyword']
     else:
         keyword = request.GET.get('keyword', '')
-    context = RequestContext(request, {'title': settings.TOP_WHATNEW, 'keyword': keyword})
+    context = RequestContext(request, {'keyword': keyword})
 
     whatnew_list = []
     all_whatnew_list = WhatNew.all_list()
@@ -114,4 +129,4 @@ def whatnew_search(request):
     pager, whatnew_list = get_pager(whatnew_list, page_id, settings.NUM_IN_LIST_PAGE)
     context['whatnew_list'] = whatnew_list
     context.update(pager)
-    return _render('list.html', context)
+    return _render('index.html', context)

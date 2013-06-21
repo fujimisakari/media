@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block contents %}
+
+<div class="box">
+    <div class="boxHeader">
+        <h2 style="float: left;">新着情報管理</h2>
+        <ul class="boxTabs" style="float: right;">
+            <li><a href="{% url 'manage_top_index' %}">一覧</a></li>
+            <li><a class="default-tab">登録</a></li>
+        </ul>
+    </div>
+
+    <div class="boxContent">
+            <h3><span>新着情報登録</span></h3>
+
+            <div class="tab-content box1_tab2">
+                <div class="attention notification">
+                    <div>
+                        パスワードを変更してください。【注意、警告メッセージ】
+                    </div>
+                </div>
+                <div class="success notification">
+			        <div>
+			            アップデートが完了しました。【完了、成功メッセージ】
+			        </div>
+			    </div>
+                <div class="error notification">
+			        <div>
+			        	お名前が記入されていません。【エラーメッセージ】
+			        </div>
+			    </div>
+			</div>
+
+            <form action="" method="post">
+                <fieldset>
+                    <div class="UpBox clearfix">
+				        <dl>
+				            <dt>
+				                <label>日付</label>
+				            </dt>
+				            <dd>
+				              	<input type="text" class="date_input text" name="date" tabindex="13" />
+				            </dd>
+				            <dt>
+				                <label>お知らせ内容</label>
+				            </dt>
+				            <dd>
+				                <textarea rows="5" cols="50" tabindex="12"></textarea>
+				            </dd>
+				        </dl>
+				    </div>
+                    <p class="center"><input type="submit" class="submitA submitL" value="登録する" tabindex="23" /></p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

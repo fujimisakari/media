@@ -5,27 +5,26 @@
 
 <div class="box">
     <div class="boxHeader">
-        <h2>新着情報管理</h2>
-        <div class="boxHeaderTabs">
-            <ul class="boxTabs">
-                <li><a href="" class="default-tab">一覧</a></li>
-                <li><a href="{% url 'manage_top_whatnew_add' %}">登録</a></li>
-            </ul>
-        </div>
+        <h2 style="float: left;">新着情報管理</h2>
+        <ul class="boxTabs" style="float: right;">
+            <li><a class="default-tab">一覧</a></li>
+            <li><a href="{% url 'manage_top_whatnew_add' %}">登録</a></li>
+        </ul>
     </div>
 
-    <div class="ml10 mb5">
-        <form method="post" action="{% url 'manage_top_whatnew_search' %}" class="search">
+    <div class="ml10 mt15 mb10">
+        <form method="post" action="{% url 'manage_top_search' %}" class="search">
             {% if keyword %}
-               <input type="text" class="searchText" value="{{ keyword }}" />
+               <input type="text" class="searchText" name="keyword" value="{{ keyword }}" />
             {% else %}
-               <input type="text" class="searchText" value="キーワード検索" />
+               <input type="text" class="searchText" name="keyword" value="キーワード検索" />
             {% endif %}
             <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
         </form>
     </div>
 
     <div class="boxContent">
+        <h3><span>新着情報一覧</span></h3>
         {% if keyword %}
             <div class="resultPage mb10 pl10 pr10">検索結果：{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
         {% else %}
