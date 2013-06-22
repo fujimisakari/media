@@ -8,7 +8,7 @@
   
   $.fn.droppy = function(options) {
 
-    options = $.extend({speed: 250, className: 'droppy', trigger: 'hover'}, options || {});
+    options = $.extend({speed: 100, className: 'droppy', trigger: 'hover'}, options || {});
 
     this.each(function() {
 
@@ -42,7 +42,7 @@
           if (!$.data(subnav, 'cancelHide')) {
             $(subnav).slideUp(options.speed);
           }
-        }, 500);
+        }, 100);
       };
 
       function show() {
