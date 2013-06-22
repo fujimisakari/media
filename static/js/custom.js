@@ -40,21 +40,21 @@ $(function(){
 
 //table
 //table sort
-$(function(){
-  $(".sort1").tablesorter({
-    //Case sort：Granted only to the class even rows 
-    widgets: ['zebra'],
-    //Zero and Fifth is not sorted 
-    headers: {
-      0: {
-        sorter: false
-      },
-      5: {
-        sorter: false
-      }
-    }
-  });
-}); 
+// $(function(){
+//   $(".sort1").tablesorter({
+//     //Case sort：Granted only to the class even rows 
+//     widgets: ['zebra'],
+//     //Zero and Fifth is not sorted 
+//     headers: {
+//       0: {
+//         sorter: false
+//       },
+//       5: {
+//         sorter: false
+//       }
+//     }
+//   });
+// }); 
 
 $(function() {
     var zIndexNumber = 1000;

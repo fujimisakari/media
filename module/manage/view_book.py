@@ -3,32 +3,27 @@
 import re
 import copy
 
+from django.db import transaction
+from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 
 from module.common.pager import get_pager
-from module.manage.forms import BookForm, BookDetailForm, CategoryForm, SubCategoryForm, WriterForm, PublisherForm
+from module.manage.forms import BookFormSet, BookDetailFormSet, CategoryFormSet, SubCategoryFormSet, WriterFormSet, PublisherFormSet
 from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
 from module.common.dirhandler import mkdir, rmdir, movedir
 
 
-FORM_MAP = {'book': BookForm,
-            'detail': BookDetailForm,
-            'category': CategoryForm,
-            'subcategory': SubCategoryForm,
-            'writer': WriterForm,
-            'publisher': PublisherForm,
+FORM_MAP = {'book': BookFormSet,
+            'detail': BookDetailFormSet,
+            'category': CategoryFormSet,
+            'subcategory': SubCategoryFormSet,
+            'writer': WriterFormSet,
+            'publisher': PublisherFormSet,
             }
-
-INIT_FORM_MAP = {'book': BookForm(label_suffix=''),
-                 'detail': BookDetailForm(label_suffix=''),
-                 'category': CategoryForm(label_suffix=''),
-                 'subcategory': SubCategoryForm(label_suffix=''),
-                 'writer': WriterForm(label_suffix=''),
-                 'publisher': PublisherForm(label_suffix=''),
-                 }
 
 MODEL_MAP = {'book': Book,
              'detail': BookDetail,
@@ -54,8 +49,11 @@ def _render(template_file, context):
 @login_required
 def book_index(request, set_type):
     context = RequestContext(request, {'set_type': set_type, 'title': TITLE_MAP[set_type]})
-    model = MODEL_MAP[set_type]
+    if request.session.get('msg_dict', False):
+        context['msg_dict'] = request.session['msg_dict']
+        del request.session['msg_dict']
 
+    model = MODEL_MAP[set_type]
     if set_type == 'book':
         edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
     elif set_type == 'detail':
@@ -78,28 +76,47 @@ def book_index(request, set_type):
     return _render('index.html', context)
 
 
+# @login_required
+# def book_add(request, set_type='book'):
+#     context = RequestContext(request, {
+#         'set_type': set_type,
+#         'category_list': Category.get_category_list(),
+#         'subcategory_list': SubCategory.get_subcategory_list(),
+#     })
+#     form = FORM_MAP[set_type]
+#     if request.method == 'POST':
+#         set_form = form(request.POST)
+#         if set_form.is_valid():
+#             try:
+#                 mkdir(request.POST)
+#                 set_form.save()
+#             except:
+#                 context['msg'] = settings.ERROR_MSG_FILEPATH
+#             context['msg'] = settings.MSG_ADD
+#         else:
+#             context['msg'] = settings.ERROR_MSG_ADD
+#     else:
+#         context['getForm'] = INIT_FORM_MAP[set_type]
+#     return _render('index.html', context)
+
+
 @login_required
-def book_add(request, set_type='book'):
-    context = RequestContext(request, {
-        'set_type': set_type,
-        'category_list': Category.get_category_list(),
-        'subcategory_list': SubCategory.get_subcategory_list(),
-    })
-    form = FORM_MAP[set_type]
+@transaction.commit_on_success
+def book_regist(request, set_type):
+    context = RequestContext(request, {'set_type': set_type, 'title': TITLE_MAP[set_type]})
     if request.method == 'POST':
-        set_form = form(request.POST)
-        if set_form.is_valid():
-            try:
-                mkdir(request.POST)
-                set_form.save()
-            except:
-                context['msg'] = settings.ERROR_MSG_FILEPATH
-            context['msg'] = settings.MSG_ADD
+        formset = FORM_MAP[set_type](request.POST)
+        if formset.is_valid():
+            # CREATE_MAP[set_type](formset.cleaned_data)
+            request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_REGIST}
+            return HttpResponseRedirect(reverse('manage_book_index', args=[set_type]))
         else:
-            context['msg'] = settings.ERROR_MSG_ADD
+            context['is_form_error'] = True
+            context['formset'] = formset
+            return _render('regist.html', context)
     else:
-        context['getForm'] = INIT_FORM_MAP[set_type]
-    return _render('index.html', context)
+        context['formset'] = FORM_MAP[set_type]()
+    return _render('regist.html', context)
 
 
 @login_required

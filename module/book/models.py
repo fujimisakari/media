@@ -86,6 +86,8 @@ class Book(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID', db_index=True)
     subcategory_id = models.IntegerField(u'サブカテゴリID', db_index=True)
     title = models.CharField(u'タイトル名', max_length=100)
+    writer_id = models.IntegerField(u'著者', null=True)
+    publisher_id = models.IntegerField(u'出版社', null=True)
 
     @property
     def img_path(self):
@@ -103,15 +105,21 @@ class Book(AbustractCachedModel):
     def get_all_list(cls):
         return sorted([book for book in cls.get_cache_all()], key=lambda x: x.subcategory_id)
 
+    @property
+    def writer(self):
+        return Writer.get_cache(self.writer_id)
+
+    @property
+    def publisher(self):
+        return Publisher.get_cache(self.publisher_id)
+
 
 class BookDetail(AbustractCachedModel):
     book_id = models.IntegerField(u'ブックID', db_index=True)
-    volume = models.IntegerField(u'巻')
+    volume = models.IntegerField(u'巻', default=1)
     pdf_size = models.IntegerField(u'PDFサイズ')
     epud_size = models.IntegerField(u'EPUDサイズ')
     total_page = models.IntegerField(u'ページ数')
-    writer_id = models.IntegerField(u'著者', null=True)
-    publisher_id = models.IntegerField(u'出版社', null=True)
     description = models.TextField(u'備考', null=True, blank=True)
     exit_pdf = models.BooleanField(u'PDF有無', default=False)
     exit_epud = models.BooleanField(u'EPUD有無', default=False)
@@ -129,14 +137,6 @@ class BookDetail(AbustractCachedModel):
     @property
     def img_path(self):
         return u'/img/thumbnail/{}/{}/{}/{}_{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
-
-    @property
-    def writer(self):
-        return Writer.get_cache(self.writer_id)
-
-    @property
-    def publisher(self):
-        return Publisher.get_cache(self.publisher_id)
 
     @classmethod
     def get_book_detail_list_by_book_id(cls, book_id):
