@@ -14,20 +14,21 @@
 <!--[if lt IE 8]><style type="text/css" media="all">@import url("css/ie.css");</style><![endif]-->
 <link href="{{ MEDIA_URL }}/css/slimbox2.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}/js/slimbox2.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.tablesorter.js"></script>
+<!-- <script type="text/javascript" src="{{ MEDIA_URL }}/js/slimbox2.js"></script> -->
+<!-- <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.tablesorter.js"></script> -->
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.date_input.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.droppy.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/script.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/custom.js"></script>
 <!--[if IE 6]>
 <script type="text/javascript" src="{{ MEDIA_URL }}/js/DD_belatedPNG.js"></script>
 <script>
   DD_belatedPNG.fix('.png_bg');
 </script>
 <![endif]-->
-<script type="text/javascript" src="{{ MEDIA_URL }}/js/custom.js"></script>
 </head>
+
 <body>
     <div class="wrapper clearfix">
         <div class="header">
@@ -63,12 +64,12 @@
                 <li><span><a>MANAGE</a></span>
                     <ul class="navi_second">
                         <li><a href="{% url 'manage_top_index' %}">新着情報</a></li>
-                        <li><a href="{% url 'manage_book_add' 'book' %}">タイトル</a></li>
-                        <li><a href="{% url 'manage_book_add' 'detail' %}">タイトル詳細</a></li>
-                        <li><a href="{% url 'manage_book_add' 'category' %}">カテゴリ</a></li>
-                        <li><a href="{% url 'manage_book_add' 'subcategory' %}">サブカテゴリ</a></li>
-                        <li><a href="{% url 'manage_book_add' 'writer' %}">著者</a></li>
-                        <li><a href="{% url 'manage_book_add' 'publisher' %}">出版社</a></li>
+                        <li><a href="{% url 'manage_book_index' 'book' %}">タイトル</a></li>
+                        <li><a href="{% url 'manage_book_index' 'detail' %}">タイトル詳細</a></li>
+                        <li><a href="{% url 'manage_book_index' 'category' %}">カテゴリ</a></li>
+                        <li><a href="{% url 'manage_book_index' 'subcategory' %}">サブカテゴリ</a></li>
+                        <li><a href="{% url 'manage_book_index' 'writer' %}">著者</a></li>
+                        <li><a href="{% url 'manage_book_index' 'publisher' %}">出版社</a></li>
                     </ul>
                 </li>
                 <li><a href="{% url 'manage_book_status' %}">STATUS</a></li>
@@ -84,14 +85,6 @@
         <div class="container clearfix">
             <div class="conHeader clearfix">
                 <div class="contentArea clearfix">
-                    {% comment %}
-                    <div class="information notification">
-                        <div>
-                          登録内容を入力してください。【インフォメーションメッセージ】
-                        </div>
-                    </div>
-                    {% endcomment %}
-
                     {% block contents %}
                     {% endblock %}
                 </div>

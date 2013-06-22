@@ -2,7 +2,6 @@
 {% load url from future %}
 
 {% block contents %}
-
 <div class="box">
     <div class="boxHeader">
         <h2 style="float: left;">新着情報管理</h2>
@@ -33,34 +32,38 @@
             <div class="resultPage mb10 pl10 pr10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
         {% endif %}
 
-        <form method="post" action="{% url 'manage_top_delete_checked' %}">
-            <table class="tableLayout">
-                <tr>
-                    <th></th>
-                    <th width="120px">登録日</th>
-                    <th>内容</th>
-                    <th width="60px">操作</th>
-                </tr>
-                {% for whatnew in whatnew_list %}
-                    {% if forloop.counter|divisibleby:2 %}
-                      <tr class="even">
-                    {% else %}
-                      <tr>
-                    {% endif %}
-                        <td class="center"><input class="checkBox" type="checkbox" name="del_flag" value="{{ whatnew.id }}" /></td>
-                        <td class="center">{{ whatnew.create_date|date:"Y-m-d" }}</td>
-                        <td class="left">{{ whatnew.content|linebreaks|safe }}</td>
-                        <td class="center">
-                            <a href="{% url 'manage_top_edit' whatnew.id %}"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
-                            <a href="{% url 'manage_top_delete' whatnew.id %}" onclick="return confirm('本当に削除しますか？')"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
-                        </td>
+        {% if not total %}
+            <div class="mt20 center bold">該当するデータはありません</div>
+        {% else %}
+            <form method="post">
+                <table class="tableLayout">
+                    <tr>
+                        <th width="30px"></th>
+                        <th width="120px">登録日</th>
+                        <th>内容</th>
+                        <th width="60px">操作</th>
                     </tr>
-                {% endfor %}
-                <tr>
-                    <td class="center" colspan="4"><input class="submitA submitM" style="margin-bottom: 2.5px;" type="submit" value="チェック項目を削除" onclick="return confirm('本当に削除しますか？')"; void(this.form.submit()); return false" /></td></td>
-                </tr>
-            </table>
-        </form>
+                    {% for whatnew in whatnew_list %}
+                        {% if forloop.counter|divisibleby:2 %}
+                          <tr class="even">
+                        {% else %}
+                          <tr>
+                        {% endif %}
+                            <td class="center"><input class="checkBox" type="checkbox" name="del_flag" value="{{ whatnew.id }}" /></td>
+                            <td class="center">{{ whatnew.create_date|date:"Y-m-d" }}</td>
+                            <td class="left">{{ whatnew.content|linebreaks|safe }}</td>
+                            <td class="center">
+                                <a href="{% url 'manage_top_edit' whatnew.id %}"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                                <a href="{% url 'manage_top_delete' whatnew.id %}" onclick="return confirm('本当に削除しますか？')"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="center" colspan="4"><input class="submitA submitM" style="margin-bottom: 2.5px;" type="submit" value="チェック項目を削除" onclick="return confirm('本当に削除しますか？')"; void(this.form.submit()); return false" /></td></td>
+                    </tr>
+                </table>
+            </form>
+        {% endif %}
     </div>
 </div>
 

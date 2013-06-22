@@ -38,9 +38,44 @@ MODEL_MAP = {'book': Book,
              'publisher': Publisher,
              }
 
+TITLE_MAP = {'book': u'BOOK',
+             'detail': u'BOOK詳細',
+             'category': u'カテゴリ',
+             'subcategory': u'サブカテゴリ',
+             'writer': u'著者',
+             'publisher': u'出版社',
+             }
+
 
 def _render(template_file, context):
     return render_to_response('manage/book/{}'.format(template_file), context)
+
+
+@login_required
+def book_index(request, set_type):
+    context = RequestContext(request, {'set_type': set_type, 'title': TITLE_MAP[set_type]})
+    model = MODEL_MAP[set_type]
+
+    if set_type == 'book':
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
+    elif set_type == 'detail':
+        book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
+        edit_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
+    elif set_type == 'category':
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
+    elif set_type == 'subcategory':
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
+        edit_list = sorted([x for x in edit_list], key=lambda x: x.category_id)
+    elif set_type == 'writer':
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
+    elif set_type == 'publisher':
+        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
+
+    page_id = request.GET.get('page', 1)
+    pager, edit_list = get_pager(edit_list, page_id, settings.NUM_IN_MANAGE_LIST)
+    context['result_list'] = edit_list
+    context.update(pager)
+    return _render('index.html', context)
 
 
 @login_required
@@ -65,83 +100,6 @@ def book_add(request, set_type='book'):
     else:
         context['getForm'] = INIT_FORM_MAP[set_type]
     return _render('index.html', context)
-
-
-@login_required
-def book_list(request, set_type):
-    context = RequestContext(request, {})
-    model = MODEL_MAP[set_type]
-
-    if set_type == 'book':
-        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
-    elif set_type == 'detail':
-        book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
-        edit_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
-    elif set_type == 'category' or set_type == 'subcategory':
-        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
-    elif set_type == 'writer':
-        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
-    else:
-        edit_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.name)
-
-    page_id = request.GET.get('page', 1)
-    pager, edit_list = get_pager(edit_list, page_id, settings.NUM_IN_MANAGE_LIST)
-    context['result_list'] = edit_list
-    context.update(pager)
-    return _render('list.html', context)
-
-
-@login_required
-def book_search(request, set_type):
-    if request.method == 'POST':
-        keyword = request.POST['search']
-    else:
-        keyword = request.GET.get('keyword', '')
-    context = RequestContext(request, {'keyword': keyword})
-    model = MODEL_MAP[set_type]
-
-    # 検索結果取得
-    result_list = []
-    for word in keyword.split():
-        word = u'.*{}.*'.format(unicode(word))
-        r = re.compile(word, re.IGNORECASE)
-        if set_type == 'book':
-            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
-            for book in search_list:
-                if r.search(book.name) or r.search(book.category.name) or r.search(book.subcategory.name):
-                    result_list.append(book)
-        elif set_type == 'detail':
-            book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
-            search_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
-            for book_detail in search_list:
-                if r.search(book_detail.book.title) or r.search(book_detail.writer.name) or r.search(book_detail.publisher.name) or r.search(book_detail.description):
-                    result_list.append(book_detail)
-        elif set_type == 'category':
-            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
-            for category in search_list:
-                if r.search(category.name):
-                    result_list.append(book)
-        elif set_type == 'subcategory':
-            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
-            for subcategory in search_list:
-                if r.search(subcategory.name) or r.search(subcategory.category.name):
-                    result_list.append(subcategory)
-        elif set_type == 'writer':
-            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
-            for writer in search_list:
-                if r.search(writer.name):
-                    result_list.append(subcategory)
-        elif set_type == 'publisher':
-            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
-            for publisher in search_list:
-                if r.search(publisher.name):
-                    result_list.append(publisher)
-
-    page_id = request.GET.get('page', 1)
-    pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)
-    context['result_list'] = result_list
-    context.update(pager)
-    return _render('list.html', context)
 
 
 @login_required
@@ -202,3 +160,56 @@ def book_delete_checked(request, set_type):
             rmdir(data_dict)
             obj.delete()
         return _render('index.html', context)
+
+
+@login_required
+def book_search(request, set_type):
+    if request.method == 'POST':
+        keyword = request.POST['keyword']
+    else:
+        keyword = request.GET.get('keyword', '')
+    context = RequestContext(request, {'keyword': keyword, 'set_type': set_type, 'title': TITLE_MAP[set_type]})
+    model = MODEL_MAP[set_type]
+
+    # 検索結果取得
+    result_list = []
+    for word in keyword.split():
+        word = u'.*{}.*'.format(unicode(word))
+        r = re.compile(word, re.IGNORECASE)
+        if set_type == 'book':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
+            for book in search_list:
+                if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name):
+                    result_list.append(book)
+        elif set_type == 'detail':
+            book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
+            search_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
+            for book_detail in search_list:
+                if r.search(book_detail.book.title) or r.search(book_detail.writer.name) or r.search(book_detail.publisher.name) or r.search(book_detail.description):
+                    result_list.append(book_detail)
+        elif set_type == 'category':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
+            for category in search_list:
+                if r.search(category.name):
+                    result_list.append(book)
+        elif set_type == 'subcategory':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
+            for subcategory in search_list:
+                if r.search(subcategory.name) or r.search(subcategory.category.name):
+                    result_list.append(subcategory)
+        elif set_type == 'writer':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
+            for writer in search_list:
+                if r.search(writer.name):
+                    result_list.append(subcategory)
+        elif set_type == 'publisher':
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
+            for publisher in search_list:
+                if r.search(publisher.name):
+                    result_list.append(publisher)
+
+    page_id = request.GET.get('page', 1)
+    pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)
+    context['result_list'] = result_list
+    context.update(pager)
+    return _render('index.html', context)
