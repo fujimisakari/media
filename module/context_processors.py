@@ -11,7 +11,10 @@ def common_context(request):
         'MEDIA_CSS': settings.MEDIA_CSS,
         'MEDIA_JS': settings.MEDIA_JS,
         'MEDIA_FOTTER': settings.MEDIA_FOTTER,
-        'category_list': Category.get_category_list()
+        'category_list': Category.get_category_list(),
+        'SUCCESS': settings.SUCCESS,
+        'ERROR': settings.ERROR,
+        'ATTENTION': settings.ATTENTION,
     }
 
 

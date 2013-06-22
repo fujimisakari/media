@@ -1,0 +1,15 @@
+{% if msg_dict %}
+    {% if msg_dict.info_type == ATTENTION %}
+        <div class="attention notification">
+            <div>{{ msg_dict.msg }}</div>
+        </div>
+    {% elif msg_dict.info_type == SUCCESS %}
+        <div class="success notification">
+            <div>{{ msg_dict.msg }}</div>
+        </div>
+    {% elif msg_dict.info_type == ERROR %}
+        <div class="error notification">
+            <div>{{ msg_dict.msg }}</div>
+        </div>
+    {% endif %}
+{% endif %}

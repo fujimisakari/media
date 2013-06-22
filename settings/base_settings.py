@@ -154,6 +154,14 @@ INSTALLED_APPS = (
 # debug_toolbar用
 INTERNAL_IPS = ('127.0.0.1',)
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    #'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
+    #'EXTRA_SIGNALS': ['myproject.signals.MySignal'],
+    # 'HIDE_DJANGO_SQL': False,
+    #'TAG': 'div',
+}
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'module.context_processors.common_context',
@@ -227,30 +235,20 @@ BOOK_VOLUME_THUMBNAIL = '_thumbnail.jpg'
 BOOK_THUMB_HEIGHT = '110'
 BOOK_THUMB_WIDTH = '80'
 
-# manage
-MANAGE_BOOK_PATH = os.path.join(ROOT_PATH, 'templates/static/media/book')
-MANAGE_MOVIE_PATH = os.path.join(ROOT_PATH, 'templates/static/media/movie')
-MANAGE_MUSIC_PATH = os.path.join(ROOT_PATH, 'templates/static/media/music')
-
-# manage title
-TOP_WHATNEW = '[TOP] What New'
-BOOK_BOOK = '[BOOK] タイトル'
-BOOK_DETAIL = '[BOOK] タイトル詳細'
-BOOK_CATEGORY = '[BOOK] カテゴリ'
-BOOK_SUBCATEGORY = '[BOOK] サブカテゴリ'
-BOOK_WRITER = '[BOOK] 著者'
-BOOK_PUBLISHER = '[BOOK] 出版社'
-UPLOAD_BOOK = '[UPLOAD] BOOK'
-ANALYSIS_BOOK = '[ANALYSIS] BOOK'
+# info type
+SUCCESS = 1
+ERROR = 2
+ATTENTION = 3
 
 # manage msg
-MSG_ADD = '登録しました'
-MSG_EDIT = '編集しました'
-MSG_DELET = '削除しました'
-MSG_CHECKED_DELET = 'チェック項目を削除しました'
-ERROR_MSG_ADD = '入力値が正常でないため、登録が行えませんでした'
-ERROR_MSG_EDIT = '入力値が正常でないため、編集が行えませんでした'
-ERROR_MSG_FILEPATH = 'カテゴリまたはサブカテゴリの組み合わせが正しくありません'
-MSG_UPLOAD = 'アップロードしました'
-ERROR_MSG_UPLOAD_FILEPATH = 'カテゴリ、サブカテゴリ、タイトルの組み合わせが正しくありません'
-ERROR_MSG_UPLOAD = '入力値が正常でないため、アップロードが行えませんでした'
+MSG_ADD = u'登録しました'
+MSG_REGIST = u'登録しました'
+MSG_EDIT = u'編集しました'
+MSG_DELET = u'削除しました'
+MSG_CHECKED_DELET = u'チェック項目を削除しました'
+ERROR_MSG_ADD = u'入力値が正常でないため、登録が行えませんでした'
+ERROR_MSG_EDIT = u'入力値が正常でないため、編集が行えませんでした'
+ERROR_MSG_FILEPATH = u'カテゴリまたはサブカテゴリの組み合わせが正しくありません'
+MSG_UPLOAD = u'アップロードしました'
+ERROR_MSG_UPLOAD_FILEPATH = u'カテゴリ、サブカテゴリ、タイトルの組み合わせが正しくありません'
+ERROR_MSG_UPLOAD = u'入力値が正常でないため、アップロードが行えませんでした'

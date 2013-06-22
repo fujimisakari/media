@@ -8,7 +8,7 @@
         <h2 style="float: left;">新着情報管理</h2>
         <ul class="boxTabs" style="float: right;">
             <li><a class="default-tab">一覧</a></li>
-            <li><a href="{% url 'manage_top_whatnew_add' %}">登録</a></li>
+            <li><a href="{% url 'manage_top_regist' %}">登録</a></li>
         </ul>
     </div>
 
@@ -23,6 +23,8 @@
         </form>
     </div>
 
+    {% include './common/msg_info.html' %}
+
     <div class="boxContent">
         <h3><span>新着情報一覧</span></h3>
         {% if keyword %}
@@ -31,7 +33,7 @@
             <div class="resultPage mb10 pl10 pr10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
         {% endif %}
 
-        <form method="post">
+        <form method="post" action="{% url 'manage_top_delete_checked' %}">
             <table class="tableLayout">
                 <tr>
                     <th></th>
@@ -49,13 +51,13 @@
                         <td class="center">{{ whatnew.create_date|date:"Y-m-d" }}</td>
                         <td class="left">{{ whatnew.content|linebreaks|safe }}</td>
                         <td class="center">
-                            <a href="{% url 'manage_top_whatnew_edit' whatnew.id %}"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
-                            <a href="#"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                            <a href="{% url 'manage_top_edit' whatnew.id %}"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                            <a href="{% url 'manage_top_delete' whatnew.id %}" onclick="return confirm('本当に削除しますか？')"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
                         </td>
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td class="center" colspan="4"><input class="submitA submitM" style="margin-bottom: 2.5px;" type="submit" value="チェック項目を削除" onclick="this.form.action='{% url 'manage_top_whatnew_delete_checked' %}'" /></td></td>
+                    <td class="center" colspan="4"><input class="submitA submitM" style="margin-bottom: 2.5px;" type="submit" value="チェック項目を削除" onclick="return confirm('本当に削除しますか？')"; void(this.form.submit()); return false" /></td></td>
                 </tr>
             </table>
         </form>

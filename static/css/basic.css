@@ -547,7 +547,12 @@ form span.note {
 form span.error {
   background: url("/static/img/icon_error.png") no-repeat 5px center;
   padding: 0 0 0 25px;
-  color: #ff8585;
+  color: #a00303;
+}
+
+form .error_msg {
+  color: #a00303;
+  font-weight: bold;
 }
 
 /* List

@@ -13,6 +13,7 @@ from module.manage.forms import BookForm, BookDetailForm, CategoryForm, SubCateg
 from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
 from module.common.dirhandler import mkdir, rmdir, movedir
 
+
 FORM_MAP = {'book': BookForm,
             'detail': BookDetailForm,
             'category': CategoryForm,
@@ -37,14 +38,6 @@ MODEL_MAP = {'book': Book,
              'publisher': Publisher,
              }
 
-TITLE_MAP = {'book': settings.BOOK_BOOK,
-             'detail': settings.BOOK_DETAIL,
-             'category': settings.BOOK_CATEGORY,
-             'subcategory': settings.BOOK_SUBCATEGORY,
-             'writer': settings.BOOK_WRITER,
-             'publisher': settings.BOOK_PUBLISHER,
-             }
-
 
 def _render(template_file, context):
     return render_to_response('manage/book/{}'.format(template_file), context)
@@ -53,7 +46,6 @@ def _render(template_file, context):
 @login_required
 def book_add(request, set_type='book'):
     context = RequestContext(request, {
-        'title': TITLE_MAP[set_type],
         'set_type': set_type,
         'category_list': Category.get_category_list(),
         'subcategory_list': SubCategory.get_subcategory_list(),
@@ -77,7 +69,7 @@ def book_add(request, set_type='book'):
 
 @login_required
 def book_list(request, set_type):
-    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    context = RequestContext(request, {})
     model = MODEL_MAP[set_type]
 
     if set_type == 'book':
@@ -105,7 +97,7 @@ def book_search(request, set_type):
         keyword = request.POST['search']
     else:
         keyword = request.GET.get('keyword', '')
-    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type, 'keyword': keyword})
+    context = RequestContext(request, {'keyword': keyword})
     model = MODEL_MAP[set_type]
 
     # 検索結果取得
@@ -154,7 +146,7 @@ def book_search(request, set_type):
 
 @login_required
 def book_edit(request, set_type, edit_id):
-    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type, 'id': edit_id})
+    context = RequestContext(request, {'id': edit_id})
     model = MODEL_MAP[set_type]
     form = FORM_MAP[set_type]
 
@@ -178,7 +170,7 @@ def book_edit(request, set_type, edit_id):
 
 @login_required
 def book_delete(request, set_type, del_id):
-    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    context = RequestContext(request, {'set_type': set_type})
     model = MODEL_MAP[set_type]
     if request.method == 'POST':
         rmdir(request.POST)
@@ -190,7 +182,7 @@ def book_delete(request, set_type, del_id):
 
 @login_required
 def book_delete_checked(request, set_type):
-    context = RequestContext(request, {'title': TITLE_MAP[set_type], 'set_type': set_type})
+    context = RequestContext(request, {'set_type': set_type})
     model = MODEL_MAP[set_type]
 
     if request.method == 'POST':

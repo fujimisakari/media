@@ -8,12 +8,12 @@
         <h2 style="float: left;">新着情報管理</h2>
         <ul class="boxTabs" style="float: right;">
             <li><a href="{% url 'manage_top_index' %}">一覧</a></li>
-            <li><a class="default-tab">登録</a></li>
+            <li><a href="{% url 'manage_top_regist' %}">登録</a></li>
         </ul>
     </div>
 
     <div class="boxContent">
-            <h3><span>新着情報登録</span></h3>
+            <h3><span>新着情報編集</span></h3>
 
             {% if is_form_error %}
 				<div class="error notification">
@@ -52,16 +52,18 @@
                                     {{ form.content }}
 				                </dd>
 				            </dl>
+                            {{ form.id }}
                         {% endfor %}
 				    </div>
                     <p class="center">
-                        <input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_top_regist' %}'" />
+                        <input type="submit" class="submitA submitL" value="編集する" tabindex="23" onclick="this.form.action='{% url 'manage_top_edit' id %}'" />
+                        <span class="mr40"></span>
+                        <input type="submit" class="submitA submitL" value="削除する" tabindex="23" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_top_delete' id %}'" />
                     </p>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
-
 
 {% endblock %}

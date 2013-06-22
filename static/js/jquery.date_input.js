@@ -13,9 +13,9 @@ function DateInput(el, opts) {
   this.hide();
 };
 DateInput.DEFAULT_OPTS = {
-  month_names: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  month_names: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
   short_month_names: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-  short_day_names: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  short_day_names: ["日", "月", "火", "水", "木", "金", "土"],
   start_of_week: 0
 };
 DateInput.prototype = {
@@ -213,7 +213,7 @@ DateInput.prototype = {
   },
   
   dateToString: function(date) {
-    return date.getFullYear() + "." + this.short_month_names[date.getMonth()] + "." + date.getDate();
+    return date.getFullYear() + "-" + this.short_month_names[date.getMonth()] + "-" + date.getDate();
   },
   
   setPosition: function() {
