@@ -15,6 +15,7 @@ def common_context(request):
         'SUCCESS': settings.SUCCESS,
         'ERROR': settings.ERROR,
         'ATTENTION': settings.ATTENTION,
+        'ATTENTION': settings.ATTENTION,
     }
 
 
