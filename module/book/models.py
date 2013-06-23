@@ -151,6 +151,16 @@ class BookDetail(AbustractCachedModel):
                 book_list.append(book_detail.book)
         return [book for book in book_list if book][:limit]
 
+    @property
+    def volume_range(self):
+        volume_range_list = []
+        extra_volume = 0
+        for row in sorted([x for x in self.get_cache_all() if self.book_id == x.book_id], key=lambda x: x.volume):
+            volume_range_list.append(row.volume)
+            extra_volume = row.volume + 1
+        volume_range_list.append(extra_volume)
+        return volume_range_list
+
 
 class Writer(AbustractCachedModel):
     category_id = models.IntegerField(u'カテゴリID', null=True, blank=True)

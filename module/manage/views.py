@@ -91,7 +91,7 @@ def regist(request, set_type):
         if formset.is_valid() and formset.cleaned_data[0]:
             # CREATE_MAP[set_type](formset.cleaned_data)
             request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_REGIST}
-            return HttpResponseRedirect(reverse('manage_book_index', args=[set_type]))
+            return HttpResponseRedirect(reverse('manage_index', args=[set_type]))
         else:
             context['is_form_error'] = True
             context['formset'] = formset
@@ -101,64 +101,97 @@ def regist(request, set_type):
     return _render('regist.html', context)
 
 
+# @login_required
+# def edit(request, set_type, edit_id):
+#     context = RequestContext(request, {'id': edit_id})
+#     model = MODEL_MAP[set_type]
+#     form = FORM_MAP[set_type]
+
+#     if request.method == 'POST':
+#         obj = model.get_cache(edit_id)
+#         formset = WhatNewFormSet(request.POST)
+#         setForm = form(request.POST, instance=obj)
+#         if setForm.is_valid():
+#             try:
+#                 # movedir(request.POST, edit_id)
+#                 setForm.save()
+#                 context['msg'] = settings.MSG_EDIT
+#             except:
+#                 context['msg'] = settings.ERROR_MSG_FILEPATH
+#         else:
+#             context['msg'] = settings.ERROR_MSG_EDIT
+#     else:
+#         obj = model.get_cache(edit_id)
+#         context['getForm'] = form(instance=obj, label_suffix='')
+#     return _render('index.html', context)
+
+
 @login_required
 def edit(request, set_type, edit_id):
-    context = RequestContext(request, {'id': edit_id})
+    context = RequestContext(request, {
+        'id': edit_id,
+        'set_type': set_type,
+        'title': TITLE_MAP[set_type],
+        'subcategory_list': SubCategory.get_subcategory_list(),
+        'writer_list': Writer.get_cache_all(),
+        'publisher_list': Publisher.get_cache_all(),
+    })
+    if set_type == 'detail':
+        context['book_list'] = Book.get_all_list()
+        context['detail'] = BookDetail.get_cache(edit_id)
     model = MODEL_MAP[set_type]
-    form = FORM_MAP[set_type]
 
     if request.method == 'POST':
-        obj = model.get_cache(edit_id)
-        setForm = form(request.POST, instance=obj)
-        if setForm.is_valid():
-            try:
-                # movedir(request.POST, edit_id)
-                setForm.save()
-                context['msg'] = settings.MSG_EDIT
-            except:
-                context['msg'] = settings.ERROR_MSG_FILEPATH
+        formset = FORM_MAP[set_type](request.POST)
+        if formset.is_valid():
+            # edit_whatnew(formset.cleaned_data)
+            request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_EDIT}
+            return HttpResponseRedirect(reverse('manage_top_index'))
         else:
-            context['msg'] = settings.ERROR_MSG_EDIT
+            context['is_form_error'] = True
+            context['formset'] = formset
+            return _render('edit.html', context)
     else:
         obj = model.get_cache(edit_id)
-        context['getForm'] = form(instance=obj, label_suffix='')
-    return _render('index.html', context)
+        context['formset'] = FORM_MAP[set_type](initial=[obj.__dict__])
+    return _render('edit.html', context)
 
 
 @login_required
+@transaction.commit_on_success
 def delete(request, set_type, del_id):
-    context = RequestContext(request, {'set_type': set_type})
+    request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_DELET}
     model = MODEL_MAP[set_type]
-    if request.method == 'POST':
-        rmdir(request.POST)
-        obj = model.get_cache(del_id)
-        obj = copy.copy(obj)
-        obj.delete()
-        return _render('index.html', context)
+    # rmdir(request.POST)
+    obj = model.objects.select_for_update().get(id=del_id)
+    obj.delete()
+    return HttpResponseRedirect(reverse('manage_index', args=[set_type]))
 
 
 @login_required
+@transaction.commit_on_success
 def delete_checked(request, set_type):
-    context = RequestContext(request, {'set_type': set_type})
     model = MODEL_MAP[set_type]
-
     if request.method == 'POST':
-        data_dict = {'set_type': set_type}
-        for del_id in request.POST.getlist('del_flag'):
-            obj = model.get_cache(del_id)
-            obj = copy.copy(obj)
-            if set_type == 'category':
-                data_dict['category'] = obj.id
-            elif set_type == 'subcategory':
-                data_dict['subcategory'] = obj.id
-                data_dict['category'] = obj.category_id
-            elif set_type == 'book':
-                data_dict['category'] = obj.category_id
-                data_dict['subcategory'] = obj.subcategory_id
-                data_dict['book'] = obj.id
-            rmdir(data_dict)
-            obj.delete()
-        return _render('index.html', context)
+        obj_id_list = [obj_id for obj_id in request.POST.getlist('del_flag')]
+        if obj_id_list:
+            request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_CHECKED_DELET}
+            model.objects.select_for_update().filter(id__in=obj_id_list).delete()
+            # delete_whatnew_cache(whatnew_id_list)
+            # data_dict = {'set_type': set_type}
+            # if set_type == 'category':
+            #     data_dict['category'] = obj.id
+            # elif set_type == 'subcategory':
+            #     data_dict['subcategory'] = obj.id
+            #     data_dict['category'] = obj.category_id
+            # elif set_type == 'book':
+            #     data_dict['category'] = obj.category_id
+            #     data_dict['subcategory'] = obj.subcategory_id
+            #     data_dict['book'] = obj.id
+            # rmdir(data_dict)
+        return HttpResponseRedirect(reverse('manage_index', args=[set_type]))
+    else:
+        return HttpResponseRedirect(reverse('manage_index', args=[set_type]))
 
 
 @login_required
