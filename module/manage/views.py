@@ -13,35 +13,36 @@ from django.shortcuts import render_to_response
 
 from module.common.pager import get_pager
 from module.manage.forms import BookFormSet, BookDetailFormSet, CategoryFormSet, SubCategoryFormSet, WriterFormSet, PublisherFormSet, WhatNewFormSet
-from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher, WhatNew
+from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
+from module.top.models import WhatNew
 from module.common.dirhandler import mkdir, rmdir, movedir
 
 
-FORM_MAP = {'book': BookFormSet,
+FORM_MAP = {'whatnew': WhatNewFormSet,
+            'book': BookFormSet,
             'detail': BookDetailFormSet,
             'category': CategoryFormSet,
             'subcategory': SubCategoryFormSet,
             'writer': WriterFormSet,
             'publisher': PublisherFormSet,
-            'whatnew': WhatNewFormSet,
             }
 
-MODEL_MAP = {'book': Book,
+MODEL_MAP = {'whatnew': WhatNew,
+             'book': Book,
              'detail': BookDetail,
              'category': Category,
              'subcategory': SubCategory,
              'writer': Writer,
              'publisher': Publisher,
-             'whatnew': WhatNew,
              }
 
-TITLE_MAP = {'book': u'BOOK',
+TITLE_MAP = {'whatnew': u'新着情報',
+             'book': u'BOOK',
              'detail': u'BOOK詳細',
              'category': u'カテゴリ',
              'subcategory': u'サブカテゴリ',
              'writer': u'著者',
              'publisher': u'出版社',
-             'whatnew': u'新着情報',
              }
 
 
@@ -50,14 +51,16 @@ def _render(template_file, context):
 
 
 @login_required
-def book_index(request, set_type):
+def index(request, set_type='whatnew'):
     context = RequestContext(request, {'set_type': set_type, 'title': TITLE_MAP[set_type]})
     if request.session.get('msg_dict', False):
         context['msg_dict'] = request.session['msg_dict']
         del request.session['msg_dict']
 
     model = MODEL_MAP[set_type]
-    if set_type == 'book':
+    if set_type == 'whatnew':
+        result_list = model.get_cache_all()
+    elif set_type == 'book':
         result_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
     elif set_type == 'detail':
         book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
@@ -71,8 +74,6 @@ def book_index(request, set_type):
         result_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
     elif set_type == 'publisher':
         result_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
-    elif set_type == 'whatnew':
-        result_list = model.get_cache_all()
 
     page_id = request.GET.get('page', 1)
     pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)
@@ -83,7 +84,7 @@ def book_index(request, set_type):
 
 @login_required
 @transaction.commit_on_success
-def book_regist(request, set_type):
+def regist(request, set_type):
     context = RequestContext(request, {'set_type': set_type, 'title': TITLE_MAP[set_type]})
     if request.method == 'POST':
         formset = FORM_MAP[set_type](request.POST)
@@ -101,7 +102,7 @@ def book_regist(request, set_type):
 
 
 @login_required
-def book_edit(request, set_type, edit_id):
+def edit(request, set_type, edit_id):
     context = RequestContext(request, {'id': edit_id})
     model = MODEL_MAP[set_type]
     form = FORM_MAP[set_type]
@@ -125,7 +126,7 @@ def book_edit(request, set_type, edit_id):
 
 
 @login_required
-def book_delete(request, set_type, del_id):
+def delete(request, set_type, del_id):
     context = RequestContext(request, {'set_type': set_type})
     model = MODEL_MAP[set_type]
     if request.method == 'POST':
@@ -137,7 +138,7 @@ def book_delete(request, set_type, del_id):
 
 
 @login_required
-def book_delete_checked(request, set_type):
+def delete_checked(request, set_type):
     context = RequestContext(request, {'set_type': set_type})
     model = MODEL_MAP[set_type]
 
@@ -161,7 +162,7 @@ def book_delete_checked(request, set_type):
 
 
 @login_required
-def book_search(request, set_type):
+def search(request, set_type):
     if request.method == 'POST':
         keyword = request.POST['keyword']
     else:
@@ -174,7 +175,12 @@ def book_search(request, set_type):
     for word in keyword.split():
         word = u'.*{}.*'.format(unicode(word))
         r = re.compile(word, re.IGNORECASE)
-        if set_type == 'book':
+        if set_type == 'whatnew':
+            search_list = model.get_cache_all()
+            for whatnew in search_list:
+                if r.search(whatnew.content):
+                    result_list.append(whatnew)
+        elif set_type == 'book':
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
             for book in search_list:
                 if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name):
@@ -205,14 +211,19 @@ def book_search(request, set_type):
             for publisher in search_list:
                 if r.search(publisher.name):
                     result_list.append(publisher)
-        elif set_type == 'whatnew':
-            search_list = model.get_cache_all()
-            for whatnew in search_list:
-                if r.search(whatnew.content):
-                    result_list.append(whatnew)
 
     page_id = request.GET.get('page', 1)
     pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)
     context['result_list'] = result_list
     context.update(pager)
     return _render('index.html', context)
+
+
+@login_required
+def status(request):
+    context = RequestContext(request, {
+        'total_title_count': len(Book.get_cache_all()),
+        'total_book_count': len(BookDetail.get_cache_all()),
+        'category_list': Category.get_category_list(),
+    })
+    return _render('status.html', context)

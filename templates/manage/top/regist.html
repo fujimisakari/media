@@ -13,53 +13,52 @@
     </div>
 
     <div class="boxContent">
-            <h3><span>新着情報登録</span></h3>
+        <h3><span>新着情報登録</span></h3>
 
-            {% if is_form_error %}
-				<div class="error notification">
-					<div>
-						正しく入力されていない項目があります
-					</div>
+		{% if is_form_error %}
+			<div class="error notification">
+				<div>
+					正しく入力されていない項目があります
 				</div>
-			{% endif %}
+			</div>
+		{% endif %}
 
-            <form method="post">
-                {{ formset.management_form }}
-                <fieldset>
-                    <div class="UpBox clearfix">
-                       {% for form in formset %}
-				            <dl>
-				                <dt>
-				                    <label>日付</label>
-                                    {% if form.create_date.errors %}
-                                        <span class='error_msg'>
-									        {{ form.create_date.errors }}
-									    </span>
-                                    {% endif %}
-				                </dt>
-				                <dd>
-                                    {{ form.create_date }}
-				                </dd>
-				                <dt>
-				                    <label>お知らせ内容</label>
-                                    {% if form.content.errors %}
-                                        <span class='error_msg'>
-                                            {{ form.content.errors }}
-                                        </span>
-                                    {% endif %}
-				                </dt>
-				                <dd>
-                                    {{ form.content }}
-				                </dd>
-				            </dl>
-                        {% endfor %}
-				    </div>
-                    <p class="center">
-                        <input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_top_regist' %}'" />
-                    </p>
-                </fieldset>
-            </form>
-        </div>
+		<form method="post">
+			{{ formset.management_form }}
+			<fieldset>
+				<div class="UpBox clearfix">
+				   {% for form in formset %}
+						<dl>
+							<dt>
+								<label>日付</label>
+								{% if form.create_date.errors %}
+									<span class='error_msg'>
+										{{ form.create_date.errors }}
+									</span>
+								{% endif %}
+							</dt>
+							<dd>
+								{{ form.create_date }}
+							</dd>
+							<dt>
+								<label>お知らせ内容</label>
+								{% if form.content.errors %}
+									<span class='error_msg'>
+										{{ form.content.errors }}
+									</span>
+								{% endif %}
+							</dt>
+							<dd>
+								{{ form.content }}
+							</dd>
+						</dl>
+					{% endfor %}
+				</div>
+				<p class="center">
+					<input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_top_regist' %}'" />
+				</p>
+			</fieldset>
+		</form>
     </div>
 </div>
 

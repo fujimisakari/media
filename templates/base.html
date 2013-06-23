@@ -63,16 +63,16 @@
                 </ul>
                 <li><span><a>MANAGE</a></span>
                     <ul class="navi_second">
-                        <li><a href="{% url 'manage_top_index' %}">新着情報</a></li>
-                        <li><a href="{% url 'manage_book_index' 'book' %}">タイトル</a></li>
-                        <li><a href="{% url 'manage_book_index' 'detail' %}">タイトル詳細</a></li>
-                        <li><a href="{% url 'manage_book_index' 'category' %}">カテゴリ</a></li>
-                        <li><a href="{% url 'manage_book_index' 'subcategory' %}">サブカテゴリ</a></li>
-                        <li><a href="{% url 'manage_book_index' 'writer' %}">著者</a></li>
-                        <li><a href="{% url 'manage_book_index' 'publisher' %}">出版社</a></li>
+                        <li><a href="{% url 'manage_index' 'whatnew' %}">新着情報</a></li>
+                        <li><a href="{% url 'manage_index' 'book' %}">タイトル</a></li>
+                        <li><a href="{% url 'manage_index' 'detail' %}">タイトル詳細</a></li>
+                        <li><a href="{% url 'manage_index' 'category' %}">カテゴリ</a></li>
+                        <li><a href="{% url 'manage_index' 'subcategory' %}">サブカテゴリ</a></li>
+                        <li><a href="{% url 'manage_index' 'writer' %}">著者</a></li>
+                        <li><a href="{% url 'manage_index' 'publisher' %}">出版社</a></li>
                     </ul>
                 </li>
-                <li><a href="{% url 'manage_book_status' %}">STATUS</a></li>
+                <li><a href="{% url 'manage_status' %}">STATUS</a></li>
                 <li><span><a>USER</a></span>
                     <ul class="navi_second">
                         <li><a href="{% url 'auth_password_change' %}">パスワードの変更</a></li>

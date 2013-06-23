@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block contents %}
+<div class="box">
+    <div class="boxHeader">
+        <h2 style="float: left;">BOOK情報管理</h2>
+        <ul class="boxTabs" style="float: right;">
+            <li><a class="default-tab">一覧</a></li>
+            <li><a href="{% url 'manage_regist' set_type %}">登録</a></li>
+        </ul>
+    </div>
+
+    <div class="ml10 mt15 mb10">
+        <form method="post" action="{% url 'manage_search' set_type %}" class="search">
+            {% if keyword %}
+               <input type="text" class="searchText" name="keyword" value="{{ keyword }}" />
+            {% else %}
+               <input type="text" class="searchText" name="keyword" value="キーワード検索" />
+            {% endif %}
+            <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
+        </form>
+    </div>
+
+    {% include './common/msg_info.html' %}
+
+    <div class="boxContent">
+        <h3><span>{{ title }}一覧</span></h3>
+        {% if keyword %}
+            <div class="resultPage mb10 pl10 pr10">検索結果：{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+        {% else %}
+            <div class="resultPage mb10 pl10 pr10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+        {% endif %}
+
+        {% if not total %}
+            <div class="mt20 center bold">該当するデータはありません</div>
+        {% else %}
+            <form method="post">
+                <table class="tableLayout">
+                    {% for object in result_list %}
+
+                        {% if set_type == 'whatnew' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th width="120px">登録日</th>
+                                    <th>内容</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input class="checkBox" type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="center">{{ object.create_date|date:"Y-m-d" }}</td>
+                                    <td class="left">{{ object.content|linebreaks|safe }}</td>
+                        {% endif %}
+
+
+                        {% if set_type == 'book' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th width="80px">カテゴリ</th>
+                                    <th width="120px">サブカテゴリ</th>
+                                    <th>タイトル</th>
+                                    <th width="140px">著者</th>
+                                    <th width="140px">出版社</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="center">{{ object.category.name }}</td>
+                                    <td class="center">{{ object.subcategory.name }}</td>
+                                    <td class="left">{{ object.title }}</td>
+                                    <td class="left">{{ object.writer.name }}</td>
+                                    <td class="left">{{ object.publisher.name }}</td>
+                        {% endif %}
+
+                        {% if set_type == 'detail' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th>タイトル</th>
+                                    <th width="40px">巻</th>
+                                    <th width="70px">PDFサイズ</th>
+                                    <!-- <th width="50px"class="size50">EPUDサイズ</th> -->
+                                    <th width="60px">ページ数</th>
+                                    <th width="60px">付属CD</th>
+                                    <th width="120px">備考</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="left">{{ object.book.title }}</td>
+                                    <td class="center">{{ object.volume }}</td>
+                                    <td class="center">{{ object.pdf_size }}M</td>
+                                    <!-- <td>{{ object.epud_size }}M</td> -->
+                                    <td class="center">{{ object.total_page }}</td>
+                                    <td class="center">{% if object.exit_attachment %}有{% else %}無{% endif %}</td>
+                                    <td class="left">{{ object.description|linebreaks|safe }}</td>
+                        {% endif %}
+
+                        {% if set_type == 'category' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th width="75px">表示順</th>
+                                    <th>カテゴリ名</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="center">{{ object.sort }}</td>
+                                    <td class="left">{{ object.name }}</td>
+                        {% endif %}
+
+                        {% if set_type == 'subcategory' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th width="75px">表示順</th>
+                                    <th width="100px">カテゴリ名</th>
+                                    <th>サブカテゴリ名</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="center">{{ object.sort }}</td>
+                                    <td class="center">{{ object.category.name }}</td>
+                                    <td class="left">{{ object.name }}</td>
+                        {% endif %}
+
+                        {% if set_type == 'writer' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th width="100px">カテゴリ名</th>
+                                    <th>著者</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="center">{{ object.category.name }}</td>
+                                    <td class="left">{{ object.name }}</td>
+                        {% endif %}
+
+                        {% if set_type == 'publisher' %}
+                            {% if forloop.first %}
+                                <tr>
+                                    <th width="30px"></th>
+                                    <th width="100px">カテゴリ名</th>
+                                    <th>出版社</th>
+                                    <th width="60px">操作</th>
+                                </tr>
+                            {% endif %}
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="del_flag" value="{{ object.id }}" /></td>
+                                    <td class="center">{{ object.category.name }}</td>
+                                    <td class="left">{{ object.name }}</td>
+                        {% endif %}
+
+                            <td class="center">
+                                <a href="{% url 'manage_edit' set_type object.id %}"><img src="{{ MEDIA_URL }}/img/icon_edit.png" alt="Edit" /></a>
+                                <a href="{% url 'manage_delete' set_type object.id %}" onclick="return confirm('本当に削除しますか？')"><img src="{{ MEDIA_URL }}/img/icon_delete.png" alt="Delete" /></a>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    <tr>
+                        <td class="center" colspan="8"><input class="submitA submitM" style="margin-bottom: 2.5px;" type="submit" value="チェック項目を削除" onclick="return confirm('本当に削除しますか？')"; void(this.form.submit()); return false" /></td></td>
+                    </tr>
+                </table>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+{% include './common/pager.html' %}
+
+{% endblock %}

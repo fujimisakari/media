@@ -13,13 +13,9 @@ body {
 }
 
 div.wrapper {
-    height: 100%;
-    position: relative;
-    height: auto !important;
-    min-height: 100%;
-    margin: 0 auto;
-    padding-top: 5px;
-    width: 940px;
+  width: 940px;
+  margin: 0 auto;
+  padding-top: 5px;
 }
 
 div.header {

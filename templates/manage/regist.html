@@ -5,9 +5,9 @@
 
 <div class="box">
     <div class="boxHeader">
-        <h2 style="float: left;">BOOK管理</h2>
+        <h2 style="float: left;">BOOK情報管理</h2>
         <ul class="boxTabs" style="float: right;">
-            <li><a href="{% url 'manage_book_index' set_type %}">一覧</a></li>
+            <li><a href="{% url 'manage_index' set_type %}">一覧</a></li>
             <li><a class="default-tab">登録</a></li>
         </ul>
     </div>
@@ -28,6 +28,33 @@
 			<fieldset>
 				<div class="UpBox clearfix">
 					{% for form in formset %}
+						{% if set_type == 'whatnew' %}
+                  		    <dl>
+						        <dt>
+						        	<label>日付</label>
+						        	{% if form.create_date.errors %}
+						        		<span class='error_msg'>
+						        			{{ form.create_date.errors }}
+						        		</span>
+						        	{% endif %}
+						        </dt>
+						        <dd>
+						        	{{ form.create_date }}
+						        </dd>
+						        <dt>
+						        	<label>お知らせ内容</label>
+						        	{% if form.content.errors %}
+						        		<span class='error_msg'>
+						        			{{ form.content.errors }}
+						        		</span>
+						        	{% endif %}
+						        </dt>
+						        <dd>
+						        	{{ form.content }}
+						        </dd>
+						    </dl>
+                        {% endif %}
+
 						{% if set_type == 'book' %}
 							<dl>
 								<dt>
@@ -60,7 +87,7 @@
 									</select>
 								</dd>
 								<dt>
-									<label>タイトル</label>
+									<label>タイトル名</label>
 									{% if form.title.errors %}
 										<span class='error_msg'>
 											{{ form.title.errors }}
@@ -71,7 +98,7 @@
 									{{ form.title }}
 								</dd>
 								<dt>
-									<label>著者名</label>
+									<label>著者</label>
 									{% if form.writer_id.errors %}
 										<span class='error_msg'>
 											{{ form.writer_id.errors }}
@@ -84,7 +111,7 @@
 									</select>
 								</dd>
 								<dt>
-									<label>出版社名</label>
+									<label>出版社</label>
 									{% if form.publisher_id.errors %}
 										<span class='error_msg'>
 											{{ form.publisher_id.errors }}
@@ -298,7 +325,7 @@
 									</select>
 								</dd>
 								<dt>
-									<label>著者</label>
+									<label>著者名</label>
 									{% if form.name.errors %}
 										<span class='error_msg'>
 											{{ form.name.errors }}
@@ -330,7 +357,7 @@
 									</select>
 								</dd>
 								<dt>
-									<label>出版社</label>
+									<label>出版社名</label>
 									{% if form.name.errors %}
 										<span class='error_msg'>
 											{{ form.name.errors }}
@@ -346,7 +373,7 @@
 					{% endfor %}
 				</div>
 				<p class="center">
-					<input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_book_regist' set_type %}'" />
+					<input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
 				</p>
 			</fieldset>
 		</form>

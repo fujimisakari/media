@@ -40,7 +40,7 @@ def whatnew_regist(request):
     context = RequestContext(request, {})
     if request.method == 'POST':
         formset = WhatNewFormSet(request.POST)
-        if formset.is_valid():
+        if formset.is_valid() and formset.cleaned_data[0]:
             create_whatnew(formset.cleaned_data)
             request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_REGIST}
             return HttpResponseRedirect(reverse('manage_top_index'))
