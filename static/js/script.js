@@ -34,6 +34,19 @@ $(document).ready(function() {
     });
 
     /**
+     * カテゴリから表示する項目を判定
+     */
+    $("#id_category").change( function(){
+        if($(this).val() == 1){
+            $("#volume_block").hide()
+            $("#attachment_block").show()
+        }else if($(this).val() == 2){
+            $("#volume_block").show()
+            $("#attachment_block").hide()
+        }
+    });
+
+    /**
      * サブカテゴリからタイトルを取得する
      */
     $("#id_subcategory").change( function(){

@@ -46,8 +46,8 @@
                     <div class="dlSection2">
                         <dl>
                             <dt>タイトル :</dt><dd>{{ book_detail.book.title }}{% if book_detail.book.category_id == 2 %} ({{ book_detail.volume }}){% endif %}</dd>
-                            <dt>著者 :</dt><dd>{{ book_detail.writer.name }}</dd>
-                            <dt>出版社 :</dt><dd>{{ book_detail.publisher.name }}</dd>
+                            <dt>著者 :</dt><dd>{{ book_detail.book.writer.name }}</dd>
+                            <dt>出版社 :</dt><dd>{{ book_detail.book.publisher.name }}</dd>
                             <dt>ページ数 :</dt><dd>{{ book_detail.total_page }}</dd>
                             {% if book_detail.exit_pdf %}
                                 <dt>PDFサイズ :</dt><dd>{{ book_detail.pdf_size }} M</dd>

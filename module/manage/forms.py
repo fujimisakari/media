@@ -33,16 +33,16 @@ class BookForm(forms.Form):
 class BookDetailForm(forms.Form):
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)
     book_id = forms.IntegerField()
-    volume = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '2', 'maxlength': '3'}))
+    volume = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '2', 'maxlength': '3'}))
     pdf_size = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '2', 'maxlength': '3'}))
     # epud_size = forms.IntegerField()
     total_page = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '2', 'maxlength': '4'}))
     writer_id = forms.IntegerField()
     publisher_id = forms.IntegerField()
     description = forms.CharField(widget=forms.Textarea(attrs={'rows': '5', 'cols': '50', 'tabindex': '12'}))
-    exit_pdf = forms.BooleanField()
+    # exit_pdf = forms.BooleanField()
     # exit_epud = forms.BooleanField()
-    exit_attachment = forms.BooleanField()
+    exit_attachment = forms.BooleanField(required=False)
 
 
 class WriterForm(forms.Form):

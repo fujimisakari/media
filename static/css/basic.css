@@ -3,15 +3,25 @@
 
 /* Area
 ----------------------------------------------- */
+html, body {
+    background: #000 url(/static/img/bg.gif) center repeat-y;
+    height: 100%;
+}
+
 body {
-  background-color: #000;
-  background: #000 url(/static/img/bg.gif) center repeat-y; 
+    background-color: #000;
 }
+
 div.wrapper {
-  width: 940px;
-  margin: 0 auto;
-  padding-top: 5px;
+    height: 100%;
+    position: relative;
+    height: auto !important;
+    min-height: 100%;
+    margin: 0 auto;
+    padding-top: 5px;
+    width: 940px;
 }
+
 div.header {
   position: relative;
   min-height: 80px;
@@ -424,20 +434,31 @@ form select {
   font-family:arial,Verdana,helvetica,sans-serif;
 }
 form textarea {
-  background: url("/static/img/bg_input.gif") repeat-x scroll 0 0 #f5f0e1;
+  background: url("/static/img/bg_input.gif") repeat-x scroll 0 0 #bba674;
 }
 form input.text:focus,
 form select:focus {
-  background: url("/static/img/bg_input_focus.gif") repeat-x scroll 0 0 #f6f0e2;
-  border: 1px solid #2a2a2a;
+  /* background: url("/static/img/bg_input_focus.gif") repeat-x scroll 0 0 #f6f0e2; */
+  /* border: 1px solid #2a2a2a; */
 }
 form textarea:focus { 
-  background: url("/static/img/bg_input_focus.gif") repeat-x scroll 0 0 #fdfaf4;
-  border: 1px solid #2a2a2a;
+  /* background: url("/static/img/bg_input_focus.gif") repeat-x scroll 0 0 #fdfaf4; */
+  /* border: 1px solid #2a2a2a; */
 }
 form select {
   margin: 0px;
+  /* color: #8b5a2b; */
+  color: #2a2a2a;
+  background: #d9c293;
+  height: 28px;
+  padding: 3px 8px;
+  border: 1px double #2a2a2a;
+  vertical-align: middle;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
 }
+
 form input.submitA {
   background: url("/static/img/bg_button.gif") repeat-x scroll 0 0 #281a05;
   color: #FFF;

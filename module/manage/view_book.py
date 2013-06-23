@@ -202,7 +202,7 @@ def book_search(request, set_type):
             book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
             search_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
             for book_detail in search_list:
-                if r.search(book_detail.book.title) or r.search(book_detail.writer.name) or r.search(book_detail.publisher.name) or r.search(book_detail.description):
+                if r.search(book_detail.book.title) or r.search(book_detail.book.writer.name) or r.search(book_detail.book.publisher.name) or r.search(book_detail.description):
                     result_list.append(book_detail)
         elif set_type == 'category':
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
