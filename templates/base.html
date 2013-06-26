@@ -34,8 +34,12 @@
         <div class="header">
             <div class="logo"><img src="{{ MEDIA_URL }}/img/logo.png" alt="Admin Template Logo" /></div>
             <div class="headNavi">
-                <form action="" class="search">
-                    <input type="text" class="searchText" value="カテゴリ or タイトル 検索" />
+                <form action="{% url 'book_search' %}" class="search">
+                    {% if navi_search %}
+                        <input type="text" class="searchText" name="keyword" value="{% if keyword %}{{ keyword }}{% else %}カテゴリ or タイトル 検索{% endif %}" />
+                    {% else %}
+                        <input type="text" class="searchText" name="keyword" value="カテゴリ or タイトル 検索" />
+                    {% endif %}
                     <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
                 </form>
                 <div class="user">

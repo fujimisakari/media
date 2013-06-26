@@ -7,13 +7,13 @@
             <h2>{{ category.name }}</h2>
         </div>
 
-        <ol id="crumb">
-            <li><a href="{% url 'book_index' %}">BOOK</a></li>
-            <li><strong>{{ category.name }}</strong></li>
-        </ol>
+        <div class="boxContent">
+            <ol id="crumb">
+                <li><a href="{% url 'book_index' %}">BOOK</a></li>
+                <li><strong>{{ category.name }}</strong></li>
+            </ol>
 
-        {% for subcategory in subcategory_list %}
-            <div class="boxContent">
+            {% for subcategory in subcategory_list %}
                 <ul class="imageList clearfix">
                     <h3><span><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></span></h3>
                     {% for book in subcategory.get_book_list %}
@@ -29,7 +29,7 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

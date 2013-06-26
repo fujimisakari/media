@@ -59,7 +59,7 @@ def index(request, set_type='whatnew'):
 
     model = MODEL_MAP[set_type]
     if set_type == 'whatnew':
-        result_list = model.get_cache_all()
+        result_list = model.all_list()
     elif set_type == 'book':
         result_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.subcategory_id)
     elif set_type == 'detail':
@@ -219,11 +219,11 @@ def search(request, set_type):
                 if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name):
                     result_list.append(book)
         elif set_type == 'detail':
-            book_detail_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.volume)
-            search_list = sorted([x for x in book_detail_list], key=lambda x: x.book_id)
+            search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.book_id)
             for book_detail in search_list:
-                if r.search(book_detail.book.title) or r.search(book_detail.book.writer.name) or r.search(book_detail.book.publisher.name) or r.search(book_detail.description):
+                if r.search(book_detail.book.title) or r.search(book_detail.description):
                     result_list.append(book_detail)
+            result_list = sorted([x for x in result_list], key=lambda x: x.volume)
         elif set_type == 'category':
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
             for category in search_list:
@@ -244,6 +244,8 @@ def search(request, set_type):
             for publisher in search_list:
                 if r.search(publisher.name):
                     result_list.append(publisher)
+    result_list = list(set(result_list))
+    result_list = sorted([x for x in result_list], key=lambda x: x.volume)
 
     page_id = request.GET.get('page', 1)
     pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)

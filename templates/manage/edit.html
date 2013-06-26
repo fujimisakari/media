@@ -25,8 +25,8 @@
 
 		<form method="post">
 			{{ formset.management_form }}
-			<fieldset>
-				<div class="UpBox clearfix">
+			<div class="UpBox clearfix">
+                <fieldset>
 					{% for form in formset %}
 						{% if set_type == 'whatnew' %}
                   		    <dl>
@@ -473,19 +473,18 @@
 						{% endif %}
 
 					{% endfor %}
-				</div>
-                <p class="center">
-					<input type="submit" class="submitA submitL" value="編集する" tabindex="23" onclick="this.form.action='{% url 'manage_edit' set_type id %}'" />
-					<span class="mr40"></span>
-					<input type="submit" class="submitA submitL" value="削除する" tabindex="23" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_delete' set_type id %}'" />
-                    {% if set_type == 'detail' %}
-    					<span class="mr40"></span>
-                        <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="23">ページへ移動</a>
-                    {% endif %}
-				</p>
-
-			</fieldset>
-		</form>
-	</div>
+    			</fieldset>
+            </div>
+            <p class="center">
+                <input type="submit" class="submitA submitL" value="編集する" tabindex="23" onclick="this.form.action='{% url 'manage_edit' set_type id %}'" />
+                <span class="mr40"></span>
+                <input type="submit" class="submitA submitL" value="削除する" tabindex="23" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_delete' set_type id %}'" />
+                {% if set_type == 'detail' %}
+                    <span class="mr40"></span>
+                    <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="23">ページへ移動</a>
+                {% endif %}
+            </p>
+        </form>
+    </div>
 </div>
 {% endblock %}

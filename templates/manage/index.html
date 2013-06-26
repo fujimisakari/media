@@ -6,7 +6,11 @@
     <div class="boxHeader">
         <h2 style="float: left;">BOOK情報管理</h2>
         <ul class="boxTabs" style="float: right;">
-            <li><a class="default-tab">一覧</a></li>
+            {% if keyword %}
+                <li><a href="{% url 'manage_index' set_type %}">一覧</a></li>
+            {% else %}
+                <li><a class="default-tab">一覧</a></li>
+            {% endif %}
             <li><a href="{% url 'manage_regist' set_type %}">登録</a></li>
         </ul>
     </div>

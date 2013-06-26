@@ -62,22 +62,9 @@ def detail(request, book_id):
 
 
 @login_required
-def preview(request, book_id, volume):
-    pass
-    # query_set = BookDetail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
-    # return render_to_response('book/preview.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
-
-
-@login_required
-def extend_detail(request, category_id, subcategory_id, title, volume):
-    query_set = BookDetail.objects.filter(entry__url_title__exact=title).get(volume__exact=volume)
-    return render_to_response('book/extend_detail.html', context_instance=RequestContext(request, {'object': query_set, 'param_category': category}))
-
-
-@login_required
 def search(request):
     if request.method == 'POST':
-        keyword = request.POST['search']
+        keyword = request.POST['keyword']
     else:
         keyword = request.GET.get('keyword', '')
 
@@ -89,11 +76,14 @@ def search(request):
         for book in all_book_list:
             if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name):
                 book_list.append(book)
+    book_list = list(set(book_list))
 
     page_id = request.GET.get('page', 1)
     pager, book_list = get_pager(book_list, page_id, settings.NUM_IN_LIST_PAGE)
     context = RequestContext(request, {
         'book_list': book_list,
+        'keyword': keyword,
+        'navi_search': True,
     })
     context.update(pager)
     return _render('search.html', context)

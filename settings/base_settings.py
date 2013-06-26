@@ -223,7 +223,7 @@ ALL_LIST_LIMIT = 32
 MEDIA_TITLE = "MEDIA SERVER"
 MEDIA_CSS = '/css/import.css'
 MEDIA_JS = '/js/import.js'
-MEDIA_FOTTER = '2011 Fujimo-net.com'
+MEDIA_FOTTER = '2011 fujimisakari.com'
 
 # book
 BOOK_PDF = '_pc.pdf'

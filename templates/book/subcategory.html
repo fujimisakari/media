@@ -7,29 +7,31 @@
             <h2>{{ subcategory.name }}</h2>
         </div>
 
-        <ol id="crumb">
-            <li><a href="{% url 'book_index' %}">BOOK</a></li>
-            <li><a href="{% url 'book_category' subcategory.category_id %}">{{ subcategory.category.name }}</a></li>
-            <li><strong>{{ subcategory.name }}</strong></li>
-        </ol>
+        <div class="boxContent">
+            <ol id="crumb">
+                <li><a href="{% url 'book_index' %}">BOOK</a></li>
+                <li><a href="{% url 'book_category' subcategory.category_id %}">{{ subcategory.category.name }}</a></li>
+                <li><strong>{{ subcategory.name }}</strong></li>
+            </ol>
 
-        <div class="resultPage mb10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+            <div class="resultPage mb10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
 
-        <div class="boxContent line">
-            <ul class="imageList clearfix">
-                {% for book in book_list %}
-                    <li>
-                        <a href="{% url 'book_detail' book.id %}">
-                            <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
-                        </a>
-                        <div class="bookName">
-                            <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
-                        </div>
-                    </li>
-                    {% if forloop.counter|divisibleby:limit_num %}
-                    {% endif %}
-                {% endfor %}
-            </ul>
+            <div class="UpBox clearfix">
+                <ul class="imageList clearfix">
+                    {% for book in book_list %}
+                        <li>
+                            <a href="{% url 'book_detail' book.id %}">
+                                <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                            </a>
+                            <div class="bookName">
+                                <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                            </div>
+                        </li>
+                        {% if forloop.counter|divisibleby:limit_num %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
     {% include './common/pager.html' %}

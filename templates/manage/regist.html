@@ -25,8 +25,8 @@
 
 		<form method="post">
 			{{ formset.management_form }}
-			<fieldset>
-				<div class="UpBox clearfix">
+            <div class="UpBox clearfix">
+                <fieldset>
 					{% for form in formset %}
 						{% if set_type == 'whatnew' %}
                   		    <dl>
@@ -371,11 +371,11 @@
 						{% endif %}
 
 					{% endfor %}
-				</div>
-				<p class="center">
-					<input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
-				</p>
-			</fieldset>
+                </fieldset>
+			</div>
+			<p class="center">
+				<input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
+			</p>
 		</form>
 	</div>
 </div>

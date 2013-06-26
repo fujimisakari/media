@@ -11,7 +11,7 @@
                 {% if current_page == page_num %}
                     <span class="active">{{ page_num }}</span>
                 {% else %}
-                    <a href="?page={{ page_num }}&keyword={{ keyword }}">&nbsp;{{ page_num }}&nbsp;</a>
+                    <a href="?page={{ page_num }}&keyword={{ keyword }}">{{ page_num }}</a>
                 {% endif %}
             {% endfor %}
 

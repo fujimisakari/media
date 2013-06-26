@@ -1,35 +1,36 @@
-{% extends 'book/local_base.html' %}
+{% extends 'base.html' %}
 {% load url from future %}
 
-{% block localTitle %}
-    <h2><img src="{{ MEDIA_URL }}{{ MAIN_ALL_LIST }}" alt="ALL LIST" width="795" height="45" /></h2>
-{% endblock %}
-
-{% block localContents %}
-    <ul class="column">
-        {% for book in book_list %}
-            <li>
-                <div class="block">
-                   <a href="{% url 'book_detail' book.id %}" class="thumbnail">
-                       <img src="{{ MEDIA_URL }}{{ book.img_path }}" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
-                   </a>
-                   <div class="bookName"><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-
-    {% if total %}
-        <p class="page_result">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</p>
-
-        {% block localContents %}
-        {% endblock %}
-
-        {% include './common/pager.html' %}
-    {% else %}
-        <div class="mt30 ml10 mb20">
-            該当する本がありません
+{% block contents %}
+    <div class="box clear">
+        <div class="boxHeader">
+            <h2>「{{ keyword }}」による検索結果</h2>
         </div>
-    {% endif %}
 
+        <div class="boxContent">
+            <div class="resultPage mb10">{{ total }}件中 {{ start_index }}〜{{ end_index }}件目を表示</div>
+
+            {% if not total %}
+                <div class="mt20 center bold">該当するデータはありません</div>
+            {% else %}
+                <div class="boxContent line">
+                    <ul class="imageList clearfix">
+                        {% for book in book_list %}
+                            <li>
+                                <a href="{% url 'book_detail' book.id %}">
+                                    <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
+                                </a>
+                                <div class="bookName">
+                                    <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                                </div>
+                            </li>
+                            {% if forloop.counter|divisibleby:limit_num %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% include './common/pager.html' %}
 {% endblock %}
