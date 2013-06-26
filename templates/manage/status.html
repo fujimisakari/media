@@ -11,15 +11,15 @@
             <div class="boxContent">
                 <h3><span>タイトル数</span></h3>
                 <table class="status">
-                    {% for category in category_list %}
+                    {% for info in status_info.category_title_info.title_list %}
                         <tr>
-                            <th>{{ category.name }}</th>
-                            <td>{{ category.title_count }}</td>
+                            <th>{{ info.category.name }}</th>
+                            <td>{{ info.title_count }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
                         <th>合計タイトル数</th>
-                        <td>{{ total_title_count }}</td>
+                        <td>{{ status_info.category_title_info.total_title_count }}</td>
                     </tr>
                 </table>
             </div>
@@ -29,15 +29,15 @@
             <div class="boxContent">
                 <h3><span>冊数</span></h3>
                 <table class="status">
-                    {% for category in category_list %}
+                    {% for info in status_info.category_book_info.book_list %}
                         <tr>
-                            <th>{{ category.name }}</th>
-                            <td>{{ category.book_count }}</td>
+                            <th>{{ info.category.name }}</th>
+                            <td>{{ info.book_count }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
                         <th>合計冊数</th>
-                        <td>{{ total_book_count }}</td>
+                        <td>{{ status_info.category_book_info.total_book_count }}</td>
                     </tr>
                 </table>
             </div>
@@ -47,18 +47,18 @@
             <br />
             <div class="boxContent">
                 <h3><span>カテゴリ別タイトル数</span></h3>
-                {% for category in category_list %}
+                {% for status_info in status_info.subcategory_book_list %}
                     {% if forloop.counter|divisibleby:2 %}
                         <div class="box small right">
                     {% else %}
                         <div class="box small left">
                     {% endif %}
-                        <h4>{{ category.name }}</h4>
+                        <h4>{{ status_info.category.name }}</h4>
                         <table class="status">
-                            {% for subcategory in category.get_subcategory_list %}
+                            {% for info in status_info.title_list %}
                                 <tr>
-                                    <th>{{ subcategory.name }}</th>
-                                    <td>{{ subcategory.title_count }}</td>
+                                    <th>{{ info.subcategory.name }}</th>
+                                    <td>{{ info.title_count }}</td>
                                 </tr>
                             {% endfor %}
                         </table>

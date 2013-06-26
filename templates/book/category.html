@@ -13,10 +13,10 @@
                 <li><strong>{{ category.name }}</strong></li>
             </ol>
 
-            {% for subcategory in subcategory_list %}
+            {% for result in result_list %}
                 <ul class="imageList clearfix">
-                    <h3><span><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></span></h3>
-                    {% for book in subcategory.get_book_list %}
+                    <h3><span><a href="{% url 'book_subcategory' result.subcategory.category_id result.subcategory.id %}">{{ result.subcategory.name }}</a></span></h3>
+                    {% for book in result.book_list %}
                         <li>
                             <a href="{% url 'book_detail' book.id %}">
                                 <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />

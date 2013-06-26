@@ -6,11 +6,11 @@
         <div class="boxHeader">
             <h2>BOOK一覧</h2>
         </div>
-        {% for category in category_list %}
+        {% for result in result_list %}
             <div class="boxContent">
                 <ul class="imageList clearfix">
-                    <h3><a href="{% url 'book_category' category.id %}"><span>{{ category.name }}</span></a></h3>
-                    {% for book in category.get_book_list %}
+                    <h3><a href="{% url 'book_category' result.category.id %}"><span>{{ result.category.name }}</span></a></h3>
+                    {% for book in result.book_list %}
                         <li>
                             <a href="{% url 'book_detail' book.id %}">
                                 <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
@@ -23,7 +23,7 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-                <p class="extendPage"><a href="{% url 'book_category' category.id %}" class="submitA submitM">もっと見る</a></p>
+                <p class="extendPage"><a href="{% url 'book_category' result.category.id %}" class="submitA submitM">もっと見る</a></p>
             </div>
         {% endfor %}
     </div>

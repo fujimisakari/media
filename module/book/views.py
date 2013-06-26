@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 
 from module.common.pager import get_pager
+from module.book.api import get_book_list, get_subcategory_list
 from module.book.models import Book, BookDetail, Category, SubCategory
 
 
@@ -17,16 +18,17 @@ def _render(template_file, context):
 
 @login_required
 def index(request):
-    context = RequestContext(request, {})
+    context = RequestContext(request, {
+        'result_list': get_book_list(),
+    })
     return _render('index.html', context)
 
 
 @login_required
 def category(request, category_id):
     category_id = int(category_id)
-    subcategory_list = Category.get_cache(category_id).get_subcategory_list()
     context = RequestContext(request, {
-        'subcategory_list': subcategory_list,
+        'result_list': get_subcategory_list(category_id),
         'category': Category.get_cache(category_id),
     })
     return _render('category.html', context)

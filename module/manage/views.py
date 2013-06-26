@@ -15,6 +15,7 @@ from module.common.pager import get_pager
 from module.manage.forms import BookFormSet, BookDetailFormSet, CategoryFormSet, SubCategoryFormSet, WriterFormSet, PublisherFormSet, WhatNewFormSet
 from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
 from module.top.models import WhatNew
+from module.manage.api import get_status_info
 from module.common.dirhandler import mkdir, rmdir, movedir
 
 
@@ -256,9 +257,5 @@ def search(request, set_type):
 
 @login_required
 def status(request):
-    context = RequestContext(request, {
-        'total_title_count': len(Book.get_cache_all()),
-        'total_book_count': len(BookDetail.get_cache_all()),
-        'category_list': Category.get_category_list(),
-    })
+    context = RequestContext(request, {'status_info': get_status_info()})
     return _render('status.html', context)
