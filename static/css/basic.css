@@ -691,27 +691,34 @@ div.loginArea {
 }
 div.login {
   margin: 0 auto;
-  padding: 50px;
+  padding: 80px 50px 50px;
   width: 405px;
 }
 div.loginBox {
-  background: url(/static/img/line_01.png) repeat-x bottom; 
-  margin: 0 0 10px 0;
+  margin: 20px 0 10px 0;
+}
+div.loginBox dl {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    background: url(/static/img/line_01.png) repeat-x bottom;
 }
 div.loginBox dl dt {
   float: left;
   width: 100px;
   clear: left;
-  min-height: 32px;
+  min-height: 54px;
   height: auto !important; /* IE6 */
-  height: 32px; /* IE6 */
-  padding: 0 5px 0 0;
+  height: 54px; /* IE6 */
+  padding: 3px 10px 0 0;
   font-size: 108%;
 }
 div.loginBox dl dd {
   text-align:left;
   margin: 0 0 3px 0;
   padding: 0 0 3px 0;
+  min-height: 54px;
+  height: auto !important; /* IE6 */
+  height: 54px; /* IE6 */
 }
 div.login input.text {
   width: 260px;
