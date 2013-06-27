@@ -29,75 +29,81 @@
 <![endif]-->
 </head>
 
-<body>
-    <div class="wrapper clearfix">
-        <div class="header">
-            <div class="logo"><img src="{{ MEDIA_URL }}/img/logo.png" alt="Admin Template Logo" /></div>
-            <div class="headNavi">
-                <form action="{% url 'book_search' %}" class="search">
-                    {% if navi_search %}
-                        <input type="text" class="searchText" name="keyword" value="{% if keyword %}{{ keyword }}{% else %}カテゴリ or タイトル 検索{% endif %}" />
-                    {% else %}
-                        <input type="text" class="searchText" name="keyword" value="カテゴリ or タイトル 検索" />
-                    {% endif %}
-                    <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
-                </form>
-                <div class="user">
-                    Login:&nbsp;<span style="color: #fafad2; font-size: 17px;">{{ user.username }}</span>
+{% if is_login_page %}
+    {% block login %}
+    {% endblock %}
+{% else %}
+    <body>
+        <div class="wrapper clearfix">
+            <div class="header">
+                <div class="logo"><img src="{{ MEDIA_URL }}/img/logo.png" alt="Admin Template Logo" /></div>
+                <div class="headNavi">
+                    <form action="{% url 'book_search' %}" class="search">
+                        {% if navi_search %}
+                            <input type="text" class="searchText" name="keyword" value="{% if keyword %}{{ keyword }}{% else %}カテゴリ or タイトル 検索{% endif %}" />
+                        {% else %}
+                            <input type="text" class="searchText" name="keyword" value="カテゴリ or タイトル 検索" />
+                        {% endif %}
+                        <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
+                    </form>
+                    <div class="user">
+                        Login:&nbsp;<span style="color: #fafad2; font-size: 17px;">{{ user.username }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="naviArea clear">
-            <ul class="navi clearfix droppy">
-                <li><a href="{% url 'top_index' %}">TOP</a></li>
-                <li><a href="{% url 'book_index' %}">BOOK</a></li>
-                <li><span><a>CATEGORY</a></span>
-                <ul class="navi_second">
-                    {% for category in category_list %}
-                        <li>
-                            <span><a href="{% url 'book_category' category.id %}">{{ category.name }}</a></span>
-                            <ul class="navi_third">
-                                {% for subcategory in category.get_subcategory_list %}
-                                    <li><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endfor %}
+            <div class="naviArea clear">
+                <ul class="navi clearfix droppy">
+                    <li><a href="{% url 'top_index' %}">TOP</a></li>
+                    <li><a href="{% url 'book_index' %}">BOOK</a></li>
+                    <li><span><a>CATEGORY</a></span>
+                    <ul class="navi_second">
+                        {% for category in category_list %}
+                            <li>
+                                <span><a href="{% url 'book_category' category.id %}">{{ category.name }}</a></span>
+                                <ul class="navi_third">
+                                    {% for subcategory in category.get_subcategory_list %}
+                                        <li><a href="{% url 'book_subcategory' category.id subcategory.id %}">{{ subcategory.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <li><span><a>MANAGE</a></span>
+                        <ul class="navi_second">
+                            <li><a href="{% url 'manage_index' 'whatnew' %}">新着情報</a></li>
+                            <li><a href="{% url 'manage_index' 'book' %}">タイトル</a></li>
+                            <li><a href="{% url 'manage_index' 'detail' %}">タイトル詳細</a></li>
+                            <li><a href="{% url 'manage_index' 'category' %}">カテゴリ</a></li>
+                            <li><a href="{% url 'manage_index' 'subcategory' %}">サブカテゴリ</a></li>
+                            <li><a href="{% url 'manage_index' 'writer' %}">著者</a></li>
+                            <li><a href="{% url 'manage_index' 'publisher' %}">出版社</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'manage_status' %}">STATUS</a></li>
+                    <li><span><a>USER</a></span>
+                        <ul class="navi_second">
+                            <li><a href="{% url 'auth_password_change' %}">パスワードの変更</a></li>
+                            <li><a href="{% url 'auth_logout' %}">ログアウト</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <li><span><a>MANAGE</a></span>
-                    <ul class="navi_second">
-                        <li><a href="{% url 'manage_index' 'whatnew' %}">新着情報</a></li>
-                        <li><a href="{% url 'manage_index' 'book' %}">タイトル</a></li>
-                        <li><a href="{% url 'manage_index' 'detail' %}">タイトル詳細</a></li>
-                        <li><a href="{% url 'manage_index' 'category' %}">カテゴリ</a></li>
-                        <li><a href="{% url 'manage_index' 'subcategory' %}">サブカテゴリ</a></li>
-                        <li><a href="{% url 'manage_index' 'writer' %}">著者</a></li>
-                        <li><a href="{% url 'manage_index' 'publisher' %}">出版社</a></li>
-                    </ul>
-                </li>
-                <li><a href="{% url 'manage_status' %}">STATUS</a></li>
-                <li><span><a>USER</a></span>
-                    <ul class="navi_second">
-                        <li><a href="{% url 'auth_password_change' %}">パスワードの変更</a></li>
-                        <li><a href="{% url 'auth_logout' %}">ログアウト</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+            </div>
 
-        <div class="container clearfix">
-            <div class="conHeader clearfix">
-                <div class="contentArea clearfix">
-                    {% block contents %}
-                    {% endblock %}
+            <div class="container clearfix">
+                <div class="conHeader clearfix">
+                    <div class="contentArea clearfix">
+                        {% block contents %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="footerArea clear">
-        <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
-    </div>
-</body>
+        <div class="footerArea clear">
+            <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
+        </div>
+    </body>
+{% endif %}
+
 </html>
