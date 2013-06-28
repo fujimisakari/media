@@ -90,19 +90,26 @@
                 </ul>
             </div>
 
-            <div class="container clearfix">
-                <div class="conHeader clearfix">
-                    <div class="contentArea clearfix">
-                        {% block contents %}
-                        {% endblock %}
+            {% if is_passward_page %}
+                {% block change_passwd %}
+                {% endblock %}
+            {% else %}
+                <div class="container clearfix">
+                    <div class="conHeader clearfix">
+                        <div class="contentArea clearfix">
+                            {% block contents %}
+                            {% endblock %}
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
 
-        <div class="footerArea clear">
-            <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
-        </div>
+        {% if not is_passward_page %}
+            <div class="footerArea clear">
+                <address id="copyright">Copyright&copy; {{ MEDIA_FOTTER }} All Rights Reserved.</address>
+            </div>
+        {% endif %}
     </body>
 {% endif %}
 
