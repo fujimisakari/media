@@ -200,11 +200,10 @@ LOGGING = {
 
 #####################################################################
 
-# csv data
+# data path
 CSV_DATA_PATH = os.path.join(ROOT_PATH, '../data/')
-
-# book data
 BOOK_DATA_PATH = os.path.join(ROOT_PATH, '../bookshelf/')
+THUMBNAIL_DATA_PATH = os.path.join(ROOT_PATH, '../static/img/thumbnail/')
 
 # search
 # HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
@@ -255,3 +254,12 @@ ERROR_MSG_FILEPATH = u'カテゴリまたはサブカテゴリの組み合わせ
 MSG_UPLOAD = u'アップロードしました'
 ERROR_MSG_UPLOAD_FILEPATH = u'カテゴリ、サブカテゴリ、タイトルの組み合わせが正しくありません'
 ERROR_MSG_UPLOAD = u'入力値が正常でないため、アップロードが行えませんでした'
+
+TITLE_MAP = {'whatnew': u'新着情報',
+             'book': u'BOOK',
+             'detail': u'BOOK詳細',
+             'category': u'カテゴリ',
+             'subcategory': u'サブカテゴリ',
+             'writer': u'著者',
+             'publisher': u'出版社',
+             }

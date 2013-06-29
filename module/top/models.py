@@ -10,4 +10,4 @@ class WhatNew(AbustractCachedModel):
 
     @classmethod
     def all_list(cls):
-        return sorted([whatnew for whatnew in cls.get_cache_all()], key=lambda x: x.id, reverse=True)
+        return sorted([whatnew for whatnew in cls.get_cache_all()], key=lambda x: x.create_date, reverse=True)

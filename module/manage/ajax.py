@@ -39,7 +39,7 @@ def get_title_list(request):
 def get_volume_list(request):
     # 指定したタイトルからvolume一覧を取得
     volumeList = '<option selected="selected" value="">---------</option>|'
-    extra_volume = 0
+    extra_volume = 1
     for row in sorted([x for x in BookDetail.get_cache_all() if int(request.GET['book_id']) == x.book_id], key=lambda x: x.volume):
         volumeList += "<option value=\"%d\">%s</option>|" % (row.volume, row.volume)
         extra_volume = row.volume + 1

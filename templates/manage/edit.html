@@ -66,7 +66,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										{% for category in category_list %}
                                             {% if category.id == form.initial.category_id %}
                                                 <option selected="selected" value="{{ category.id }}">{{ category.name }}</option>
@@ -85,7 +85,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id">
+									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
 										{% for subcategory in subcategory_list %}
                                             {% if subcategory.category_id == form.initial.category_id %}
                                                 {% if subcategory.id == form.initial.subcategory_id %}
@@ -117,7 +117,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_writer" name="form-0-writer_id">
+									<select id="id_writer" name="form-0-writer_id" tabindex='4'>
                                         {% if form.initial.writer_id %}
 										    <option value="">---------</option>
 										    {% for writer in writer_list %}
@@ -148,7 +148,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_publisher" name="form-0-publisher_id">
+									<select id="id_publisher" name="form-0-publisher_id" tabindex='5'>
                                         {% if form.initial.publisher_id %}
 										    <option value="">---------</option>
 										    {% for publisher in publisher_list %}
@@ -184,7 +184,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										{% for category in category_list %}
                                             {% if category.id == detail.book.category_id %}
 										        <option selected="selected" value="{{ category.id }}">{{ category.name }}</option>
@@ -203,7 +203,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id">
+									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
 										{% for subcategory in subcategory_list %}
                                             {% if subcategory.category_id == detail.book.category_id %}
                                                 {% if subcategory.id == detail.book.subcategory_id %}
@@ -224,7 +224,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_book" name="form-0-book_id">
+									<select id="id_book" name="form-0-book_id" tabindex='3'>
 										{% for book in book_list %}
                                             {% if book.subcategory_id == detail.book.subcategory_id %}
                                                 {% if book.id == detail.book.id %}
@@ -247,7 +247,7 @@
 								        	{% endif %}
 								        </dt>
 								        <dd>
-								        	<select id="id_volume" name="form-0-volume">
+								        	<select id="id_volume" name="form-0-volume" tabindex='4'>
                                                 {% for volume in detail.volume_range %}
                                                     {% if volume == form.initial.volume %}
 										               <option selected="selected" value="{{ volume }}">{{ volume }}</option>
@@ -292,7 +292,7 @@
 								        	{% endif %}
 								        </dt>
 								        <dd>
-								        	<select name="form-0-exit_attachment">
+								        	<select name="form-0-exit_attachment" tabindex='7'>
 								        		<option selected="selected" value="0">無し</option>
 								        		<option value="1">有り</option>
 								        	</select>
@@ -351,7 +351,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										{% for category in category_list %}
                                             {% if category.id == form.initial.category_id %}
                                                 <option selected="selected" value="{{ category.id }}">{{ category.name }}</option>
@@ -397,7 +397,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
                                         {% if form.initial.category_id %}
 										    <option value="">---------</option>
 										    {% for category in category_list %}
@@ -440,7 +440,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
                                         {% if form.initial.category_id %}
 										    <option value="">---------</option>
 										    {% for category in category_list %}
@@ -476,12 +476,12 @@
     			</fieldset>
             </div>
             <p class="center">
-                <input type="submit" class="submitA submitL" value="編集する" tabindex="23" onclick="this.form.action='{% url 'manage_edit' set_type id %}'" />
+                <input type="submit" class="submitA submitL" value="編集する" tabindex="10" onclick="this.form.action='{% url 'manage_edit' set_type id %}'" />
                 <span class="mr40"></span>
-                <input type="submit" class="submitA submitL" value="削除する" tabindex="23" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_delete' set_type id %}'" />
+                <input type="submit" class="submitA submitL" value="削除する" tabindex="11" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_delete' set_type id %}'" />
                 {% if set_type == 'detail' %}
                     <span class="mr40"></span>
-                    <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="23">ページへ移動</a>
+                    <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="12">ページへ移動</a>
                 {% endif %}
             </p>
         </form>

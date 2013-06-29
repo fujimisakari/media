@@ -109,9 +109,9 @@ class Book(AbustractCachedModel):
 class BookDetail(AbustractCachedModel):
     book_id = models.IntegerField(u'ブックID', db_index=True)
     volume = models.IntegerField(u'巻', default=1)
-    pdf_size = models.IntegerField(u'PDFサイズ')
-    epud_size = models.IntegerField(u'EPUDサイズ')
-    total_page = models.IntegerField(u'ページ数')
+    pdf_size = models.IntegerField(u'PDFサイズ', default=0)
+    epud_size = models.IntegerField(u'EPUDサイズ', default=0)
+    total_page = models.IntegerField(u'ページ数', default=0)
     description = models.TextField(u'備考', null=True, blank=True)
     exit_pdf = models.BooleanField(u'PDF有無', default=True)
     exit_epud = models.BooleanField(u'EPUD有無', default=False)

@@ -66,7 +66,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										<option selected="selected" value="">---------</option>
 										{% for category in category_list %}
 											<option value="{{ category.id }}">{{ category.name }}</option>
@@ -82,7 +82,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id">
+									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
 										<option selected="selected" value="">---------</option>
 									</select>
 								</dd>
@@ -106,7 +106,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_writer" name="form-0-writer_id">
+									<select id="id_writer" name="form-0-writer_id" tabindex='4'>
 										<option selected="selected" value="">---------</option>
 									</select>
 								</dd>
@@ -119,7 +119,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_publisher" name="form-0-publisher_id">
+									<select id="id_publisher" name="form-0-publisher_id" tabindex='5'>
 										<option selected="selected" value="">---------</option>
 									</select>
 								</dd>
@@ -137,7 +137,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										<option selected="selected" value="">---------</option>
 										{% for category in category_list %}
 											<option value="{{ category.id }}">{{ category.name }}</option>
@@ -153,7 +153,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id">
+									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
 										<option selected="selected" value="">---------</option>
 									</select>
 								</dd>
@@ -166,7 +166,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_book" name="form-0-book_id">
+									<select id="id_book" name="form-0-book_id" tabindex='3'>
 										<option selected="selected" value="">---------</option>
 									</select>
 								</dd>
@@ -180,7 +180,7 @@
 										{% endif %}
 									</dt>
 									<dd>
-										<select id="id_volume" name="form-0-volume">
+										<select id="id_volume" name="form-0-volume" tabindex='4'>
 											<option selected="selected" value="">---------</option>
 										</select>
 									</dd>
@@ -217,7 +217,7 @@
 										{% endif %}
 									</dt>
 									<dd>
-										<select name="form-0-exit_attachment">
+										<select name="form-0-exit_attachment" tabindex='7'>
 											<option selected="selected" value="0">無し</option>
 											<option value="1">有り</option>
 										</select>
@@ -275,7 +275,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										{% for category in category_list %}
 											<option value="{{ category.id }}">{{ category.name }}</option>
 										{% endfor %}
@@ -317,7 +317,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										<option selected="selected" value="">---------</option>
 										{% for category in category_list %}
 											<option value="{{ category.id }}">{{ category.name }}</option>
@@ -349,7 +349,7 @@
 									{% endif %}
 								</dt>
 								<dd>
-									<select id="id_category" name="form-0-category_id">
+									<select id="id_category" name="form-0-category_id" tabindex='1'>
 										<option selected="selected" value="">---------</option>
 										{% for category in category_list %}
 											<option value="{{ category.id }}">{{ category.name }}</option>
@@ -374,7 +374,7 @@
                 </fieldset>
 			</div>
 			<p class="center">
-				<input type="submit" class="submitA submitL" value="登録する" tabindex="23" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
+				<input type="submit" class="submitA submitL" value="登録する" tabindex="10" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
 			</p>
 		</form>
 	</div>

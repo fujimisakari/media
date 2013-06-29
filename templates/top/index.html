@@ -26,7 +26,7 @@
                     {% for book in recent_book_list %}
                         <li>
                             <a href="{% url 'book_detail' book.id %}">
-                                <img src="{{ MEDIA_URL }}{{ book.img_path }}" width="77" height="{{ BOOK_THUMB_HEIGHT }}" />
+                                <img src="{{ MEDIA_URL }}{{ book.img_path }}" class="imgLine" width="77" height="{{ BOOK_THUMB_HEIGHT }}" />
                                 <div class="bookName" style="width: 77px">
                                     <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
                                 </div>
