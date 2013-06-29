@@ -130,6 +130,10 @@ class BookDetail(AbustractCachedModel):
     def img_path(self):
         return u'/img/thumbnail/{}/{}/{}/{}_{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
 
+    @property
+    def download_path(self):
+        return u'/book/download/{}/{}/{}/{}/'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
+
     @classmethod
     def get_book_detail_list_by_book_id(cls, book_id):
         return sorted([book_detail for book_detail in cls.get_cache_all() if book_detail.book_id == book_id], key=lambda x: x.volume)

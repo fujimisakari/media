@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
 
 from django.conf import settings
+from django.http import HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
@@ -89,3 +91,13 @@ def search(request):
     })
     context.update(pager)
     return _render('search.html', context)
+
+
+@login_required
+def download(request, category_id, subcategory_id, book_id, volume):
+    file_path = u'{}/{}/{}/{}/{}{}'.format(settings.BOOK_DATA_PATH, category_id, subcategory_id, book_id, volume, settings.BOOK_PDF)
+    book = Book.get_cache(book_id)
+    if os.path.exists(file_path) and book:
+        response = HttpResponse(open(file_path, 'rb').read(), mimetype='application/pdf')
+        response['Content-Disposition'] = u'attachment; filename={}_{}.pdf'.format(book.title, volume).encode('utf-8')
+        return response

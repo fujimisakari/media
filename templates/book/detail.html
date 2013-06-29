@@ -26,7 +26,7 @@
                                 <img src="{{ MEDIA_URL }}{{ book_detail.img_path }}"  class="imgLine" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
                             </a>
                             <div>
-                                <a class="dwBtn">Download</a>
+                                <a href="{{ book_detail.download_path }}" class="dwBtn">Download</a>
                             </div>
                             <ul>
                                 {% if book_detail.exit_pdf %}

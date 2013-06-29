@@ -203,6 +203,9 @@ LOGGING = {
 # csv data
 CSV_DATA_PATH = os.path.join(ROOT_PATH, '../data/')
 
+# book data
+BOOK_DATA_PATH = os.path.join(ROOT_PATH, '../bookshelf/')
+
 # search
 # HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
 
