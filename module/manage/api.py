@@ -2,6 +2,7 @@
 
 import os
 from django.conf import settings
+from django.core.cache import cache
 from module.book.models import Book, BookDetail, Category, SubCategory, Writer, Publisher
 from module.top.models import WhatNew
 
@@ -90,6 +91,9 @@ def regist_data(set_type, data):
         os.mkdir(book_path)
         os.mkdir(img_path)
     elif set_type == 'detail':
+        # 空の場合はデフォルト値を入れる
+        if not data['volume']:
+            data['volume'] = 1
         model.objects.create(
             book_id=data['book_id'],
             volume=data['volume'],
@@ -184,14 +188,18 @@ def edit_data(set_type, data):
         subcategory.save()
     elif set_type == 'writer':
         model.objects.select_for_update().update(
+            id=data['id'],
             category_id=data['category_id'],
             name=data['name'],
         )
     elif set_type == 'publisher':
         model.objects.select_for_update().update(
+            id=data['id'],
             category_id=data['category_id'],
             name=data['name'],
         )
+    cache.delete(model.get_cache_path(data['id']))
+    cache.delete(model.get_cache_all_path())
 
 
 def delete_data(set_type, del_id_list):
@@ -206,6 +214,7 @@ def delete_data(set_type, del_id_list):
             after_img_path = '{}{}/{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
+            BookDetail.objects.filter(book_id=obj.id).delete()
         elif set_type == 'category':
             before_book_path = '{}{}'.format(settings.BOOK_DATA_PATH, obj.id)
             after_book_path = '{}del_{}'.format(settings.BOOK_DATA_PATH, obj.id)
@@ -220,4 +229,10 @@ def delete_data(set_type, del_id_list):
             after_img_path = '{}{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.id)
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
+            book_list = Book.objects.filter(subcategory_id=obj.id)
+            for book in book_list:
+                BookDetail.objects.filter(book_id=book.id).delete()
+                book.delete()
         obj.delete()
+        cache.delete(model.get_cache_path(del_id))
+    cache.delete(model.get_cache_all_path())

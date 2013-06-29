@@ -175,6 +175,7 @@
 
 						{% if set_type == 'detail' %}
 							<dl>
+                                {% comment %}
 								<dt>
 									<label>カテゴリ</label>
 									{% if form.category_id.errors %}
@@ -236,6 +237,7 @@
 										{% endfor %}
 									</select>
 								</dd>
+                                {% endcomment %}
                                 {% if detail.book.category_id == 2 %}
 								    <dev id="volume_block">
 								        <dt>
@@ -480,8 +482,12 @@
                 <span class="mr40"></span>
                 <input type="submit" class="submitA submitL" value="削除する" tabindex="11" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_delete' set_type id %}'" />
                 {% if set_type == 'detail' %}
-                    <span class="mr40"></span>
-                    <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="12">ページへ移動</a>
+                    <br />
+                    <div class='center mt20'>
+                        <a href="{% url 'manage_edit' 'book' detail.book_id %}" class="detail_btn" tabindex="12">BOOK編集へ移動</a>
+                        <span class="mr40"></span>
+                        <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="12">BOOK情報へ移動</a>
+                    </div>
                 {% endif %}
             </p>
 

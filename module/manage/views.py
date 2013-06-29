@@ -184,7 +184,6 @@ def search(request, set_type):
                 if r.search(publisher.name):
                     result_list.append(publisher)
     result_list = list(set(result_list))
-    result_list = sorted([x for x in result_list], key=lambda x: x.volume)
 
     page_id = request.GET.get('page', 1)
     pager, result_list = get_pager(result_list, page_id, settings.NUM_IN_MANAGE_LIST)

@@ -54,6 +54,9 @@ class BookDetailForm(forms.Form):
             book_detail_list = BookDetail.get_book_detail_list_by_book_id(book_id)
             if [bd for bd in book_detail_list if bd.volume == volume]:
                 raise forms.ValidationError(u'volumeが重複してます')
+        if volume:
+            # 空の場合はデフォルト値を入れる
+            self.cleaned_data['volume'] = 1
 
 
 class WriterForm(forms.Form):
