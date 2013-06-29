@@ -46,8 +46,8 @@ div.footerArea {
 /* Header
 ----------------------------------------------- */
 div.header div.logo {
-  padding: 5px 0 5px 0;
-  font-size: 250%;
+  padding: 0 0 15px 0;
+  /* font-size: 250%; */
   /* width: 305px; */
   /* height: 99px; */
 }
@@ -90,7 +90,7 @@ div.header div.headNavi form.search {
   width: 240px;
   height: 28px;
   margin: 0 10px 0 0;
-  padding-bottom: 5px;
+  padding-bottom: 13px;
   background: url("/static/img/bg_search.gif") left top no-repeat;
 }
 div.header div.headNavi form.search:focus {
