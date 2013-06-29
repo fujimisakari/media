@@ -39,7 +39,7 @@
         {% if not total %}
             <div class="mt20 center bold">該当するデータはありません</div>
         {% else %}
-            <form method="post">
+            <form method="post" action="{% url 'manage_delete_checked' set_type %}">
                 <table class="tableLayout">
                     {% for object in result_list %}
 

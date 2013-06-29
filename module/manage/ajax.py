@@ -15,16 +15,26 @@ def get_subcategory_list(request):
 def get_writer_list(request):
     # 指定したカテゴリから著者名一覧を取得
     writerList = '<option selected="selected" value="">---------</option>|'
-    for row in [x for x in Writer.get_cache_all() if x.category_id == int(request.GET['category_id'])]:
-        writerList += "<option value=\"%d\">%s</option>|" % (row.id, row.name)
+    writer_list = [x for x in Writer.get_cache_all() if x.category_id == int(request.GET['category_id'])]
+    if writer_list:
+        for row in [x for x in Writer.get_cache_all() if x.category_id == int(request.GET['category_id'])]:
+            writerList += "<option value=\"%d\">%s</option>|" % (row.id, row.name)
+    else:
+        none_wirter = [x for x in Writer.get_cache_all() if not x.category_id][0]
+        writerList += "<option value=\"%d\">%s</option>|" % (none_wirter.id, none_wirter.name)
     return HttpResponse(writerList, mimetype="text/javascript")
 
 
 def get_publisher_list(request):
     # 指定したカテゴリから出版会社一覧を取得
     publisherList = '<option selected="selected" value="">---------</option>|'
-    for row in [x for x in Publisher.get_cache_all() if x.category_id == int(request.GET['category_id'])]:
-        publisherList += "<option value=\"%d\">%s</option>|" % (row.id, row.name)
+    publisher_list = [x for x in Publisher.get_cache_all() if x.category_id == int(request.GET['category_id'])]
+    if publisher_list:
+        for row in [x for x in Publisher.get_cache_all() if x.category_id == int(request.GET['category_id'])]:
+            publisherList += "<option value=\"%d\">%s</option>|" % (row.id, row.name)
+    else:
+        none_publisher = [x for x in Publisher.get_cache_all() if not x.category_id][0]
+        publisherList += "<option value=\"%d\">%s</option>|" % (none_publisher.id, none_publisher.name)
     return HttpResponse(publisherList, mimetype="text/javascript")
 
 

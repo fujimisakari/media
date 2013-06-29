@@ -85,8 +85,8 @@ def regist_data(set_type, data):
             writer_id=data['writer_id'],
             publisher_id=data['publisher_id'],
         )
-        book_path = '{}/{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
-        img_path = '{}/{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
+        book_path = '{}{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
+        img_path = '{}{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
         os.mkdir(book_path)
         os.mkdir(img_path)
     elif set_type == 'detail':
@@ -103,8 +103,8 @@ def regist_data(set_type, data):
             name=data['name'],
             sort=data['sort'],
         )
-        book_path = '{}/{}'.format(settings.BOOK_DATA_PATH, category.id)
-        img_path = '{}/{}'.format(settings.THUMBNAIL_DATA_PATH, category.id)
+        book_path = '{}{}'.format(settings.BOOK_DATA_PATH, category.id)
+        img_path = '{}{}'.format(settings.THUMBNAIL_DATA_PATH, category.id)
         os.mkdir(book_path)
         os.mkdir(img_path)
     elif set_type == 'subcategory':
@@ -113,8 +113,8 @@ def regist_data(set_type, data):
             name=data['name'],
             sort=data['sort'],
         )
-        book_path = '{}/{}/{}'.format(settings.BOOK_DATA_PATH, subcategory.category_id, subcategory.id)
-        img_path = '{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, subcategory.category_id, subcategory.id)
+        book_path = '{}{}/{}'.format(settings.BOOK_DATA_PATH, subcategory.category_id, subcategory.id)
+        img_path = '{}{}/{}'.format(settings.THUMBNAIL_DATA_PATH, subcategory.category_id, subcategory.id)
         os.mkdir(book_path)
         os.mkdir(img_path)
     elif set_type == 'writer':
@@ -140,15 +140,15 @@ def edit_data(set_type, data):
         )
     elif set_type == 'book':
         book = model.objects.select_for_update().get(id=data['id'])
-        before_book_path = '{}/{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
-        before_img_path = '{}/{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
+        before_book_path = '{}{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
+        before_img_path = '{}{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
         book.title = data['title']
         book.category_id = data['category_id']
         book.subcategory_id = data['subcategory_id']
         book.writer_id = data['writer_id']
         book.publisher_id = data['publisher_id']
-        after_book_path = '{}/{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
-        after_img_path = '{}/{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
+        after_book_path = '{}{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
+        after_img_path = '{}{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
         if before_book_path != after_book_path:
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
@@ -171,13 +171,13 @@ def edit_data(set_type, data):
         )
     elif set_type == 'subcategory':
         subcategory = model.objects.select_for_update().get(id=data['id'])
-        before_book_path = '{}/{}/{}'.format(settings.BOOK_DATA_PATH, subcategory.category_id, subcategory.id)
-        before_img_path = '{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, subcategory.category_id, subcategory.id)
-        subcategory.category_id = data['category_id'],
-        subcategory.name = data['name'],
-        subcategory.sort = data['sort'],
-        after_book_path = '{}/{}/{}'.format(settings.BOOK_DATA_PATH, subcategory.category_id, subcategory.id)
-        after_img_path = '{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, subcategory.category_id, subcategory.id)
+        before_book_path = '{}{}/{}'.format(settings.BOOK_DATA_PATH, subcategory.category_id, subcategory.id)
+        before_img_path = '{}{}/{}'.format(settings.THUMBNAIL_DATA_PATH, subcategory.category_id, subcategory.id)
+        subcategory.category_id = data['category_id']
+        subcategory.name = data['name']
+        subcategory.sort = data['sort']
+        after_book_path = '{}{}/{}'.format(settings.BOOK_DATA_PATH, subcategory.category_id, subcategory.id)
+        after_img_path = '{}{}/{}'.format(settings.THUMBNAIL_DATA_PATH, subcategory.category_id, subcategory.id)
         if before_book_path != after_book_path:
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
@@ -200,24 +200,24 @@ def delete_data(set_type, del_id_list):
     for del_id in del_id_list:
         obj = model.objects.select_for_update().get(id=del_id)
         if set_type == 'book':
-            before_book_path = '{}/{}/{}/{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
-            after_book_path = '{}/{}/{}/del_{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
-            before_img_path = '{}/{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
-            after_img_path = '{}/{}/{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
+            before_book_path = '{}{}/{}/{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
+            after_book_path = '{}{}/{}/del_{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
+            before_img_path = '{}{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
+            after_img_path = '{}{}/{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.subcategory_id, obj.id)
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
         elif set_type == 'category':
-            before_book_path = '{}/{}'.format(settings.BOOK_DATA_PATH, obj.id)
-            after_book_path = '{}/del_{}'.format(settings.BOOK_DATA_PATH, obj.id)
-            before_img_path = '{}/{}'.format(settings.THUMBNAIL_DATA_PATH, obj.id)
-            after_img_path = '{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.id)
+            before_book_path = '{}{}'.format(settings.BOOK_DATA_PATH, obj.id)
+            after_book_path = '{}del_{}'.format(settings.BOOK_DATA_PATH, obj.id)
+            before_img_path = '{}{}'.format(settings.THUMBNAIL_DATA_PATH, obj.id)
+            after_img_path = '{}del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.id)
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
         elif set_type == 'subcategory':
-            before_book_path = '{}/{}/{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.id)
-            after_book_path = '{}/{}/del_{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.id)
-            before_img_path = '{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.id)
-            after_img_path = '{}/{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.id)
+            before_book_path = '{}{}/{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.id)
+            after_book_path = '{}{}/del_{}'.format(settings.BOOK_DATA_PATH, obj.category_id, obj.id)
+            before_img_path = '{}{}/{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.id)
+            after_img_path = '{}{}/del_{}'.format(settings.THUMBNAIL_DATA_PATH, obj.category_id, obj.id)
             os.rename(before_book_path, after_book_path)
             os.rename(before_img_path, after_img_path)
         obj.delete()

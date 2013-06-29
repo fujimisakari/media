@@ -471,7 +471,7 @@
 								</dd>
 							</dl>
 						{% endif %}
-
+                        {{ form.id }}
 					{% endfor %}
     			</fieldset>
             </div>
@@ -484,6 +484,7 @@
                     <a href="{% url 'book_detail' detail.book_id %}" class="detail_btn" tabindex="12">ページへ移動</a>
                 {% endif %}
             </p>
+
         </form>
     </div>
 </div>
