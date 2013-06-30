@@ -3,13 +3,10 @@
 3,2,青年コミック,3
 4,2,その他コミック,4
 5,1,Server,70
-6,1,Linux,80
 7,1,php,40
 8,1,Python,20
 9,1,Java,50
 10,1,Network,90
-11,1,WEB+DB PRESS,110
-12,1,Softwear Desing,120
 13,1,その他,130
 17,1,Perl,30
 18,1,Xhtml css,100
@@ -17,3 +14,4 @@
 20,1,MySQL,65
 21,1,Emacs,55
 22,1,JavaScript,51
+23,1,Magazine,110
