@@ -31,5 +31,6 @@ class Command(BaseCommand):
                     try:
                         export_sql = "SELECT * FROM {} INTO OUTFILE '{}' fields terminated by ','".format(model._meta.db_table, csv_file_path)
                         cur.execute(export_sql)
+                        print 'export {}.csv'.format(model._meta.db_table)
                     except Warning:
                         print >> sys.stderr, u"not exist '{}'.".format(model._meta.db_table)

@@ -10,15 +10,22 @@ env.DEPLOY_DIR = '/var/www/'
 
 
 def graceful():
-    sudo('sudo apache2ctl graceful')
+    sudo('apache2ctl graceful')
+
+
+def importcsv():
+    with cd(env.DEPLOY_DIR):
+        with cd('media'):
+            run('./manage.py importcsv')
+            sudo('/etc/init.d/memcached restart')
 
 
 def deploy():
 
     with cd(env.DEPLOY_DIR):
         if not exists('media'):
-            run('git clone git@github.com:fujimisakari/media.git')
+            run('sudo -u www-data git clone git@github.com:fujimisakari/media.git')
 
         with cd('media'):
-            run('git pull')
-            run('git pull origin master')
+            run('sudo -u www-data git pull')
+            sudo('apache2ctl graceful')

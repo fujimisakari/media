@@ -29,5 +29,6 @@ class Command(BaseCommand):
                             import_sql = "LOAD DATA LOCAL INFILE '{}' INTO TABLE {} FIELDS TERMINATED BY ','".format(csv_file_path, model._meta.db_table)
                             cur.execute(import_sql)
                             transaction.commit_unless_managed()
+                            print 'import {}.csv'.format(model._meta.db_table)
                         except Warning:
                             print >> sys.stderr, u"not exist '{}'.".format(model._meta.db_table)
