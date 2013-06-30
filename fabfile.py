@@ -20,8 +20,13 @@ def importcsv():
             sudo('/etc/init.d/memcached restart')
 
 
-def deploy():
+def exportcsv():
+    with cd(env.DEPLOY_DIR):
+        with cd('media'):
+            run('./manage.py exportcsv')
 
+
+def deploy():
     with cd(env.DEPLOY_DIR):
         if not exists('media'):
             run('sudo -u www-data git clone git@github.com:fujimisakari/media.git')
