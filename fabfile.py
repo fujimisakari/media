@@ -26,6 +26,13 @@ def exportcsv():
             run('./manage.py exportcsv')
 
 
+def migrate():
+    with cd(env.DEPLOY_DIR):
+        with cd('media'):
+            run('./manage.py migrate top')
+            run('./manage.py migrate book')
+
+
 def deploy():
     with cd(env.DEPLOY_DIR):
         if not exists('media'):

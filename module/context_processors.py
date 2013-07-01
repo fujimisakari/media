@@ -28,4 +28,5 @@ def book_context(request):
         'BOOK_VOLUME_THUMBNAIL': settings.BOOK_VOLUME_THUMBNAIL,
         'BOOK_THUMB_HEIGHT': settings.BOOK_THUMB_HEIGHT,
         'BOOK_THUMB_WIDTH': settings.BOOK_THUMB_WIDTH,
+        'SUBCATEGORY_LIST_LIMIT': settings.SUBCATEGORY_LIST_LIMIT,
     }

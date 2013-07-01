@@ -249,6 +249,9 @@ def upload_data(data, upload_file):
     elif int(data['upload_type']) == 2:
         file_path = '{}{}/{}/{}/{}{}'.format(settings.BOOK_DATA_PATH, data['category_id'], data['subcategory_id'],
                                              data['book_id'], data['volume'], settings.BOOK_PDF)
+        backup_file_path = '{}{}/{}/{}/{}{}.bk'.format(settings.BOOK_DATA_PATH, data['category_id'], data['subcategory_id'],
+                                                       data['book_id'], data['volume'], settings.BOOK_PDF)
+        os.rename(file_path, backup_file_path)
     create_file = open(file_path, mode='w')
     for chunk in upload_file.chunks():
         create_file.write(chunk)

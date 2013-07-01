@@ -80,10 +80,11 @@ class Book(AbustractCachedModel):
     title = models.CharField(u'タイトル名', max_length=100)
     writer_id = models.IntegerField(u'著者', null=True)
     publisher_id = models.IntegerField(u'出版社', null=True)
+    thumbnail_volume = models.IntegerField(u'サムネイルで表示するvolume', default=1)
 
     @property
     def img_path(self):
-        return u'/img/thumbnail/{}/{}/{}/{}'.format(self.category_id, self.subcategory_id, self.id, settings.BOOK_THUMBNAIL)
+        return u'/img/thumbnail/{}/{}/{}/{}{}'.format(self.category_id, self.subcategory_id, self.id, self.thumbnail_volume, settings.BOOK_VOLUME_THUMBNAIL)
 
     @property
     def category(self):

@@ -42,5 +42,6 @@ def get_subcategory_list(category_id):
             if not book_detail.book in book_list:
                 book_list.append(book_detail.book)
         tmp_dict['book_list'] = book_list
+        tmp_dict['is_more'] = True if len(book_list) >= settings.SUBCATEGORY_LIST_LIMIT else False
         result_list.append(tmp_dict)
     return result_list
