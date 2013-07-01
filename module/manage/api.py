@@ -151,6 +151,7 @@ def edit_data(set_type, data):
         book.subcategory_id = data['subcategory_id']
         book.writer_id = data['writer_id']
         book.publisher_id = data['publisher_id']
+        book.thumbnail_volume = data['thumbnail_volume']
         after_book_path = '{}{}/{}/{}'.format(settings.BOOK_DATA_PATH, book.category_id, book.subcategory_id, book.id)
         after_img_path = '{}{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
         if before_book_path != after_book_path:

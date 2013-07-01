@@ -170,6 +170,29 @@
                                         {% endif %}
 									</select>
 								</dd>
+                                {% if form.initial.category_id == 2 %}
+								    <dev id="volume_block">
+								        <dt>
+								        	<label>サムネイルで表示する巻</label>
+								        	{% if form.volume.errors %}
+								        		<span class='error_msg'>
+								        			{{ form.volume.errors }}
+								        		</span>
+								        	{% endif %}
+								        </dt>
+								        <dd>
+								        	<select id="id_thumbnail_volume" name="form-0-thumbnail_volume" tabindex='6'>
+                                                {% for detail in book.detail_list %}
+                                                    {% if detail.volume == form.initial.thumbnail_volume %}
+										               <option selected="selected" value="{{ detail.volume }}">{{ detail.volume }}</option>
+                                                    {% else %}
+										                <option value="{{ detail.volume }}">{{ detail.volume }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+								        	</select>
+								        </dd>
+								    </dev>
+                                {% endif %}
 							</dl>
 						{% endif %}
 

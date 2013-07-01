@@ -24,7 +24,6 @@ def book_context(request):
         'BOOK_IPAD': settings.BOOK_IPAD,
         'BOOK_IPHONE': settings.BOOK_IPHONE,
         'BOOK_DATA': settings.BOOK_DATA,
-        'BOOK_THUMBNAIL': settings.BOOK_THUMBNAIL,
         'BOOK_VOLUME_THUMBNAIL': settings.BOOK_VOLUME_THUMBNAIL,
         'BOOK_THUMB_HEIGHT': settings.BOOK_THUMB_HEIGHT,
         'BOOK_THUMB_WIDTH': settings.BOOK_THUMB_WIDTH,

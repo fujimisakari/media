@@ -31,6 +31,7 @@ class BookForm(forms.Form):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'text size4', 'tabindex': '3'}))
     writer_id = forms.IntegerField()
     publisher_id = forms.IntegerField()
+    thumbnail_volume = forms.IntegerField(required=False)
 
 
 class BookDetailForm(forms.Form):

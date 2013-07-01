@@ -106,6 +106,10 @@ class Book(AbustractCachedModel):
     def publisher(self):
         return Publisher.get_cache(self.publisher_id)
 
+    @property
+    def detail_list(self):
+        return sorted([book_detail for book_detail in BookDetail.get_cache_all() if book_detail.book_id == self.id], key=lambda x: x.volume)
+
 
 class BookDetail(AbustractCachedModel):
     book_id = models.IntegerField(u'ブックID', db_index=True)
@@ -129,11 +133,11 @@ class BookDetail(AbustractCachedModel):
 
     @property
     def img_path(self):
-        return u'/img/thumbnail/{}/{}/{}/{}_{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
+        return u'/img/thumbnail/{}/{}/{}/{}{}'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_VOLUME_THUMBNAIL)
 
     @property
     def download_path(self):
-        return u'/book/download/{}/{}/{}/{}/'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume, settings.BOOK_THUMBNAIL)
+        return u'/book/download/{}/{}/{}/{}/'.format(self.book.category_id, self.book.subcategory_id, self.book_id, self.volume)
 
     @classmethod
     def get_book_detail_list_by_book_id(cls, book_id):
