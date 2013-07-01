@@ -13,7 +13,7 @@ urlpatterns = patterns(
     url(r'^delete_checked/(?P<set_type>\w+)/$', 'delete_checked', name='manage_delete_checked'),
     url(r'^search/(?P<set_type>\w+)/$', 'search', name='manage_search'),
     url(r'^status/$', 'status', name='manage_status'),
-    # url(r'^uploader/(?P<set_type>\w+)/$', uploader, 'manage_upload'),
+    url(r'^upload/$', 'upload', name='manage_upload'),
 
     url(r'^ajax/book_title/$', get_title_list, name='manage_get_title_list'),
     url(r'^ajax/book_subcategory/$', get_subcategory_list, name='manage_get_subcategory_list'),

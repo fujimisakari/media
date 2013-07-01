@@ -1,53 +1,115 @@
-{% extends 'manage/base.html' %}
+{% extends 'base.html' %}
+{% load url from future %}
 
-{% block manageContentsMain %}
-    {% if form_entry %}
-        <form method="post" enctype="multipart/form-data">
-            <table class="manageAdd">
-                {{ form_entry.as_table }}
-                <tr>
-                    <th><label for="id_entry">タイトル ※</label></th>
-                    <td>
-                        <select id="id_entry" name="entry">
-                            <option selected="selected" value="">---------</option>
-                            {% for entry in entry_list %}
-                            <option value="{{ entry.id }}">{{ entry.title }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="id_volume">巻 ※</label></th>
-                    <td>
-                        <select id="id_volume" name="volume">
-                            <option selected="selected" value="">---------</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label>データ種別 ※</label></th>
-                    <td>
-                        <ul>
-                            <li><label for="id_data_type_0"><input type="radio" id="id_data_type_0" value="thumbnail" name="data_type" checked="checked" /> サムネイル用画像(jpgのみ)</label></li>
-                            <li><label for="id_data_type_1"><input type="radio" id="id_data_type_1" value="pdf" name="data_type" /> pdfファイル</label></li>
-                            <li><label for="id_data_type_2"><input type="radio" id="id_data_type_2" value="epud" name="data_type" /> epudファイル</label></li>
-                            <li><label for="id_data_type_3"><input type="radio" id="id_data_type_3" value="zip" name="data_type" /> 付属CD-R(zipファイル)</label></li>
-                            <li><p>※アップロード時間は150Mで3分くらいかかる</p></li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label>アップデータ ※</label></th>
-                    <td>{{ form_upload.upload_file }}</td>
-                </tr>
-            <!-- /.manageTop --></table>
-            <table class="manageButton">
-                <tr>
-                    <td>
-                    <input class="button" type="submit" value="ENTER" onclick="this.form.action='.'" />
-                    </td>
-                </tr>
-            <!-- /.manageButton --></table>
-        </form>
+{% block contents %}
+
+<div class="box">
+    <div class="boxHeader">
+        <h2 style="float: left;">BOOK情報管理</h2>
+    </div>
+
+    {% if msg_dict.info_type == SUCCESS %}
+        <div class="success notification">
+            <div>{{ msg_dict.msg }}</div>
+        </div>
     {% endif %}
+
+    {% if is_form_error %}
+        <div class="error notification">
+            <div>
+                正しく入力されていない項目があります
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="boxContent">
+        <h3><span>データアップロード</span></h3>
+        <form method="post" enctype="multipart/form-data">
+            {{ form.management_form }}
+            <div class="UpBox clearfix">
+                <fieldset>
+                    <dl>
+                        <dt>
+                            <label>カテゴリ</label>
+                            {% if form.category_id.errors %}
+                                <span class='error_msg'>
+                                    {{ form.category_id.errors }}
+                                </span>
+                            {% endif %}
+                        </dt>
+                        <dd>
+                            <select id="id_category" name="category_id" tabindex='1'>
+                                <option selected="selected" value="">---------</option>
+                                {% for category in category_list %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </dd>
+                        <dt>
+                            <label>サブカテゴリ</label>
+                            {% if form.subcategory_id.errors %}
+                                <span class='error_msg'>
+                                    {{ form.subcategory_id.errors }}
+                                </span>
+                            {% endif %}
+                        </dt>
+                        <dd>
+                            <select id="id_subcategory" name="subcategory_id" tabindex='2'>
+                                <option selected="selected" value="">---------</option>
+                            </select>
+                        </dd>
+                        <dt>
+                            <label>タイトル</label>
+                            {% if form.book_id.errors %}
+                                <span class='error_msg'>
+                                    {{ form.book_id.errors }}
+                                </span>
+                            {% endif %}
+                        </dt>
+                        <dd>
+                            <select id="id_book" name="book_id" tabindex='3'>
+                                <option selected="selected" value="">---------</option>
+                            </select>
+                        </dd>
+                        <dev id="volume_block">
+                            <dt>
+                                <label>巻</label>
+                                {% if form.volume.errors %}
+                                    <span class='error_msg'>
+                                        {{ form.volume.errors }}
+                                    </span>
+                                {% endif %}
+                            </dt>
+                            <dd>
+                                <select id="id_volume" name="volume" tabindex='4'>
+                                    <option selected="selected" value="">---------</option>
+                                </select>
+                            </dd>
+                        </dev>
+                        <dt>
+                            <label>アップロード タイプ</label>
+                        </dt>
+                        <dd>
+                            {{ form.upload_type }}
+                        </dd>
+                        <dt>
+                            <label>アップロード ファイル</label>
+                            {% if form.upload_file.errors %}
+                                <span class='error_msg'>
+                                    {{ form.upload_file.errors }}
+                                </span>
+                            {% endif %}
+                        </dt>
+                        <dd>
+                            {{ form.upload_file }}
+                        </dd>
+                    </dl>
+                </fieldset>
+            </div>
+            <p class="center">
+                <input type="submit" class="submitA submitL" value="アップロードする" tabindex="10" onclick="this.form.action='.'" />
+            </p>
+        </form>
+    </div>
+</div>
 {% endblock %}

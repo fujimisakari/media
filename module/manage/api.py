@@ -236,3 +236,20 @@ def delete_data(set_type, del_id_list):
         obj.delete()
         cache.delete(model.get_cache_path(del_id))
     cache.delete(model.get_cache_all_path())
+
+
+def upload_data(data, upload_file):
+
+    if not data['volume']:
+        data['volume'] = 1
+
+    if int(data['upload_type']) == 1:
+        file_path = '{}{}/{}/{}/{}{}'.format(settings.THUMBNAIL_DATA_PATH, data['category_id'], data['subcategory_id'],
+                                             data['book_id'], data['volume'], settings.BOOK_VOLUME_THUMBNAIL)
+    elif int(data['upload_type']) == 2:
+        file_path = '{}{}/{}/{}/{}{}'.format(settings.BOOK_DATA_PATH, data['category_id'], data['subcategory_id'],
+                                             data['book_id'], data['volume'], settings.BOOK_PDF)
+    create_file = open(file_path, mode='w')
+    for chunk in upload_file.chunks():
+        create_file.write(chunk)
+    create_file.close()

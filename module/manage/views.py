@@ -11,9 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 
 from module.common.pager import get_pager
-from module.manage.forms import BookFormSet, BookDetailFormSet, CategoryFormSet, SubCategoryFormSet, WriterFormSet, PublisherFormSet, WhatNewFormSet
+from module.manage.forms import (BookFormSet, BookDetailFormSet, CategoryFormSet, SubCategoryFormSet,
+                                 WriterFormSet, PublisherFormSet, WhatNewFormSet, UploadFileForm)
 from module.book.models import Book, BookDetail, SubCategory, Writer, Publisher
-from module.manage.api import MODEL_MAP, regist_data, delete_data, edit_data, get_status_info
+from module.manage.api import MODEL_MAP, regist_data, delete_data, edit_data, upload_data, get_status_info
 
 
 FORM_MAP = {'whatnew': WhatNewFormSet,
@@ -198,83 +199,23 @@ def status(request):
     return _render('status.html', context)
 
 
-# import os.path
-# from django.conf import settings
-# from django.template import RequestContext
-# from django.contrib.auth.decorators import login_required
-# from django.shortcuts import render_to_response
-# from django import forms
-# from module.book.models import Category, SubCategory, Book, BookDetail
-# from module.manage.view_common import *
+@login_required
+def upload(request):
+    context = RequestContext(request, {})
+    if request.session.get('msg_dict', False):
+        context['msg_dict'] = request.session['msg_dict']
+        del request.session['msg_dict']
 
-
-# class UploadEntryForm(forms.ModelForm):
-#     class Meta:
-#         model = Book
-#         fields = ('category_id', 'subcategory_id')
-
-
-# class UploadFileForm(forms.ModelForm):
-#     upload_file = forms.FileField()
-
-#     class Meta:
-#         model = BookDetail
-#         fields = ('book_id', 'volume')
-
-
-# def create_path(post_data):
-#     volume = forms.IntegerField()
-#     category = Category.objects.get(pk=post_data['category'])
-#     subcategory = SubCategory.objects.get(pk=post_data['subcategory'])
-#     entry = Book.objects.get(pk=post_data['entry'])
-#     get_data_type = {'thumbnail': '_thumbnail.jpg',
-#                      'pdf': '_pc.pdf',
-#                      'epud': '_ipad.epud',
-#                      'zip': '_data.zip',
-#                      }[post_data['data_type']]
-#     filename = "%s%s" % (post_data['volume'], get_data_type)
-
-#     path = os.path.join(settings.MANAGE_BOOK_PATH, category.url_name, subcategory.url_name, entry.url_title, filename)
-#     return path
-
-
-# @login_required
-# def uploader(request, set_type='book'):
-#     getTitle = titleSelecter('upload', set_type)
-#     tmplName = 'manage/upload/book.html'
-
-#     if request.method == 'POST':
-#         form = UploadFileForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             try:
-#                 path = create_path(request.POST)
-#                 create_file = open(path, mode='w')
-#                 upfile = request.FILES['upload_file']
-#                 for chunk in upfile.chunks():
-#                     create_file.write(chunk)
-#                 create_file.close()
-#             except:
-#                 return render_to_response(tmplName,
-#                                           {'msg': ERROR_MSG_FILEPATH,
-#                                            'base_type': 'upload',
-#                                            'title': getTitle},
-#                                           context_instance=RequestContext(request))
-#         else:
-#             return render_to_response(tmplName,
-#                                       {'msg': ERROR_MSG_UPLOAD,
-#                                        'base_type': 'upload',
-#                                        'title': getTitle},
-#                                       context_instance=RequestContext(request))
-#         return render_to_response(tmplName,
-#                                   {'msg': MSG_UPLOAD,
-#                                    'base_type': 'upload',
-#                                    'title': getTitle},
-#                                   context_instance=RequestContext(request))
-#     else:
-#         form_entry = UploadEntryForm(label_suffix='')
-#         form_upload = UploadFileForm(label_suffix='')
-#     return render_to_response(tmplName,
-#                               {'form_entry': form_entry,
-#                                'form_upload': form_upload,
-#                                'title': getTitle},
-#                               context_instance=RequestContext(request))
+    if request.method == 'POST':
+        formset = UploadFileForm(request.POST, request.FILES)
+        if formset.is_valid():
+            upload_data(formset.data, request.FILES['upload_file'])
+            request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_UPLOAD}
+            return HttpResponseRedirect(reverse('manage_upload'))
+        else:
+            context['is_form_error'] = True
+            context['form'] = formset
+            return _render('upload.html', context)
+    else:
+        context['form'] = UploadFileForm()
+    return _render('upload.html', context)

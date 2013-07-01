@@ -210,7 +210,7 @@ THUMBNAIL_DATA_PATH = os.path.join(ROOT_PATH, '../static/img/thumbnail/')
 # HYPER_ESTRAIER_INDEX = os.path.join(ROOT_PATH, 'templates/static/media/book/casket/')
 
 # upload
-FILE_UPLOAD_MAX_MEMORY_SIZE = u'314572800'
+UPLOAD_SIZE_LIMIT = u'314572800'
 FILE_UPLOAD_TEMP_DIR = os.path.join(ROOT_PATH, 'templates/static/media/tmp')
 
 # paging
@@ -249,6 +249,7 @@ MSG_REGIST = u'登録しました'
 MSG_EDIT = u'編集しました'
 MSG_DELET = u'削除しました'
 MSG_CHECKED_DELET = u'チェック項目を削除しました'
+MSG_UPLOAD = u'アップロードしました'
 ERROR_MSG_ADD = u'入力値が正常でないため、登録が行えませんでした'
 ERROR_MSG_EDIT = u'入力値が正常でないため、編集が行えませんでした'
 ERROR_MSG_FILEPATH = u'カテゴリまたはサブカテゴリの組み合わせが正しくありません'

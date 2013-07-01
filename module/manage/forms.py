@@ -71,6 +71,32 @@ class PublisherForm(forms.Form):
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'text size4', 'tabindex': '2'}))
 
 
+class UploadFileForm(forms.Form):
+    UPDATE_TYPE_CHOICES = ((1, u'サムネイル画像'), (2, u'PDFファイル'))
+    category_id = forms.IntegerField()
+    subcategory_id = forms.IntegerField()
+    book_id = forms.IntegerField()
+    volume = forms.IntegerField(required=False)
+    upload_file = forms.FileField()
+    upload_type = forms.ChoiceField(initial=1, choices=UPDATE_TYPE_CHOICES)
+
+    # def clean_upload_file(self):
+    #     upfile = self.cleaned_data['image_upload']
+    #     if upfile:
+    #         # ファイルのサイズチェック
+    #         if upfile.size > settings.UPLOAD_SIZE_LIMIT:
+    #             raise forms.ValidationError(u'データサイズが2Mを超てます')
+
+    #         # 拡張子チェック
+    #         allow_ext = ['jpeg', 'png', 'gif', 'jpg']
+    #         file_dict = get_file_property(upfile.name)
+    #         if file_dict is not None:
+    #             if not file_dict['ext'].lower() in allow_ext:
+    #                 raise forms.ValidationError(u'この%sの拡張子は使用できません' % file_dict['ext'])
+    #         else:
+    #             raise forms.ValidationError(u'拡張子が不明です')
+
+
 WhatNewFormSet = formset_factory(WhatNewForm, max_num=1)
 CategoryFormSet = formset_factory(CategoryForm, max_num=1)
 SubCategoryFormSet = formset_factory(SubCategoryForm, max_num=1)
@@ -78,3 +104,4 @@ BookFormSet = formset_factory(BookForm, max_num=1)
 BookDetailFormSet = formset_factory(BookDetailForm, max_num=1)
 WriterFormSet = formset_factory(WriterForm, max_num=1)
 PublisherFormSet = formset_factory(PublisherForm, max_num=1)
+UploadFileFormSet = formset_factory(UploadFileForm, max_num=1)
