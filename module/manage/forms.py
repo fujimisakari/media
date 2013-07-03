@@ -37,7 +37,7 @@ class BookForm(forms.Form):
 class BookDetailForm(forms.Form):
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)
     book_id = forms.IntegerField()
-    volume = forms.IntegerField(required=False)
+    volume = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '4', 'maxlength': '3'}))
     pdf_size = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '5', 'maxlength': '3'}))
     # epud_size = forms.IntegerField()
     total_page = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'text size1', 'tabindex': '6', 'maxlength': '4'}))
@@ -55,9 +55,7 @@ class BookDetailForm(forms.Form):
             book_detail_list = BookDetail.get_book_detail_list_by_book_id(book_id)
             if [bd for bd in book_detail_list if bd.volume == volume]:
                 raise forms.ValidationError(u'volumeが重複してます')
-        if volume:
-            # 空の場合はデフォルト値を入れる
-            self.cleaned_data['volume'] = 1
+        return volume
 
 
 class WriterForm(forms.Form):

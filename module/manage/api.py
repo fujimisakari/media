@@ -159,8 +159,7 @@ def edit_data(set_type, data):
             os.rename(before_img_path, after_img_path)
         book.save()
     elif set_type == 'detail':
-        model.objects.select_for_update().update(
-            id=data['id'],
+        model.objects.select_for_update().filter(id=data['id']).update(
             book_id=data['book_id'],
             volume=data['volume'],
             pdf_size=data['pdf_size'],
@@ -169,8 +168,7 @@ def edit_data(set_type, data):
             description=data['description'],
         )
     elif set_type == 'category':
-        model.objects.select_for_update().update(
-            id=data['id'],
+        model.objects.select_for_update().filter(id=data['id']).update(
             name=data['name'],
             sort=data['sort'],
         )
@@ -188,14 +186,12 @@ def edit_data(set_type, data):
             os.rename(before_img_path, after_img_path)
         subcategory.save()
     elif set_type == 'writer':
-        model.objects.select_for_update().update(
-            id=data['id'],
+        model.objects.select_for_update().filter(id=data['id']).update(
             category_id=data['category_id'],
             name=data['name'],
         )
     elif set_type == 'publisher':
-        model.objects.select_for_update().update(
-            id=data['id'],
+        model.objects.select_for_update().filter(id=data['id']).update(
             category_id=data['category_id'],
             name=data['name'],
         )

@@ -273,15 +273,7 @@
 								        	{% endif %}
 								        </dt>
 								        <dd>
-								        	<select id="id_volume" name="form-0-volume" tabindex='4'>
-                                                {% for volume in detail.volume_range %}
-                                                    {% if volume == form.initial.volume %}
-										               <option selected="selected" value="{{ volume }}">{{ volume }}</option>
-                                                    {% else %}
-										                <option value="{{ volume }}">{{ volume }}</option>
-                                                    {% endif %}
-                                                {% endfor %}
-								        	</select>
+        									{{ form.volume }}
 								        </dd>
 								    </dev>
                                 {% endif %}
