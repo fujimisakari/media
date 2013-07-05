@@ -117,7 +117,7 @@ class BookDetail(AbustractCachedModel):
     pdf_size = models.IntegerField(u'PDFサイズ', default=0)
     epud_size = models.IntegerField(u'EPUDサイズ', default=0)
     total_page = models.IntegerField(u'ページ数', default=0)
-    description = models.TextField(u'備考', null=True, blank=True)
+    description = models.TextField(u'備考', blank=True)
     exit_pdf = models.BooleanField(u'PDF有無', default=True)
     exit_epud = models.BooleanField(u'EPUD有無', default=False)
     exit_attachment = models.BooleanField(u'付属CD-R有無', default=False)

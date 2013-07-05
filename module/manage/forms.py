@@ -2,7 +2,7 @@
 
 from django import forms
 from django.forms.formsets import formset_factory
-from module.book.models import BookDetail
+from module.book.models import BookDetail, Writer, Publisher
 
 
 class WhatNewForm(forms.Form):
@@ -53,8 +53,10 @@ class BookDetailForm(forms.Form):
         if detail_id:
             # volumeの重複チェック
             book_detail_list = BookDetail.get_book_detail_list_by_book_id(book_id)
-            if [bd for bd in book_detail_list if bd.volume == volume]:
+            if [bd for bd in book_detail_list if bd.volume == volume and bd.id != detail_id]:
                 raise forms.ValidationError(u'volumeが重複してます')
+        if not volume:
+            volume = 1
         return volume
 
 
@@ -63,11 +65,25 @@ class WriterForm(forms.Form):
     category_id = forms.IntegerField()
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'text size4', 'tabindex': '2'}))
 
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        # 重複チェック
+        if [w for w in Writer.get_cache_all() if w.name == name]:
+            raise forms.ValidationError(u'名前が重複してます')
+        return name
+
 
 class PublisherForm(forms.Form):
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)
     category_id = forms.IntegerField()
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'text size4', 'tabindex': '2'}))
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        # 重複チェック
+        if [p for p in Publisher.get_cache_all() if p.name == name]:
+            raise forms.ValidationError(u'名前が重複してます')
+        return name
 
 
 class UploadFileForm(forms.Form):

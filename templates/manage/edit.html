@@ -276,6 +276,8 @@
         									{{ form.volume }}
 								        </dd>
 								    </dev>
+                                {% else %}
+                                    <input type="hidden" name="form-0-volume" value="{{ detail.volume }}">
                                 {% endif %}
 								<dt>
 									<label>PDFサイズ</label>

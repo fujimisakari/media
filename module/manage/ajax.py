@@ -17,7 +17,7 @@ def get_writer_list(request):
     writerList = '<option selected="selected" value="">---------</option>|'
     none_wirter = [x for x in Writer.get_cache_all() if not x.category_id][0]
     writerList += "<option value=\"%d\">%s</option>|" % (none_wirter.id, none_wirter.name)
-    for row in [x for x in Writer.get_cache_all() if x.category_id == int(request.GET['category_id'])]:
+    for row in sorted([x for x in Writer.get_cache_all() if x.category_id == int(request.GET['category_id'])], key=lambda x: x.name):
         writerList += "<option value=\"%d\">%s</option>|" % (row.id, row.name)
     return HttpResponse(writerList, mimetype="text/javascript")
 
@@ -27,7 +27,7 @@ def get_publisher_list(request):
     publisherList = '<option selected="selected" value="">---------</option>|'
     none_publisher = [x for x in Publisher.get_cache_all() if not x.category_id][0]
     publisherList += "<option value=\"%d\">%s</option>|" % (none_publisher.id, none_publisher.name)
-    for row in [x for x in Publisher.get_cache_all() if x.category_id == int(request.GET['category_id'])]:
+    for row in sorted([x for x in Publisher.get_cache_all() if x.category_id == int(request.GET['category_id'])], key=lambda x: x.name):
         publisherList += "<option value=\"%d\">%s</option>|" % (row.id, row.name)
     return HttpResponse(publisherList, mimetype="text/javascript")
 

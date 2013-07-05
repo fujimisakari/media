@@ -90,6 +90,9 @@ def regist_data(set_type, data):
         img_path = '{}{}/{}/{}'.format(settings.THUMBNAIL_DATA_PATH, book.category_id, book.subcategory_id, book.id)
         os.mkdir(book_path)
         os.mkdir(img_path)
+        # book詳細も作成
+        BookDetail.objects.create(book_id=book.id)
+
     elif set_type == 'detail':
         # 空の場合はデフォルト値を入れる
         if not data['volume']:
@@ -248,7 +251,8 @@ def upload_data(data, upload_file):
                                              data['book_id'], data['volume'], settings.BOOK_PDF)
         backup_file_path = '{}{}/{}/{}/{}{}.bk'.format(settings.BOOK_DATA_PATH, data['category_id'], data['subcategory_id'],
                                                        data['book_id'], data['volume'], settings.BOOK_PDF)
-        os.rename(file_path, backup_file_path)
+        if os.path.exists(file_path):
+            os.rename(file_path, backup_file_path)
     create_file = open(file_path, mode='w')
     for chunk in upload_file.chunks():
         create_file.write(chunk)

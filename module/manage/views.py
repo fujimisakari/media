@@ -170,7 +170,7 @@ def search(request, set_type):
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
             for category in search_list:
                 if r.search(category.name):
-                    result_list.append(book)
+                    result_list.append(category)
         elif set_type == 'subcategory':
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.sort)
             for subcategory in search_list:
@@ -180,7 +180,7 @@ def search(request, set_type):
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
             for writer in search_list:
                 if r.search(writer.name):
-                    result_list.append(subcategory)
+                    result_list.append(writer)
         elif set_type == 'publisher':
             search_list = sorted([x for x in model.get_cache_all()], key=lambda x: x.category_id)
             for publisher in search_list:
