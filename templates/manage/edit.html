@@ -192,6 +192,8 @@
 								        	</select>
 								        </dd>
 								    </dev>
+                                {% else %}
+                                    <input type="hidden" name="form-0-thumbnail_volume" value="{{ form.initial.thumbnail_volume }}">
                                 {% endif %}
 							</dl>
 						{% endif %}
