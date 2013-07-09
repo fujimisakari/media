@@ -177,7 +177,7 @@ ol#crumb a:before {
     border-top: 1.5em solid transparent;
     border-bottom: 1.5em solid transparent;
     border-left: 1.5em solid;
-    right: -1.5em;
+    right: -1.4em;
 }
 
 ol#crumb a:after {
@@ -187,7 +187,7 @@ ol#crumb a:after {
 
 ol#crumb a:before {
     border-left-color: #333;
-    right: -1.6em;
+    right: -1.5em;
     z-index: 2;
 }
 
