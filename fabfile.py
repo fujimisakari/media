@@ -23,7 +23,7 @@ def importcsv():
 def exportcsv():
     with cd(env.DEPLOY_DIR):
         with cd('media'):
-            run('./manage.py exportcsv')
+            run('sudo -u www-data ./manage.py exportcsv')
 
 
 def migrate():
