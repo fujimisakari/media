@@ -121,7 +121,7 @@
                                         {% if form.initial.writer_id %}
                                             <option value="">---------</option>
                                             {% for writer in writer_list %}
-                                                {% if writer.category_id == form.initial.category_id %}
+                                                {% if writer.category_id == form.initial.category_id or not writer.category_id %}
                                                     {% if writer.id == form.initial.writer_id %}
                                                         <option selected="selected" value="{{ writer.id }}">{{ writer.name }}</option>
                                                     {% else %}
@@ -152,7 +152,7 @@
                                         {% if form.initial.publisher_id %}
                                             <option value="">---------</option>
                                             {% for publisher in publisher_list %}
-                                                {% if publisher.category_id == form.initial.category_id %}
+                                                {% if publisher.category_id == form.initial.category_id or not publisher.category_id %}
                                                     {% if publisher.id == form.initial.publisher_id %}
                                                         <option selected="selected" value="{{ publisher.id }}">{{ publisher.name }}</option>
                                                     {% else %}

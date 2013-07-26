@@ -70,7 +70,8 @@
                             <dl>
                                 <dt>作成日 :</dt><dd>{{ book_detail.create_date|date:"Y-m-d" }}</dd>
                                 <dt>備考 :</dt><dd>{{ book_detail.description|linebreaks|safe }}</dd>
-                                <dt><a href="{% url 'manage_edit' 'detail' book_detail.id %}">編集する</a></dt><dd></dd>
+                                <dt><a href="{% url 'manage_edit' 'book' book.id %}">基本情報を編集する</a></dt><dd></dd>
+                                <dt><a href="{% url 'manage_edit' 'detail' book_detail.id %}">詳細を編集する</a></dt><dd></dd>
                             </dl>
                         </div>
                     </div>

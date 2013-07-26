@@ -10,6 +10,7 @@ env.DEPLOY_DIR = '/var/www/'
 
 
 def graceful():
+    sudo('/etc/init.d/memcached restart')
     sudo('apache2ctl graceful')
 
 

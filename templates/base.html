@@ -40,9 +40,9 @@
                 <div class="headNavi">
                     <form action="{% url 'book_search' %}" class="search">
                         {% if navi_search %}
-                            <input type="text" class="searchText" name="keyword" value="{% if keyword %}{{ keyword }}{% else %}カテゴリ or タイトル 検索{% endif %}" />
+                            <input type="text" class="searchText" name="keyword" value="{% if keyword %}{{ keyword }}{% else %}キーワード 検索{% endif %}" />
                         {% else %}
-                            <input type="text" class="searchText" name="keyword" value="カテゴリ or タイトル 検索" />
+                            <input type="text" class="searchText" name="keyword" value="キーワード 検索" />
                         {% endif %}
                         <input type="image" src="{{ MEDIA_URL }}/img/icon_search.png" alt="検索" class="searchBtn" onclick="void(this.form.submit());return false" />
                     </form>
