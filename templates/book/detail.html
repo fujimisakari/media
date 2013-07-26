@@ -27,7 +27,7 @@
                             </a>
                             {% if user.is_staff %}
                                 <div id="dwn-befor{{ book_detail.volume }}">
-                                    <a class="dwBtn" onclick="fnDwnBtnDisable({{ book_detail.volume }}); return false;">Download</a>
+                                    <a class="dwBtn" href="{{ book_detail.download_path }}" onclick="fnDwnBtnDisable({{ book_detail.volume }}); return false;">Download</a>
                                 </div>
                                 <div id="dwn-after{{ book_detail.volume }}" style="display: none">
                                     <a class="dwbtnDisable">Download</a>
