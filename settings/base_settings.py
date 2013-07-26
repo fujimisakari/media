@@ -211,7 +211,7 @@ THUMBNAIL_DATA_PATH = os.path.join(ROOT_PATH, '../static/img/thumbnail/')
 
 # upload
 UPLOAD_SIZE_LIMIT = u'314572800'
-FILE_UPLOAD_TEMP_DIR = u'tmp'
+# FILE_UPLOAD_TEMP_DIR = u'tmp'
 
 # paging
 LIST_COUNT = 5
