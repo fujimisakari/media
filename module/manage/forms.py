@@ -32,6 +32,7 @@ class BookForm(forms.Form):
     writer_id = forms.IntegerField()
     publisher_id = forms.IntegerField()
     thumbnail_volume = forms.IntegerField(required=False)
+    keyword_box = forms.CharField(required=True, widget=forms.Textarea(attrs={'rows': '3', 'cols': '50', 'tabindex': '4'}))
 
 
 class BookDetailForm(forms.Form):

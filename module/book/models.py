@@ -81,6 +81,7 @@ class Book(AbustractCachedModel):
     writer_id = models.IntegerField(u'著者', null=True)
     publisher_id = models.IntegerField(u'出版社', null=True)
     thumbnail_volume = models.IntegerField(u'サムネイルで表示するvolume', default=1)
+    keyword_box = models.TextField(u'キーワード検索ワードbox', blank=True)
 
     @property
     def img_path(self):

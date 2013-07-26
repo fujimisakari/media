@@ -8,85 +8,85 @@
         <h2 style="float: left;">BOOK情報管理</h2>
         <ul class="boxTabs" style="float: right;">
             <li><a href="{% url 'manage_index' set_type %}">一覧</a></li>
-			<li><a href="{% url 'manage_regist' set_type %}">登録</a></li>
+            <li><a href="{% url 'manage_regist' set_type %}">登録</a></li>
         </ul>
     </div>
 
     <div class="boxContent">
-    	<h3><span>{{ title }}編集</span></h3>
+        <h3><span>{{ title }}編集</span></h3>
 
-		{% if is_form_error %}
-			<div class="error notification">
-				<div>
-					正しく入力されていない項目があります
-				</div>
-			</div>
-		{% endif %}
+        {% if is_form_error %}
+            <div class="error notification">
+                <div>
+                    正しく入力されていない項目があります
+                </div>
+            </div>
+        {% endif %}
 
-		<form method="post">
-			{{ formset.management_form }}
-			<div class="UpBox clearfix">
+        <form method="post">
+            {{ formset.management_form }}
+            <div class="UpBox clearfix">
                 <fieldset>
-					{% for form in formset %}
-						{% if set_type == 'whatnew' %}
-                  		    <dl>
-						        <dt>
-						        	<label>日付</label>
-						        	{% if form.create_date.errors %}
-						        		<span class='error_msg'>
-						        			{{ form.create_date.errors }}
-						        		</span>
-						        	{% endif %}
-						        </dt>
-						        <dd>
-						        	{{ form.create_date }}
-						        </dd>
-						        <dt>
-						        	<label>お知らせ内容</label>
-						        	{% if form.content.errors %}
-						        		<span class='error_msg'>
-						        			{{ form.content.errors }}
-						        		</span>
-						        	{% endif %}
-						        </dt>
-						        <dd>
-						        	{{ form.content }}
-						        </dd>
-						    </dl>
+                    {% for form in formset %}
+                        {% if set_type == 'whatnew' %}
+                            <dl>
+                                <dt>
+                                    <label>日付</label>
+                                    {% if form.create_date.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.create_date.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.create_date }}
+                                </dd>
+                                <dt>
+                                    <label>お知らせ内容</label>
+                                    {% if form.content.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.content.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.content }}
+                                </dd>
+                            </dl>
                         {% endif %}
 
-						{% if set_type == 'book' %}
-							<dl>
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										{% for category in category_list %}
+                        {% if set_type == 'book' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        {% for category in category_list %}
                                             {% if category.id == form.initial.category_id %}
                                                 <option selected="selected" value="{{ category.id }}">{{ category.name }}</option>
                                             {% else %}
                                                 <option value="{{ category.id }}">{{ category.name }}</option>
                                             {% endif %}
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>サブカテゴリ</label>
-									{% if form.subcategory_id.errors %}
-										<span class='error_msg'>
-											{{ form.subcategory_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
-										{% for subcategory in subcategory_list %}
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>サブカテゴリ</label>
+                                    {% if form.subcategory_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.subcategory_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
+                                        {% for subcategory in subcategory_list %}
                                             {% if subcategory.category_id == form.initial.category_id %}
                                                 {% if subcategory.id == form.initial.subcategory_id %}
                                                     <option selected="selected" value="{{ subcategory.id }}">{{ subcategory.name }}</option>
@@ -94,33 +94,33 @@
                                                     <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
                                                 {% endif %}
                                             {% endif %}
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>タイトル名</label>
-									{% if form.title.errors %}
-										<span class='error_msg'>
-											{{ form.title.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.title }}
-								</dd>
-								<dt>
-									<label>著者</label>
-									{% if form.writer_id.errors %}
-										<span class='error_msg'>
-											{{ form.writer_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_writer" name="form-0-writer_id" tabindex='4'>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>タイトル名</label>
+                                    {% if form.title.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.title.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.title }}
+                                </dd>
+                                <dt>
+                                    <label>著者</label>
+                                    {% if form.writer_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.writer_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_writer" name="form-0-writer_id" tabindex='4'>
                                         {% if form.initial.writer_id %}
-										    <option value="">---------</option>
-										    {% for writer in writer_list %}
+                                            <option value="">---------</option>
+                                            {% for writer in writer_list %}
                                                 {% if writer.category_id == form.initial.category_id %}
                                                     {% if writer.id == form.initial.writer_id %}
                                                         <option selected="selected" value="{{ writer.id }}">{{ writer.name }}</option>
@@ -128,30 +128,30 @@
                                                         <option value="{{ writer.id }}">{{ writer.name }}</option>
                                                     {% endif %}
                                                  {% endif %}
-										    {% endfor %}
+                                            {% endfor %}
                                         {% else %}
-										    <option selected="selected" value="">---------</option>
-										    {% for writer in writer_list %}
+                                            <option selected="selected" value="">---------</option>
+                                            {% for writer in writer_list %}
                                                 {% if writer.category_id == form.initial.category_id %}
                                                     <option value="{{ writer.id }}">{{ writer.name }}</option>
-										        {% endif %}
-										    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endif %}
-									</select>
-								</dd>
-								<dt>
-									<label>出版社</label>
-									{% if form.publisher_id.errors %}
-										<span class='error_msg'>
-											{{ form.publisher_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_publisher" name="form-0-publisher_id" tabindex='5'>
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>出版社</label>
+                                    {% if form.publisher_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.publisher_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_publisher" name="form-0-publisher_id" tabindex='5'>
                                         {% if form.initial.publisher_id %}
-										    <option value="">---------</option>
-										    {% for publisher in publisher_list %}
+                                            <option value="">---------</option>
+                                            {% for publisher in publisher_list %}
                                                 {% if publisher.category_id == form.initial.category_id %}
                                                     {% if publisher.id == form.initial.publisher_id %}
                                                         <option selected="selected" value="{{ publisher.id }}">{{ publisher.name }}</option>
@@ -159,157 +159,168 @@
                                                         <option value="{{ publisher.id }}">{{ publisher.name }}</option>
                                                     {% endif %}
                                                  {% endif %}
-										    {% endfor %}
+                                            {% endfor %}
                                         {% else %}
-										    <option selected="selected" value="">---------</option>
-										    {% for publisher in publisher_list %}
+                                            <option selected="selected" value="">---------</option>
+                                            {% for publisher in publisher_list %}
                                                 {% if publisher.category_id == form.initial.category_id %}
                                                     <option value="{{ publisher.id }}">{{ publisher.name }}</option>
-										        {% endif %}
-										    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endif %}
-									</select>
-								</dd>
+                                    </select>
+                                </dd>
                                 {% if form.initial.category_id == 2 %}
-								    <dev id="volume_block">
-								        <dt>
-								        	<label>サムネイルで表示する巻</label>
-								        	{% if form.volume.errors %}
-								        		<span class='error_msg'>
-								        			{{ form.volume.errors }}
-								        		</span>
-								        	{% endif %}
-								        </dt>
-								        <dd>
-								        	<select id="id_thumbnail_volume" name="form-0-thumbnail_volume" tabindex='6'>
+                                    <dev id="volume_block">
+                                        <dt>
+                                            <label>サムネイルで表示する巻</label>
+                                            {% if form.volume.errors %}
+                                                <span class='error_msg'>
+                                                    {{ form.volume.errors }}
+                                                </span>
+                                            {% endif %}
+                                        </dt>
+                                        <dd>
+                                            <select id="id_thumbnail_volume" name="form-0-thumbnail_volume" tabindex='6'>
                                                 {% for detail in book.detail_list %}
                                                     {% if detail.volume == form.initial.thumbnail_volume %}
-										               <option selected="selected" value="{{ detail.volume }}">{{ detail.volume }}</option>
+                                                       <option selected="selected" value="{{ detail.volume }}">{{ detail.volume }}</option>
                                                     {% else %}
-										                <option value="{{ detail.volume }}">{{ detail.volume }}</option>
+                                                        <option value="{{ detail.volume }}">{{ detail.volume }}</option>
                                                     {% endif %}
                                                 {% endfor %}
-								        	</select>
-								        </dd>
-								    </dev>
+                                            </select>
+                                        </dd>
+                                    </dev>
                                 {% else %}
                                     <input type="hidden" name="form-0-thumbnail_volume" value="{{ form.initial.thumbnail_volume }}">
                                 {% endif %}
-							</dl>
-						{% endif %}
+                                <dt>
+                                    <label>検索キーワード</label>
+                                    {% if form.keyword_box.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.keyword_box.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.keyword_box }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-						{% if set_type == 'detail' %}
+                        {% if set_type == 'detail' %}
                             <input type="hidden" name="form-0-book_id" value="{{ detail.book_id }}" id="id_book">
-							<dl>
+                            <dl>
                                 {% comment %}
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										{% for category in category_list %}
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        {% for category in category_list %}
                                             {% if category.id == detail.book.category_id %}
-										        <option selected="selected" value="{{ category.id }}">{{ category.name }}</option>
+                                                <option selected="selected" value="{{ category.id }}">{{ category.name }}</option>
                                             {% else %}
-										        <option value="{{ category.id }}">{{ category.name }}</option>
+                                                <option value="{{ category.id }}">{{ category.name }}</option>
                                             {% endif %}
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>サブカテゴリ</label>
-									{% if form.subcategory_id.errors %}
-										<span class='error_msg'>
-											{{ form.subcategory_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
-										{% for subcategory in subcategory_list %}
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>サブカテゴリ</label>
+                                    {% if form.subcategory_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.subcategory_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
+                                        {% for subcategory in subcategory_list %}
                                             {% if subcategory.category_id == detail.book.category_id %}
                                                 {% if subcategory.id == detail.book.subcategory_id %}
-										            <option selected="selected" value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                                                    <option selected="selected" value="{{ subcategory.id }}">{{ subcategory.name }}</option>
                                                 {% else %}
-										            <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                                                    <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
                                                 {% endif %}
                                             {% endif %}
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>タイトル</label>
-									{% if form.book_id.errors %}
-										<span class='error_msg'>
-											{{ form.book_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_book" name="form-0-book_id" tabindex='3'>
-										{% for book in book_list %}
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>タイトル</label>
+                                    {% if form.book_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.book_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_book" name="form-0-book_id" tabindex='3'>
+                                        {% for book in book_list %}
                                             {% if book.subcategory_id == detail.book.subcategory_id %}
                                                 {% if book.id == detail.book.id %}
-										            <option selected="selected" value="{{ book.id }}">{{ book.title }}</option>
+                                                    <option selected="selected" value="{{ book.id }}">{{ book.title }}</option>
                                                 {% else %}
-										            <option value="{{ book.id }}">{{ book.title }}</option>
+                                                    <option value="{{ book.id }}">{{ book.title }}</option>
                                                 {% endif %}
                                             {% endif %}
-										{% endfor %}
-									</select>
-								</dd>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
                                 {% endcomment %}
                                 {% if detail.book.category_id == 2 %}
-								    <dev id="volume_block">
-								        <dt>
-								        	<label>巻</label>
-								        	{% if form.volume.errors %}
-								        		<span class='error_msg'>
-								        			{{ form.volume.errors }}
-								        		</span>
-								        	{% endif %}
-								        </dt>
-								        <dd>
-        									{{ form.volume }}
-								        </dd>
-								    </dev>
+                                    <dev id="volume_block">
+                                        <dt>
+                                            <label>巻</label>
+                                            {% if form.volume.errors %}
+                                                <span class='error_msg'>
+                                                    {{ form.volume.errors }}
+                                                </span>
+                                            {% endif %}
+                                        </dt>
+                                        <dd>
+                                            {{ form.volume }}
+                                        </dd>
+                                    </dev>
                                 {% else %}
                                     <input type="hidden" name="form-0-volume" value="{{ detail.volume }}">
                                 {% endif %}
-								<dt>
-									<label>PDFサイズ</label>
-									{% if form.pdf_size.errors %}
-										<span class='error_msg'>
-											{{ form.pdf_size.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.pdf_size }}
-								</dd>
-								<dt>
-									<label>ページ数</label>
-									{% if form.total_page.errors %}
-										<span class='error_msg'>
-											{{ form.total_page.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.total_page }}
-								</dd>
+                                <dt>
+                                    <label>PDFサイズ</label>
+                                    {% if form.pdf_size.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.pdf_size.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.pdf_size }}
+                                </dd>
+                                <dt>
+                                    <label>ページ数</label>
+                                    {% if form.total_page.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.total_page.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.total_page }}
+                                </dd>
                                 {% if detail.book.category_id == 1 %}
-								    <dev id="attachment_block">
-								        <dt>
-								        	<label>付属CD</label>
-								        	{% if form.exit_attachment.errors %}
-								        		<span class='error_msg'>
-								        			{{ form.exit_attachment.errors }}
+                                    <dev id="attachment_block">
+                                        <dt>
+                                            <label>付属CD</label>
+                                            {% if form.exit_attachment.errors %}
+                                                <span class='error_msg'>
+                                        {{ form.exit_attachment.errors }}
 								        		</span>
 								        	{% endif %}
 								        </dt>

@@ -13,368 +13,379 @@
     </div>
 
     <div class="boxContent">
-    	<h3><span>{{ title }}登録</span></h3>
+        <h3><span>{{ title }}登録</span></h3>
 
-		{% if is_form_error %}
-			<div class="error notification">
-				<div>
-					正しく入力されていない項目があります
-				</div>
-			</div>
-		{% endif %}
+        {% if is_form_error %}
+            <div class="error notification">
+                <div>
+                    正しく入力されていない項目があります
+                </div>
+            </div>
+        {% endif %}
 
-		<form method="post">
-			{{ formset.management_form }}
+        <form method="post">
+            {{ formset.management_form }}
             <div class="UpBox clearfix">
                 <fieldset>
-					{% for form in formset %}
-						{% if set_type == 'whatnew' %}
-                  		    <dl>
-						        <dt>
-						        	<label>日付</label>
-						        	{% if form.create_date.errors %}
-						        		<span class='error_msg'>
-						        			{{ form.create_date.errors }}
-						        		</span>
-						        	{% endif %}
-						        </dt>
-						        <dd>
-						        	{{ form.create_date }}
-						        </dd>
-						        <dt>
-						        	<label>お知らせ内容</label>
-						        	{% if form.content.errors %}
-						        		<span class='error_msg'>
-						        			{{ form.content.errors }}
-						        		</span>
-						        	{% endif %}
-						        </dt>
-						        <dd>
-						        	{{ form.content }}
-						        </dd>
-						    </dl>
+                    {% for form in formset %}
+                        {% if set_type == 'whatnew' %}
+                            <dl>
+                                <dt>
+                                    <label>日付</label>
+                                    {% if form.create_date.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.create_date.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.create_date }}
+                                </dd>
+                                <dt>
+                                    <label>お知らせ内容</label>
+                                    {% if form.content.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.content.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.content }}
+                                </dd>
+                            </dl>
                         {% endif %}
 
-						{% if set_type == 'book' %}
-							<dl>
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										<option selected="selected" value="">---------</option>
-										{% for category in category_list %}
-											<option value="{{ category.id }}">{{ category.name }}</option>
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>サブカテゴリ</label>
-									{% if form.subcategory_id.errors %}
-										<span class='error_msg'>
-											{{ form.subcategory_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
-										<option selected="selected" value="">---------</option>
-									</select>
-								</dd>
-								<dt>
-									<label>タイトル名</label>
-									{% if form.title.errors %}
-										<span class='error_msg'>
-											{{ form.title.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.title }}
-								</dd>
-								<dt>
-									<label>著者</label>
-									{% if form.writer_id.errors %}
-										<span class='error_msg'>
-											{{ form.writer_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_writer" name="form-0-writer_id" tabindex='4'>
-										<option selected="selected" value="">---------</option>
-									</select>
-								</dd>
-								<dt>
-									<label>出版社</label>
-									{% if form.publisher_id.errors %}
-										<span class='error_msg'>
-											{{ form.publisher_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_publisher" name="form-0-publisher_id" tabindex='5'>
-										<option selected="selected" value="">---------</option>
-									</select>
-								</dd>
-							</dl>
-						{% endif %}
+                        {% if set_type == 'book' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        <option selected="selected" value="">---------</option>
+                                        {% for category in category_list %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>サブカテゴリ</label>
+                                    {% if form.subcategory_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.subcategory_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
+                                        <option selected="selected" value="">---------</option>
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>タイトル名</label>
+                                    {% if form.title.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.title.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.title }}
+                                </dd>
+                                <dt>
+                                    <label>著者</label>
+                                    {% if form.writer_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.writer_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_writer" name="form-0-writer_id" tabindex='4'>
+                                        <option selected="selected" value="">---------</option>
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>出版社</label>
+                                    {% if form.publisher_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.publisher_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_publisher" name="form-0-publisher_id" tabindex='5'>
+                                        <option selected="selected" value="">---------</option>
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>検索キーワード</label>
+                                    {% if form.keyword_box.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.keyword_box.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.keyword_box }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-						{% if set_type == 'detail' %}
-							<dl>
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										<option selected="selected" value="">---------</option>
-										{% for category in category_list %}
-											<option value="{{ category.id }}">{{ category.name }}</option>
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>サブカテゴリ</label>
-									{% if form.subcategory_id.errors %}
-										<span class='error_msg'>
-											{{ form.subcategory_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
-										<option selected="selected" value="">---------</option>
-									</select>
-								</dd>
-								<dt>
-									<label>タイトル</label>
-									{% if form.book_id.errors %}
-										<span class='error_msg'>
-											{{ form.book_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_book" name="form-0-book_id" tabindex='3'>
-										<option selected="selected" value="">---------</option>
-									</select>
-								</dd>
-								<dev id="volume_block">
-									<dt>
-										<label>巻</label>
-										{% if form.volume.errors %}
-											<span class='error_msg'>
-												{{ form.volume.errors }}
-											</span>
-										{% endif %}
-									</dt>
-									<dd>
-    									{{ form.volume }}
-									</dd>
-								</dev>
-								<dt>
-									<label>PDFサイズ</label>
-									{% if form.pdf_size.errors %}
-										<span class='error_msg'>
-											{{ form.pdf_size.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.pdf_size }}
-								</dd>
-								<dt>
-									<label>ページ数</label>
-									{% if form.total_page.errors %}
-										<span class='error_msg'>
-											{{ form.total_page.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.total_page }}
-								</dd>
-								<dev id="attachment_block">
-									<dt>
-										<label>付属CD</label>
-										{% if form.exit_attachment.errors %}
-											<span class='error_msg'>
-												{{ form.exit_attachment.errors }}
-											</span>
-										{% endif %}
-									</dt>
-									<dd>
-										<select name="form-0-exit_attachment" tabindex='7'>
-											<option selected="selected" value="0">無し</option>
-											<option value="1">有り</option>
-										</select>
-									</dd>
-								</dev>
-								<dt>
-									<label>備考</label>
-									{% if form.description.errors %}
-										<span class='error_msg'>
-											{{ form.description.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.description }}
-								</dd>
-							</dl>
-						{% endif %}
+                        {% if set_type == 'detail' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        <option selected="selected" value="">---------</option>
+                                        {% for category in category_list %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>サブカテゴリ</label>
+                                    {% if form.subcategory_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.subcategory_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_subcategory" name="form-0-subcategory_id" tabindex='2'>
+                                        <option selected="selected" value="">---------</option>
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>タイトル</label>
+                                    {% if form.book_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.book_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_book" name="form-0-book_id" tabindex='3'>
+                                        <option selected="selected" value="">---------</option>
+                                    </select>
+                                </dd>
+                                <dev id="volume_block">
+                                    <dt>
+                                        <label>巻</label>
+                                        {% if form.volume.errors %}
+                                            <span class='error_msg'>
+                                                {{ form.volume.errors }}
+                                            </span>
+                                        {% endif %}
+                                    </dt>
+                                    <dd>
+                                        {{ form.volume }}
+                                    </dd>
+                                </dev>
+                                <dt>
+                                    <label>PDFサイズ</label>
+                                    {% if form.pdf_size.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.pdf_size.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.pdf_size }}
+                                </dd>
+                                <dt>
+                                    <label>ページ数</label>
+                                    {% if form.total_page.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.total_page.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.total_page }}
+                                </dd>
+                                <dev id="attachment_block">
+                                    <dt>
+                                        <label>付属CD</label>
+                                        {% if form.exit_attachment.errors %}
+                                            <span class='error_msg'>
+                                                {{ form.exit_attachment.errors }}
+                                            </span>
+                                        {% endif %}
+                                    </dt>
+                                    <dd>
+                                        <select name="form-0-exit_attachment" tabindex='7'>
+                                            <option selected="selected" value="0">無し</option>
+                                            <option value="1">有り</option>
+                                        </select>
+                                    </dd>
+                                </dev>
+                                <dt>
+                                    <label>備考</label>
+                                    {% if form.description.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.description.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.description }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-						{% if set_type == 'category' %}
-							<dl>
-								<dt>
-									<label>カテゴリ名</label>
-									{% if form.name.errors %}
-										<span class='error_msg'>
-											{{ form.name.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.name }}
-								</dd>
-								<dt>
-									<label>表示優先度</label>
-									{% if form.sort.errors %}
-										<span class='error_msg'>
-											{{ form.sort.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.sort }}
-								</dd>
-							</dl>
-						{% endif %}
+                        {% if set_type == 'category' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ名</label>
+                                    {% if form.name.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.name.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.name }}
+                                </dd>
+                                <dt>
+                                    <label>表示優先度</label>
+                                    {% if form.sort.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.sort.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.sort }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-						{% if set_type == 'subcategory' %}
-							<dl>
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										{% for category in category_list %}
-											<option value="{{ category.id }}">{{ category.name }}</option>
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>サブカテゴリ名</label>
-									{% if form.name.errors %}
-										<span class='error_msg'>
-											{{ form.name.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.name }}
-								</dd>
-								<dt>
-									<label>表示優先度</label>
-									{% if form.sort.errors %}
-										<span class='error_msg'>
-											{{ form.sort.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.sort }}
-								</dd>
-							</dl>
-						{% endif %}
+                        {% if set_type == 'subcategory' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        {% for category in category_list %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>サブカテゴリ名</label>
+                                    {% if form.name.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.name.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.name }}
+                                </dd>
+                                <dt>
+                                    <label>表示優先度</label>
+                                    {% if form.sort.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.sort.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.sort }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-						{% if set_type == 'writer' %}
-							<dl>
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										<option selected="selected" value="">---------</option>
-										{% for category in category_list %}
-											<option value="{{ category.id }}">{{ category.name }}</option>
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>著者名</label>
-									{% if form.name.errors %}
-										<span class='error_msg'>
-											{{ form.name.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.name }}
-								</dd>
-							</dl>
-						{% endif %}
+                        {% if set_type == 'writer' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        <option selected="selected" value="">---------</option>
+                                        {% for category in category_list %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>著者名</label>
+                                    {% if form.name.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.name.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.name }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-						{% if set_type == 'publisher' %}
-							<dl>
-								<dt>
-									<label>カテゴリ</label>
-									{% if form.category_id.errors %}
-										<span class='error_msg'>
-											{{ form.category_id.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									<select id="id_category" name="form-0-category_id" tabindex='1'>
-										<option selected="selected" value="">---------</option>
-										{% for category in category_list %}
-											<option value="{{ category.id }}">{{ category.name }}</option>
-										{% endfor %}
-									</select>
-								</dd>
-								<dt>
-									<label>出版社名</label>
-									{% if form.name.errors %}
-										<span class='error_msg'>
-											{{ form.name.errors }}
-										</span>
-									{% endif %}
-								</dt>
-								<dd>
-									{{ form.name }}
-								</dd>
-							</dl>
-						{% endif %}
+                        {% if set_type == 'publisher' %}
+                            <dl>
+                                <dt>
+                                    <label>カテゴリ</label>
+                                    {% if form.category_id.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.category_id.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    <select id="id_category" name="form-0-category_id" tabindex='1'>
+                                        <option selected="selected" value="">---------</option>
+                                        {% for category in category_list %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                <dt>
+                                    <label>出版社名</label>
+                                    {% if form.name.errors %}
+                                        <span class='error_msg'>
+                                            {{ form.name.errors }}
+                                        </span>
+                                    {% endif %}
+                                </dt>
+                                <dd>
+                                    {{ form.name }}
+                                </dd>
+                            </dl>
+                        {% endif %}
 
-					{% endfor %}
+                    {% endfor %}
                 </fieldset>
-			</div>
-			<p class="center">
-				<input type="submit" class="submitA submitL" value="登録する" tabindex="10" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
-			</p>
-		</form>
-	</div>
+            </div>
+            <p class="center">
+                <input type="submit" class="submitA submitL" value="登録する" tabindex="10" onclick="this.form.action='{% url 'manage_regist' set_type %}'" />
+            </p>
+        </form>
+    </div>
 </div>
 {% endblock %}

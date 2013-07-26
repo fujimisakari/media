@@ -82,7 +82,7 @@ def search(request):
         word = u'.*{}.*'.format(unicode(word))
         r = re.compile(word, re.IGNORECASE)
         for book in all_book_list:
-            if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name):
+            if r.search(book.title) or r.search(book.category.name) or r.search(book.subcategory.name) or r.search(book.keyword_box):
                 book_list.append(book)
     book_list = list(set(book_list))
 
