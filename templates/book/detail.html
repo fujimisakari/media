@@ -26,8 +26,11 @@
                                 <img src="{{ MEDIA_URL }}{{ book_detail.img_path }}"  class="imgLine" alt="THUMBNAIL" width="{{ BOOK_THUMB_WIDTH }}" height="{{ BOOK_THUMB_HEIGHT }}" />
                             </a>
                             {% if user.is_staff %}
-                                <div>
-                                    <a href="{{ book_detail.download_path }}" class="dwBtn">Download</a>
+                                <div id="dwn-befor{{ book_detail.volume }}">
+                                    <a class="dwBtn" onclick="fnDwnBtnDisable({{ book_detail.volume }}); return false;">Download</a>
+                                </div>
+                                <div id="dwn-after{{ book_detail.volume }}" style="display: none">
+                                    <a class="dwbtnDisable">Download</a>
                                 </div>
                             {% endif %}
                             <ul>

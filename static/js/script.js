@@ -139,5 +139,13 @@ $(document).ready(function() {
             $(this).css('color', f_color);
         }
     })
-
+    
 });
+
+/**
+ *  クリックしたらダウンロードボタンを無効にする
+ */
+function fnDwnBtnDisable(volume){
+    $("#dwn-befor" + volume).hide();
+    $("#dwn-after" + volume).show();
+}

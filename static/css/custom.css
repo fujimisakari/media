@@ -127,6 +127,19 @@ a.dwBtn:hover {
   color: #fff;
 }
 
+a.dwbtnDisable{
+    background: url("/static/img/bg_button_over.gif") repeat-x scroll 0 0 #ae7e4f;
+    color: #999494;
+    border: 1px solid #4f331a;
+    cursor: pointer;
+    margin:0 0 10px;
+    font-weight: bold;
+    padding: 3px 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
 .resultPage{
     font-size: 124%;
     padding: 0 0 3px 10px;

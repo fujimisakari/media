@@ -53,6 +53,10 @@ def subcategory(request, category_id, subcategory_id):
 
 @login_required
 def detail(request, book_id):
+    args = [u'{}={}'.format(key, page) for key, page in request.GET.items()]
+    BACK_URL = u'{}?{}'.format(request.path, u'&'.join(args))
+    request.session['BACK_URL'] = BACK_URL
+
     book_id = int(book_id)
     book_detail_list = BookDetail.get_book_detail_list_by_book_id(book_id)
     page_id = request.GET.get('page', 1)

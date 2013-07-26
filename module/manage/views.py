@@ -34,6 +34,8 @@ def _render(template_file, context):
 @login_required
 def index(request, set_type='whatnew'):
     context = RequestContext(request, {'set_type': set_type, 'title': settings.TITLE_MAP[set_type]})
+    if request.session.get('BACK_URL', False):
+        del request.session['BACK_URL']
     if request.session.get('msg_dict', False):
         context['msg_dict'] = request.session['msg_dict']
         del request.session['msg_dict']
@@ -103,8 +105,11 @@ def edit(request, set_type, edit_id):
         formset = FORM_MAP[set_type](request.POST)
         if formset.is_valid() and formset.cleaned_data[0]:
             edit_data(set_type, formset.cleaned_data[0])
-            request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_EDIT}
-            return HttpResponseRedirect(reverse('manage_index', args=[set_type]))
+            if request.session.get('BACK_URL', False):
+                return HttpResponseRedirect(request.session['BACK_URL'])
+            else:
+                request.session['msg_dict'] = {'info_type': settings.SUCCESS, 'msg': settings.MSG_EDIT}
+                return HttpResponseRedirect(reverse('manage_index', args=[set_type]))
         else:
             context['is_form_error'] = True
             context['formset'] = formset
