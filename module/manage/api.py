@@ -141,8 +141,7 @@ def edit_data(set_type, data):
     model = MODEL_MAP[set_type]
 
     if set_type == 'whatnew':
-        model.objects.select_for_update().update(
-            id=data['id'],
+        model.objects.select_for_update().filter(id=data['id']).update(
             create_date=data['create_date'],
             content=data['content'],
         )
