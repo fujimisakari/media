@@ -512,7 +512,12 @@
                 <input type="submit" class="submitA submitL" value="編集する" tabindex="10" onclick="this.form.action='{% url 'manage_edit' set_type id %}'" />
                 <span class="mr40"></span>
                 <input type="submit" class="submitA submitL" value="削除する" tabindex="11" onclick="return confirm('本当に削除しますか？'); this.form.action='{% url 'manage_delete' set_type id %}'" />
-                {% if set_type == 'detail' %}
+                {% if back_url %}
+                    <br />
+                    <div class='center mt20'>
+                        <a href="{{ back_url }}" class="detail_btn" tabindex="12">BOOK詳細へ戻る</a>
+                    </div>
+                {% elif set_type == 'detail' %}
                     <br />
                     <div class='center mt20'>
                         <a href="{% url 'manage_edit' 'book' detail.book_id %}" class="detail_btn" tabindex="12">BOOK編集へ移動</a>

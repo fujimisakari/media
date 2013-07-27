@@ -142,7 +142,7 @@ class BookDetail(AbustractCachedModel):
 
     @classmethod
     def get_book_detail_list_by_book_id(cls, book_id):
-        return sorted([book_detail for book_detail in cls.get_cache_all() if book_detail.book_id == book_id], key=lambda x: x.volume)
+        return sorted([book_detail for book_detail in cls.get_cache_all() if book_detail.book_id == book_id], key=lambda x: x.volume, reverse=True)
 
     @classmethod
     def get_recent_book_list(cls, limit=3):

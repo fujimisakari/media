@@ -94,11 +94,16 @@ def edit(request, set_type, edit_id):
         'writer_list': Writer.get_cache_all(),
         'publisher_list': Publisher.get_cache_all(),
     })
+
+    if request.session.get('BACK_URL', False):
+        context['back_url'] = request.session['BACK_URL']
+
     if set_type == 'detail':
         context['book_list'] = Book.get_all_list()
         context['detail'] = BookDetail.get_cache(edit_id)
     if set_type == 'book':
         context['book'] = Book.get_cache(edit_id)
+
     model = MODEL_MAP[set_type]
 
     if request.method == 'POST':

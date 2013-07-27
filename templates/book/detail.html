@@ -2,10 +2,13 @@
 {% load url from future %}
 
 {% block contents %}
-    <div class="block clearfix">
+    <div class="block box clearfix">
 
         <div class="boxHeader">
-            <h2>BOOK詳細</h2>
+            <h2 style="float: left;">BOOK詳細</h2>
+            <ul class="boxTabs" style="float: right;">
+                <li><a href="{% url 'manage_edit' 'book' book.id %}">基本情報を編集する</a></li>
+            </ul>
         </div>
 
         <div class="boxContent">
@@ -27,7 +30,7 @@
                             </a>
                             {% if user.is_staff %}
                                 <div id="dwn-befor{{ book_detail.volume }}">
-                                    <a class="dwBtn" href="{{ book_detail.download_path }}" onclick="fnDwnBtnDisable({{ book_detail.volume }}); return false;">Download</a>
+                                    <a class="dwBtn" href="{{ book_detail.download_path }}" onclick="fnDwnBtnDisable({{ book_detail.volume }});">Download</a>
                                 </div>
                                 <div id="dwn-after{{ book_detail.volume }}" style="display: none">
                                     <a class="dwbtnDisable">Download</a>
@@ -70,7 +73,6 @@
                             <dl>
                                 <dt>作成日 :</dt><dd>{{ book_detail.create_date|date:"Y-m-d" }}</dd>
                                 <dt>備考 :</dt><dd>{{ book_detail.description|linebreaks|safe }}</dd>
-                                <dt><a href="{% url 'manage_edit' 'book' book.id %}">基本情報を編集する</a></dt><dd></dd>
                                 <dt><a href="{% url 'manage_edit' 'detail' book_detail.id %}">詳細を編集する</a></dt><dd></dd>
                             </dl>
                         </div>
