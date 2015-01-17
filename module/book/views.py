@@ -4,7 +4,7 @@ import re
 import os
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
@@ -105,3 +105,5 @@ def download(request, category_id, subcategory_id, book_id, volume):
         response = HttpResponse(open(file_path, 'rb').read(), mimetype='application/pdf')
         response['Content-Disposition'] = u'attachment; filename={}_{}.pdf'.format(book.title, volume).encode('utf-8')
         return response
+    else:
+        return HttpResponseServerError('<h3>Download Data not found</h3>')
